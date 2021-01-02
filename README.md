@@ -13,9 +13,11 @@ Licences affecting this library can be found in the lib_licences folder.
 ### Using modified version of java-mumble-link
 
 The library is provided as part of the mods jar-file.  
-To change the library version change the value of the java_mumble_link_version property in the gradle.properties file.  
-Then you have to run a "gradle shadowJar".  
-You will find your custom version in the folder build/libs.  
+To customize the library version follow the following steps:  
+1. Clone this repository  
+2. Change the library version by changing the value of the java_mumble_link_version property in the gradle.properites file  
+3. Run "gradle shadowJar"  
+4. Your custom mod version can be found in the build/libs folder. Copy it to the mods folder of your client/server.  
 
 ## Branches
 
