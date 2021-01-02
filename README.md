@@ -14,9 +14,8 @@ Licences affecting this library can be found in the lib_licences folder.
 
 The library is provided with the mods jar-file.  
 To change the library version change the value of the java_mumble_link_version property in the gradle.properties file.  
-Then you have to run a gradle sync and when the sync is done you have to run "gradle shadowJar".  
+Then you have to run a "gradle shadowJar".  
 You will find your custom version in the folder build/libs.  
-There are no warranties, that the mod works with a custom library version.
 
 ## Branches
 master - default branch - holds only the licences of the libraries and the README file  
