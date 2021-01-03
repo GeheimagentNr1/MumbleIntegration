@@ -29,22 +29,22 @@ public class OptionsEntryValueBoolean extends OptionsEntryValue<Boolean> {
 		int mouseY,
 		float partialTicks ) {
 		
-		button.field_230690_l_ = _x + 135;
-		button.field_230691_m_ = _y + entryHeight / 6;
-		button.func_238482_a_( new StringTextComponent( String.valueOf( value ) ) );
-		button.func_230430_a_( matrixStack, mouseX, mouseY, partialTicks );
+		button.x = _x + 135;
+		button.y = _y + entryHeight / 6;
+		button.setMessage( new StringTextComponent( String.valueOf( value ) ) );
+		button.render( matrixStack, mouseX, mouseY, partialTicks );
 	}
 	
 	@Nonnull
 	@Override
-	public IGuiEventListener getListener() {
+	public IGuiEventListener getParentListener() {
 		
 		return button;
 	}
 	
 	@Nonnull
 	@Override
-	public List<? extends IGuiEventListener> func_231039_at__() {
+	public List<? extends IGuiEventListener> getEventListeners() {
 		
 		return ImmutableList.of();
 	}

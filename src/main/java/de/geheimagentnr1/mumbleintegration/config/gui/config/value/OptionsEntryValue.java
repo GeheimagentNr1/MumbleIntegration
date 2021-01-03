@@ -41,10 +41,10 @@ public abstract class OptionsEntryValue<T> extends OptionsListWidgetEntry {
 	}
 	
 	@Override
-	public void func_230432_a_( @Nonnull MatrixStack matrixStack, int index, int rowTop, int rowLeft, int width,
+	public void render( @Nonnull MatrixStack matrixStack, int index, int rowTop, int rowLeft, int width,
 		int height, int mouseX, int mouseY, boolean hovered, float deltaTime ) {
 		
-		client.fontRenderer.func_238405_a_( matrixStack, title.getString(), rowLeft + 10,
+		client.fontRenderer.drawStringWithShadow( matrixStack, title.getString(), rowLeft + 10,
 			rowTop + (float)( height / 4 + client.fontRenderer.FONT_HEIGHT / 2 ), 16777215 );
 		drawValue( matrixStack, height, rowLeft, rowTop, mouseX, mouseY, deltaTime );
 		x = rowLeft;
@@ -57,7 +57,7 @@ public abstract class OptionsEntryValue<T> extends OptionsListWidgetEntry {
 	}
 	
 	@Nonnull
-	public abstract IGuiEventListener getListener();
+	public abstract IGuiEventListener getParentListener();
 	
 	@Nonnull
 	public TextComponent getTitle() {
