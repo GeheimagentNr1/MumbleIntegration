@@ -1,14 +1,17 @@
 package de.geheimagentnr1.mumbleintegration.config.gui;
 
 import com.google.common.collect.Lists;
+import com.mojang.blaze3d.matrix.MatrixStack;
 import de.geheimagentnr1.mumbleintegration.config.gui.config.OptionsListWidget;
 import de.geheimagentnr1.mumbleintegration.config.gui.config.value.OptionsEntryValue;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.IGuiEventListener;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.button.Button;
-import net.minecraft.client.resources.I18n;
+import net.minecraft.util.text.ITextProperties;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -33,30 +36,32 @@ public abstract class GuiOptions extends Screen {
 	}
 	
 	@Override
-	public void init( @Nonnull Minecraft client, int _width, int _height ) {
+	public void func_231158_b_( @Nonnull Minecraft client, int _width, int _height ) {
 		
-		super.init( client, _width, _height );
+		super.func_231158_b_( client, _width, _height );
 		
 		options = getOptions();
-		children.add( options );
-		setFocused( options );
+		field_230705_e_.add( options );
+		func_231035_a_( options );
 		
-		addButton( new Button( _width / 2 - 100, _height - 25, 100, 20, I18n.format( "gui.done" ), w -> {
+		func_230480_a_( new Button( _width / 2 - 100, _height - 25, 100, 20,
+			new TranslationTextComponent( "gui.done" ), w -> {
 			options.save();
-			onClose();
+			func_231175_as__();
 		} ) );
-		addButton( new Button( _width / 2 + 5, _height - 25, 100, 20, I18n.format( "gui.cancel" ), w -> onClose() ) );
+		func_230480_a_( new Button( _width / 2 + 5, _height - 25, 100, 20,
+			new TranslationTextComponent( "gui.cancel" ), w -> func_231175_as__() ) );
 	}
 	
 	@Override
-	public void render( int mouseX, int mouseY, float partialTicks ) {
+	public void func_230430_a_( @Nonnull MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks ) {
 		
 		Objects.requireNonNull( options );
-		renderBackground();
-		options.render( mouseX, mouseY, partialTicks );
-		drawCenteredString( font, title.getFormattedText(), width / 2, 12, 16777215 );
-		super.render( mouseX, mouseY, partialTicks );
-		if( mouseY < 32 || mouseY > height - 32 ) {
+		func_230446_a_( matrixStack );
+		options.func_230430_a_( matrixStack, mouseX, mouseY, partialTicks );
+		func_238471_a_( matrixStack, field_230712_o_, field_230704_d_.getString(), field_230708_k_ / 2, 12, 16777215 );
+		super.func_230430_a_( matrixStack, mouseX, mouseY, partialTicks );
+		if( mouseY < 32 || mouseY > field_230709_l_ - 32 ) {
 			return;
 		}
 		options.forEach( entry -> {
@@ -65,27 +70,28 @@ public abstract class GuiOptions extends Screen {
 				
 				int valueX = value.getX() + 10;
 				int valueY = value.getY() + 10;
-				String formatted_title = value.getTitle().getFormattedText();
-				if( mouseX < valueX || mouseX > valueX + font.getStringWidth( formatted_title ) ||
+				String formatted_title = value.getTitle().getString();
+				if( mouseX < valueX || mouseX > valueX + field_230712_o_.getStringWidth( formatted_title ) ||
 					mouseY < valueY || mouseY > valueY + 9 ) {
 					return;
 				}
-				List<String> tooltip = Lists.newArrayList();
-				tooltip.addAll( font.listFormattedStringToWidth( value.getDescription(), 200 ) );
-				renderTooltip( tooltip, mouseX, mouseY );
+				List<ITextProperties> tooltip = Lists.newArrayList();
+				tooltip.addAll( field_230712_o_.func_238425_b_( new StringTextComponent( value.getDescription() ),
+					200 ) );
+				func_238654_b_( matrixStack, tooltip, mouseX, mouseY );
 			}
 		} );
 	}
 	
 	@Override
-	public void onClose() {
+	public void func_231175_as__() {
 		
-		Objects.requireNonNull( minecraft ).displayGuiScreen( parent );
+		Objects.requireNonNull( field_230706_i_ ).displayGuiScreen( parent );
 	}
 	
 	public void addListener( @Nonnull IGuiEventListener listener ) {
 		
-		children.add( listener );
+		field_230705_e_.add( listener );
 	}
 	
 	@Nonnull

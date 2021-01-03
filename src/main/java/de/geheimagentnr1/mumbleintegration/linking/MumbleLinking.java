@@ -6,10 +6,11 @@ import de.geheimagentnr1.mumbleintegration.config.MainConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.renderer.ActiveRenderInfo;
-import net.minecraft.client.renderer.Vector3f;
 import net.minecraft.client.world.ClientWorld;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.dimension.DimensionType;
+import net.minecraft.util.RegistryKey;
+import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.util.math.vector.Vector3f;
+import net.minecraft.world.World;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -20,8 +21,10 @@ import java.awt.*;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.List;
 import java.util.Objects;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 
 @SuppressWarnings( { "SynchronizationOnStaticField", "NonThreadSafeLazyInitialization" } )
@@ -38,7 +41,7 @@ public class MumbleLinking {
 	private static MumbleLink mumble = null;
 	
 	@Nullable
-	private static DimensionType dimension = null;
+	private static RegistryKey<World> dimension = null;
 	
 	static {
 		// Required to open URIs
@@ -100,14 +103,23 @@ public class MumbleLinking {
 			synchronized( UNDERSCORE_PATTERN ) {
 				ensureLinking();
 				Objects.requireNonNull( mumble );
-				DimensionType worldDimension = world.getDimension().getType();
+				RegistryKey<World> worldDimension = world.func_234923_W_();
 				autoConnect( worldDimension );
 				ActiveRenderInfo activeRenderInfo = Minecraft.getInstance().gameRenderer.getActiveRenderInfo();
 				float[] camPos = vec3dToArray( activeRenderInfo.getProjectedView() );
 				float[] camDir = vec3fToArray( activeRenderInfo.getViewVector() );
 				float[] camTop = new float[] { 0.0F, 1.0F, 0.0F };
 				if( !MainConfig.useDimensionChannels() ) {
-					camPos[1] += worldDimension.getId() << 9;
+					List<RegistryKey<World>> worlds = Objects.requireNonNull( Minecraft.getInstance().getConnection() )
+						.func_239164_m_().stream().sorted().collect( Collectors.toList() );
+					
+					int index = -1;
+					for( int i = 0; i < worlds.size(); i++ ) {
+						if( worlds.get( i ).equals( world.func_234923_W_() ) ) {
+							index = i;
+						}
+					}
+					camPos[1] += index << 9;
 				}
 				mumble.incrementUiTick();
 				mumble.setAvatarPosition( camPos );
@@ -121,7 +133,7 @@ public class MumbleLinking {
 		}
 	}
 	
-	private static void autoConnect( @Nonnull DimensionType worldDimension ) {
+	private static void autoConnect( @Nonnull RegistryKey<World> worldDimension ) {
 		
 		if( MainConfig.shouldAutoConnect() ) {
 			if( MainConfig.useDimensionChannels() ) {
@@ -138,35 +150,35 @@ public class MumbleLinking {
 		}
 	}
 	
-	private static void connectToMumble( @Nonnull DimensionType dimensionType ) {
+	private static void connectToMumble( @Nonnull RegistryKey<World> dimensionKey ) {
 		
 		try {
 			Desktop.getDesktop().browse( new URI( "mumble", null, MainConfig.getAddress(), MainConfig.getPort(),
-				buildMumblePath( dimensionType ), null, null ) );
+				buildMumblePath( dimensionKey ), null, null ) );
 		} catch( IOException | URISyntaxException exception ) {
 			LOGGER.error( "Connection To Mumble Failed", exception );
 		}
 	}
 	
 	@Nonnull
-	private static String buildMumblePath( @Nonnull DimensionType dimensionType ) {
+	private static String buildMumblePath( @Nonnull RegistryKey<World> dimensionKey ) {
 		
 		String path = "/" + MainConfig.getPath();
 		
 		if( !MainConfig.useDimensionChannels() ) {
 			return path;
 		}
-		return path + "/" + getTrimedNameOfDimension( dimensionType );
+		return path + "/" + getTrimedNameOfDimension( dimensionKey );
 	}
 	
 	@Nonnull
-	private static String getTrimedNameOfDimension( @Nonnull DimensionType dimensionType ) {
+	private static String getTrimedNameOfDimension( @Nonnull RegistryKey<World> dimensionKey ) {
 		
 		return StringUtils.capitalize( UNDERSCORE_PATTERN.matcher( Objects.requireNonNull(
-			dimensionType.getRegistryName() ).getPath() ).replaceAll( " " ) );
+			dimensionKey.func_240901_a_() ).getPath() ).replaceAll( " " ) );
 	}
 	
-	private static float[] vec3dToArray( @Nonnull Vec3d vec3d ) {
+	private static float[] vec3dToArray( @Nonnull Vector3d vec3d ) {
 		
 		return vec3ToArray( (float)vec3d.x, (float)vec3d.y, -(float)vec3d.z );
 	}
