@@ -20,7 +20,7 @@ public abstract class OptionsEntryValueInput<T> extends OptionsEntryValue<T> {
 		@Nonnull Predicate<String> validator, @Nonnull Consumer<T> _save ) {
 		
 		super( optionName, _description, _value, _save );
-		textField = new WatchedTextField( this, client.fontRenderer, 0, 0, 98, 18 );
+		textField = new WatchedTextField( client.fontRenderer, 0, 0, 98, 18, this );
 		textField.setText( String.valueOf( value ) );
 		textField.setValidator( validator );
 	}

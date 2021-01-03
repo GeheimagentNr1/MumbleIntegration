@@ -26,7 +26,7 @@ public class ModEventHandler {
 	}
 	
 	@SubscribeEvent
-	public static void handleModConfigReloadingEvent( @Nonnull ModConfig.ConfigReloading event ) {
+	public static void handleModConfigReloadingEvent( @Nonnull ModConfig.Reloading event ) {
 		
 		MainConfig.handleConfigChange();
 	}
@@ -35,7 +35,7 @@ public class ModEventHandler {
 	@SubscribeEvent
 	public static void handleClientSetupEvent( @Nonnull FMLClientSetupEvent event ) {
 		
-		ModLoadingContext.get().registerExtensionPoint( ExtensionPoint.CONFIGGUIFACTORY,
-			() -> ( mc, parent ) -> new ModGuiConfig( parent ) );
+		ModLoadingContext.get().registerExtensionPoint( ExtensionPoint.CONFIGGUIFACTORY, () -> ( mc, parent ) ->
+			new ModGuiConfig( parent ) );
 	}
 }

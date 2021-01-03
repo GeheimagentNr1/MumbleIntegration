@@ -15,10 +15,10 @@ class WatchedTextField extends TextFieldWidget {
 	
 	//package-private
 	@SuppressWarnings( "SameParameterValue" )
-	WatchedTextField( @Nonnull OptionsEntryValueInput<?> _watcher, @Nonnull FontRenderer fontRenderer, int _x, int _y,
-		int _width, int _height ) {
+	WatchedTextField( @Nonnull FontRenderer fontIn, int xIn, int yIn, int widthIn, int heightIn,
+		@Nonnull OptionsEntryValueInput<?> _watcher ) {
 		
-		super( fontRenderer, _x, _y, _width, _height, "" );
+		super( fontIn, xIn, yIn, widthIn, heightIn, "" );
 		watcher = _watcher;
 	}
 	

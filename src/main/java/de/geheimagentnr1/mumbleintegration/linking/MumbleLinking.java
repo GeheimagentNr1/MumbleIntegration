@@ -6,6 +6,7 @@ import de.geheimagentnr1.mumbleintegration.config.MainConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.renderer.ActiveRenderInfo;
+import net.minecraft.client.renderer.Vector3f;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.dimension.DimensionType;
@@ -103,7 +104,7 @@ public class MumbleLinking {
 				autoConnect( worldDimension );
 				ActiveRenderInfo activeRenderInfo = Minecraft.getInstance().gameRenderer.getActiveRenderInfo();
 				float[] camPos = vec3dToArray( activeRenderInfo.getProjectedView() );
-				float[] camDir = vec3dToArray( activeRenderInfo.getLookDirection() );
+				float[] camDir = vec3fToArray( activeRenderInfo.getViewVector() );
 				float[] camTop = new float[] { 0.0F, 1.0F, 0.0F };
 				if( !MainConfig.useDimensionChannels() ) {
 					camPos[1] += worldDimension.getId() << 9;
@@ -161,13 +162,22 @@ public class MumbleLinking {
 	@Nonnull
 	private static String getTrimedNameOfDimension( @Nonnull DimensionType dimensionType ) {
 		
-		return StringUtils.capitalize(
-			UNDERSCORE_PATTERN.matcher( Objects.requireNonNull( dimensionType.getRegistryName() ).getPath() )
-				.replaceAll( " " ) );
+		return StringUtils.capitalize( UNDERSCORE_PATTERN.matcher( Objects.requireNonNull(
+			dimensionType.getRegistryName() ).getPath() ).replaceAll( " " ) );
 	}
 	
 	private static float[] vec3dToArray( @Nonnull Vec3d vec3d ) {
 		
-		return new float[] { (float)vec3d.x, (float)vec3d.y, -(float)vec3d.z };
+		return vec3ToArray( (float)vec3d.x, (float)vec3d.y, -(float)vec3d.z );
+	}
+	
+	private static float[] vec3fToArray( @Nonnull Vector3f vector3f ) {
+		
+		return vec3ToArray( vector3f.getX(), vector3f.getY(), -vector3f.getZ() );
+	}
+	
+	private static float[] vec3ToArray( float x, float y, float z ) {
+		
+		return new float[] { x, y, z };
 	}
 }

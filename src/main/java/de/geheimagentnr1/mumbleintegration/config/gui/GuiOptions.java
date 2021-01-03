@@ -41,12 +41,11 @@ public abstract class GuiOptions extends Screen {
 		children.add( options );
 		setFocused( options );
 		
-		addButton( new Button( _width / 2 - 100, _height - 25, 100, 20, I18n.format( "gui.done" ), button -> {
+		addButton( new Button( _width / 2 - 100, _height - 25, 100, 20, I18n.format( "gui.done" ), w -> {
 			options.save();
 			onClose();
 		} ) );
-		addButton( new Button( _width / 2 + 5, _height - 25, 100, 20, I18n.format( "gui.cancel" ),
-			button -> onClose() ) );
+		addButton( new Button( _width / 2 + 5, _height - 25, 100, 20, I18n.format( "gui.cancel" ), w -> onClose() ) );
 	}
 	
 	@Override
@@ -67,8 +66,8 @@ public abstract class GuiOptions extends Screen {
 				int valueX = value.getX() + 10;
 				int valueY = value.getY() + 10;
 				String formatted_title = value.getTitle().getFormattedText();
-				if( mouseX < valueX || mouseX > valueX + font.getStringWidth( formatted_title ) || mouseY < valueY ||
-					mouseY > valueY + 9 ) {
+				if( mouseX < valueX || mouseX > valueX + font.getStringWidth( formatted_title ) ||
+					mouseY < valueY || mouseY > valueY + 9 ) {
 					return;
 				}
 				List<String> tooltip = Lists.newArrayList();
