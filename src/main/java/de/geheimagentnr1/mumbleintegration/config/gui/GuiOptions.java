@@ -8,7 +8,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.IGuiEventListener;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.button.Button;
-import net.minecraft.util.text.ITextProperties;
+import net.minecraft.util.IReorderingProcessor;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -75,7 +75,7 @@ public abstract class GuiOptions extends Screen {
 					mouseY < valueY || mouseY > valueY + 9 ) {
 					return;
 				}
-				List<ITextProperties> tooltip = Lists.newArrayList();
+				List<IReorderingProcessor> tooltip = Lists.newArrayList();
 				tooltip.addAll( field_230712_o_.func_238425_b_( new StringTextComponent( value.getDescription() ),
 					200 ) );
 				func_238654_b_( matrixStack, tooltip, mouseX, mouseY );
