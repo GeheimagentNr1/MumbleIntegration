@@ -3,10 +3,13 @@ buildscript {
         jcenter()
         mavenCentral()
         maven { url = "http://files.minecraftforge.net/maven" }
+        google()
+        maven { url = "https://plugins.gradle.org/m2/" }
     }
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
         classpath "com.github.jengelman.gradle.plugins:shadow:2.0.4"
+        classpath 'com.jaredsburrows:gradle-license-plugin:0.8.90'
     }
 }
 
@@ -15,6 +18,14 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'com.github.johnrengelman.shadow'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
+apply plugin: 'com.jaredsburrows.license'
+
+task copyLicenses(type: Copy) {
+    from 'build/reports/licenses'
+    into 'lib_licences'
+}
+build.dependsOn( copyLicenses )
+copyLicenses.dependsOn( "licenseReport" )
 
 version = "${major_version}.${minor_version}.${patch_version}"
 group = "${domain}.${mod_id}" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
@@ -101,7 +112,7 @@ dependencies {
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
     minecraft "net.minecraftforge:forge:${mc_version}-${forge_version}"
 
-    runtimeOnly("com.skaggsm:java-mumble-link:${java_mumble_link_version}") {
+    compile("com.skaggsm:java-mumble-link:${java_mumble_link_version}") {
         exclude group: 'net.java.dev.jna'
     }
     shadow("com.skaggsm:java-mumble-link:${java_mumble_link_version}") {
