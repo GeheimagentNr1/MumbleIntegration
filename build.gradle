@@ -60,7 +60,7 @@ minecraft {
             property 'forge.logging.console.level', 'debug'
 
             mods {
-                mumbleintegration {
+                "${mod_id}" {
                     source sourceSets.main
                 }
             }
@@ -76,7 +76,7 @@ minecraft {
             property 'forge.logging.console.level', 'debug'
 
             mods {
-                mumbleintegration {
+                "${mod_id}" {
                     source sourceSets.main
                 }
             }
@@ -91,10 +91,10 @@ minecraft {
             // Recommended logging level for the console
             property 'forge.logging.console.level', 'debug'
 
-            args '--mod', 'mumbleintegration', '--all', '--output', file('src/generated/resources/')
+            args '--mod', "${mod_id}".toString(), '--all', '--output', file('src/generated/resources/')
 
             mods {
-                mumbleintegration {
+                "${mod_id}" {
                     source sourceSets.main
                 }
             }
