@@ -20,6 +20,8 @@ apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 apply plugin: 'com.jaredsburrows.license'
 
+compileJava.dependsOn(clean)
+
 task copyLicenses(type: Copy) {
     from 'build/reports/licenses'
     into 'lib_licences'
@@ -174,12 +176,3 @@ publishing {
         }
     }
 }
-
-import groovy.json.JsonSlurper
-import groovy.json.JsonOutput
-
-final def file = new File("updates.json")
-final def json = new JsonSlurper().parse(file)
-final def promos = json.promos
-promos["${mc_version}-recommended"] = "${version}"
-file.write(JsonOutput.prettyPrint(JsonOutput.toJson(json)))
