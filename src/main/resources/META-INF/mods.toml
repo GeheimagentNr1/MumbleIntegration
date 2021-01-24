@@ -17,14 +17,14 @@ modId="mumbleintegration" #mandatory
 version="${file.jarVersion}" #mandatory
  # A display name for the mod
 displayName="Mumble Integration" #mandatory
-# A URL to query for updates for this mod. See the JSON update specification <here>
-#updateJSONURL="http://myurl.me/" #optional
+# A URL to query for updates for this mod. See the JSON update specification https://mcforge.readthedocs.io/en/latest/gettingstarted/autoupdate/
+updateJSONURL="https://raw.githubusercontent.com/GeheimagentNr1/MumbleIntegration/master_1.14.4/updates.json" #optional
 # A URL for the "homepage" for this mod, displayed in the mod UI
-#displayURL="http://example.com/" #optional
+displayURL="https://www.curseforge.com/minecraft/mc-mods/mumble-integration" #optional
 # A file name (in the root of the mod JAR) containing a logo for display
-#logoFile="mumbleintegration.png" #optional
+logoFile="mumbleintegration.png" #optional
 # A text field displayed in the mod UI
-#credits="Thanks for this example mod goes to Java" #optional
+credits="Thanks for the logo goes to Muse31" #optional
 # A text field displayed in the mod UI
 authors="GeheimagentNr1" #optional
 # The description text for the mod (multi line!) (#mandatory)
