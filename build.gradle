@@ -20,13 +20,13 @@ apply plugin: 'com.github.johnrengelman.shadow'
 apply plugin: 'com.jaredsburrows.license'
 
 delete "src/main/java/com"
-compileJava.dependsOn(clean)
+publish.dependsOn(clean)
 
 task copyLicenses(type: Copy) {
     from 'build/reports/licenses'
     into 'lib_licences'
 }
-build.dependsOn( copyLicenses )
+compileJava.dependsOn( copyLicenses )
 copyLicenses.dependsOn( "licenseReport" )
 
 version = "${major_version}.${minor_version}.${patch_version}"
