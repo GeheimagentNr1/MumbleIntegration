@@ -75,5 +75,5 @@ Plexus Common Utilities,A collection of various utility classes to ease working 
     more.,3.2.1,null,null,null,Apache License, Version 2.0,http://www.apache.org/licenses/LICENSE-2.0.txt,org.codehaus.plexus:plexus-utils:3.2.1
 TerminalConsoleAppender,JLine 3 appender for Log4j2, allows extending command line apps using colors and command completion,1.2.0,Minecrell,https://github.com/Minecrell/TerminalConsoleAppender,null,MIT License,https://opensource.org/licenses/MIT,net.minecrell:terminalconsoleappender:1.2.0
 text2speech,null,1.11.3,null,null,null,null,null,com.mojang:text2speech:1.11.3
-Typetools,Typetools for reading lambda metadata,0.8.1,jhalterman,https://github.com/MinecraftForge/typetools,null,null,null,net.jodah:typetools:0.8.1
+Typetools,Typetools for reading lambda metadata,0.8.3,jhalterman,https://github.com/MinecraftForge/typetools,null,null,null,net.jodah:typetools:0.8.3
 Unsafe,Unsafe hacks for forge,0.2.0,cpw,https://github.com/MinecraftForge/Unsafe,null,null,null,net.minecraftforge:unsafe:0.2.0

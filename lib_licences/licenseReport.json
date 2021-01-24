@@ -1002,14 +1002,14 @@
   {
     "project": "Typetools",
     "description": "Typetools for reading lambda metadata",
-    "version": "0.8.1",
+    "version": "0.8.3",
     "developers": [
       "jhalterman"
     ],
     "url": "https://github.com/MinecraftForge/typetools",
     "year": null,
     "licenses": [],
-    "dependency": "net.jodah:typetools:0.8.1"
+    "dependency": "net.jodah:typetools:0.8.3"
   },
   {
     "project": "Unsafe",
