@@ -26,7 +26,7 @@ task copyLicenses(type: Copy) {
     from 'build/reports/licenses'
     into 'lib_licences'
 }
-build.dependsOn( copyLicenses )
+compileJava.dependsOn( copyLicenses )
 copyLicenses.dependsOn( "licenseReport" )
 
 version = "${major_version}.${minor_version}.${patch_version}"
