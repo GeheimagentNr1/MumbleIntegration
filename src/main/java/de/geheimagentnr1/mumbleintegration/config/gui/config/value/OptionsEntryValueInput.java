@@ -33,14 +33,14 @@ public abstract class OptionsEntryValueInput<T> extends OptionsEntryValue<T> {
 		int mouseY,
 		float partialTicks ) {
 		
-		textField.field_230690_l_ = _x + 135;
-		textField.field_230691_m_ = _y + entryHeight / 6;
-		textField.func_230430_a_( matrixStack, mouseX, mouseY, partialTicks );
+		textField.x = _x + 135;
+		textField.y = _y + entryHeight / 6;
+		textField.render( matrixStack, mouseX, mouseY, partialTicks );
 	}
 	
 	@Nonnull
 	@Override
-	public IGuiEventListener getListener() {
+	public IGuiEventListener getParentListener() {
 		
 		return textField;
 	}
@@ -50,7 +50,7 @@ public abstract class OptionsEntryValueInput<T> extends OptionsEntryValue<T> {
 	
 	@Nonnull
 	@Override
-	public List<? extends IGuiEventListener> func_231039_at__() {
+	public List<? extends IGuiEventListener> getEventListeners() {
 		
 		return ImmutableList.of();
 	}

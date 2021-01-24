@@ -103,7 +103,7 @@ public class MumbleLinking {
 			synchronized( UNDERSCORE_PATTERN ) {
 				ensureLinking();
 				Objects.requireNonNull( mumble );
-				RegistryKey<World> worldDimension = world.func_234923_W_();
+				RegistryKey<World> worldDimension = world.getDimensionKey();
 				autoConnect( worldDimension );
 				ActiveRenderInfo activeRenderInfo = Minecraft.getInstance().gameRenderer.getActiveRenderInfo();
 				float[] camPos = vec3dToArray( activeRenderInfo.getProjectedView() );
@@ -115,7 +115,7 @@ public class MumbleLinking {
 					
 					int index = -1;
 					for( int i = 0; i < worlds.size(); i++ ) {
-						if( worlds.get( i ).equals( world.func_234923_W_() ) ) {
+						if( worlds.get( i ).equals( world.getDimensionKey() ) ) {
 							index = i;
 						}
 					}
@@ -174,8 +174,8 @@ public class MumbleLinking {
 	@Nonnull
 	private static String getTrimedNameOfDimension( @Nonnull RegistryKey<World> dimensionKey ) {
 		
-		return StringUtils.capitalize( UNDERSCORE_PATTERN.matcher( Objects.requireNonNull(
-			dimensionKey.func_240901_a_() ).getPath() ).replaceAll( " " ) );
+		return StringUtils.capitalize( UNDERSCORE_PATTERN.matcher( Objects.requireNonNull( dimensionKey.getLocation() )
+			.getPath() ).replaceAll( " " ) );
 	}
 	
 	private static float[] vec3dToArray( @Nonnull Vector3d vec3d ) {

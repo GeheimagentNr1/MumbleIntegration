@@ -32,27 +32,27 @@ public class OptionsListWidget extends AbstractOptionList<OptionsListWidgetEntry
 	}
 	
 	@Override
-	public int func_230949_c_() {
+	public int getRowWidth() {
 		
 		return 250;
 	}
 	
 	@Override
-	public void func_230430_a_( @Nonnull MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks ) {
+	public void render( @Nonnull MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks ) {
 		
-		func_230433_a_( matrixStack );
-		int sp = func_230952_d_();
+		renderBackground( matrixStack );
+		int sp = getScrollbarPosition();
 		int spss = sp + 6;
 		RenderSystem.disableLighting();
 		RenderSystem.disableFog();
 		Tessellator tessellator = Tessellator.getInstance();
 		BufferBuilder bufferBuilder = tessellator.getBuffer();
-		field_230668_b_.getTextureManager().bindTexture( field_230663_f_ );
+		minecraft.getTextureManager().bindTexture( BACKGROUND_LOCATION );
 		RenderSystem.color4f( 1.0F, 1.0F, 1.0F, 1.0F );
-		int left_start = func_230968_n_();
-		int top_start = field_230672_i_ + 4 - (int)func_230966_l_();
+		int left_start = getRowLeft();
+		int top_start = y0 + 4 - (int)getScrollAmount();
 		
-		func_238478_a_( matrixStack, left_start, top_start, mouseX, mouseY, partialTicks );
+		renderList( matrixStack, left_start, top_start, mouseX, mouseY, partialTicks );
 		RenderSystem.disableDepthTest();
 		RenderSystem.enableBlend();
 		RenderSystem.blendFuncSeparate( GlStateManager.SourceFactor.SRC_ALPHA,
@@ -62,35 +62,35 @@ public class OptionsListWidget extends AbstractOptionList<OptionsListWidgetEntry
 		RenderSystem.shadeModel( 7425 );
 		RenderSystem.disableTexture();
 		bufferBuilder.begin( 7, DefaultVertexFormats.POSITION_COLOR_TEX );
-		bufferBuilder.pos( field_230675_l_, field_230672_i_ + 4, 0.0D ).color( 0, 0, 0, 0 ).tex( 0.0F, 1.0F )
+		bufferBuilder.pos( x0, y0 + 4, 0.0D ).color( 0, 0, 0, 0 ).tex( 0.0F, 1.0F )
 			.endVertex();
-		bufferBuilder.pos( field_230674_k_, field_230672_i_ + 4, 0.0D ).color( 0, 0, 0, 0 ).tex( 1.0F, 1.0F )
+		bufferBuilder.pos( x1, y0 + 4, 0.0D ).color( 0, 0, 0, 0 ).tex( 1.0F, 1.0F )
 			.endVertex();
-		bufferBuilder.pos( field_230674_k_, field_230672_i_, 0.0D ).color( 0, 0, 0, 255 ).tex( 1.0F, 0.0F ).endVertex();
-		bufferBuilder.pos( field_230675_l_, field_230672_i_, 0.0D ).color( 0, 0, 0, 255 ).tex( 0.0F, 0.0F ).endVertex();
-		bufferBuilder.pos( field_230675_l_, field_230673_j_, 0.0D ).color( 0, 0, 0, 255 ).tex( 0.0F, 1.0F ).endVertex();
-		bufferBuilder.pos( field_230674_k_, field_230673_j_, 0.0D ).color( 0, 0, 0, 255 ).tex( 1.0F, 1.0F ).endVertex();
-		bufferBuilder.pos( field_230674_k_, field_230673_j_ - 4, 0.0D ).color( 0, 0, 0, 0 ).tex( 1.0F, 0.0F )
+		bufferBuilder.pos( x1, y0, 0.0D ).color( 0, 0, 0, 255 ).tex( 1.0F, 0.0F ).endVertex();
+		bufferBuilder.pos( x0, y0, 0.0D ).color( 0, 0, 0, 255 ).tex( 0.0F, 0.0F ).endVertex();
+		bufferBuilder.pos( x0, y1, 0.0D ).color( 0, 0, 0, 255 ).tex( 0.0F, 1.0F ).endVertex();
+		bufferBuilder.pos( x1, y1, 0.0D ).color( 0, 0, 0, 255 ).tex( 1.0F, 1.0F ).endVertex();
+		bufferBuilder.pos( x1, y1 - 4, 0.0D ).color( 0, 0, 0, 0 ).tex( 1.0F, 0.0F )
 			.endVertex();
-		bufferBuilder.pos( field_230675_l_, field_230673_j_ - 4, 0.0D ).color( 0, 0, 0, 0 ).tex( 0.0F, 0.0F )
+		bufferBuilder.pos( x0, y1 - 4, 0.0D ).color( 0, 0, 0, 0 ).tex( 0.0F, 0.0F )
 			.endVertex();
 		tessellator.draw();
-		int mpy = Math.max( 0, func_230945_b_() - ( field_230673_j_ - field_230672_i_ - 4 ) );
+		int mpy = Math.max( 0, getMaxPosition() - ( y1 - y0 - 4 ) );
 		if( mpy > 0 ) {
-			int yp = (int)( (float)( ( field_230673_j_ - field_230672_i_ ) * ( field_230673_j_ - field_230672_i_ ) ) /
-				func_230945_b_() );
-			yp = MathHelper.clamp( yp, 32, field_230673_j_ - field_230672_i_ - 8 );
+			int yp = (int)( (float)( ( y1 - y0 ) * ( y1 - y0 ) ) /
+				getMaxPosition() );
+			yp = MathHelper.clamp( yp, 32, y1 - y0 - 8 );
 			int ye =
-				(int)func_230966_l_() * ( field_230673_j_ - field_230672_i_ - yp ) / mpy + field_230672_i_;
-			if( ye < field_230672_i_ ) {
-				ye = field_230672_i_;
+				(int)getScrollAmount() * ( y1 - y0 - yp ) / mpy + y0;
+			if( ye < y0 ) {
+				ye = y0;
 			}
 			
 			bufferBuilder.begin( 7, DefaultVertexFormats.POSITION_COLOR_TEX );
-			bufferBuilder.pos( sp, field_230673_j_, 0.0D ).color( 0, 0, 0, 255 ).tex( 0.0F, 1.0F ).endVertex();
-			bufferBuilder.pos( spss, field_230673_j_, 0.0D ).color( 0, 0, 0, 255 ).tex( 1.0F, 1.0F ).endVertex();
-			bufferBuilder.pos( spss, field_230672_i_, 0.0D ).color( 0, 0, 0, 255 ).tex( 1.0F, 0.0F ).endVertex();
-			bufferBuilder.pos( sp, field_230672_i_, 0.0D ).color( 0, 0, 0, 255 ).tex( 0.0F, 0.0F ).endVertex();
+			bufferBuilder.pos( sp, y1, 0.0D ).color( 0, 0, 0, 255 ).tex( 0.0F, 1.0F ).endVertex();
+			bufferBuilder.pos( spss, y1, 0.0D ).color( 0, 0, 0, 255 ).tex( 1.0F, 1.0F ).endVertex();
+			bufferBuilder.pos( spss, y0, 0.0D ).color( 0, 0, 0, 255 ).tex( 1.0F, 0.0F ).endVertex();
+			bufferBuilder.pos( sp, y0, 0.0D ).color( 0, 0, 0, 255 ).tex( 0.0F, 0.0F ).endVertex();
 			bufferBuilder.pos( sp, ye + yp, 0.0D ).color( 128, 128, 128, 255 ).tex( 0.0F, 1.0F ).endVertex();
 			bufferBuilder.pos( spss, ye + yp, 0.0D ).color( 128, 128, 128, 255 ).tex( 1.0F, 1.0F ).endVertex();
 			bufferBuilder.pos( spss, ye, 0.0D ).color( 128, 128, 128, 255 ).tex( 1.0F, 0.0F ).endVertex();
@@ -101,7 +101,7 @@ public class OptionsListWidget extends AbstractOptionList<OptionsListWidgetEntry
 			bufferBuilder.pos( sp, ye, 0.0D ).color( 192, 192, 192, 255 ).tex( 0.0F, 0.0F ).endVertex();
 			tessellator.draw();
 		}
-		func_230447_a_( matrixStack, mouseX, mouseY );
+		renderDecorations( matrixStack, mouseX, mouseY );
 		RenderSystem.enableTexture();
 		RenderSystem.shadeModel( 7424 );
 		RenderSystem.enableAlphaTest();
@@ -110,7 +110,7 @@ public class OptionsListWidget extends AbstractOptionList<OptionsListWidgetEntry
 	
 	public void save() {
 		
-		func_231039_at__()
+		getEventListeners()
 			.stream()
 			.filter( entry -> entry instanceof OptionsEntryValue )
 			.map( entry -> (OptionsEntryValue<?>)entry )
@@ -120,14 +120,14 @@ public class OptionsListWidget extends AbstractOptionList<OptionsListWidgetEntry
 	public void add( @Nonnull OptionsListWidgetEntry entry ) {
 		
 		if( entry instanceof OptionsEntryValue ) {
-			owner.addListener( ( (OptionsEntryValue<?>)entry ).getListener() );
+			owner.addFromOutsideListener( ( (OptionsEntryValue<?>)entry ).getParentListener() );
 		}
-		func_230513_b_( entry );
+		addEntry( entry );
 	}
 	
 	public void forEach( @Nonnull Consumer<OptionsListWidgetEntry> consumer ) {
 		
-		for( OptionsListWidgetEntry value : func_231039_at__() ) {
+		for( OptionsListWidgetEntry value : getEventListeners() ) {
 			consumer.accept( value );
 		}
 	}

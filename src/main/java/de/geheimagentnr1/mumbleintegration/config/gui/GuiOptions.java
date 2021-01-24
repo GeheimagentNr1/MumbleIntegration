@@ -36,32 +36,32 @@ public abstract class GuiOptions extends Screen {
 	}
 	
 	@Override
-	public void func_231158_b_( @Nonnull Minecraft client, int _width, int _height ) {
+	public void init( @Nonnull Minecraft minecraft, int width, int height ) {
 		
-		super.func_231158_b_( client, _width, _height );
+		super.init( minecraft, width, height );
 		
 		options = getOptions();
-		field_230705_e_.add( options );
-		func_231035_a_( options );
+		children.add( options );
+		setListener( options );
 		
-		func_230480_a_( new Button( _width / 2 - 100, _height - 25, 100, 20,
-			new TranslationTextComponent( "gui.done" ), w -> {
+		addButton( new Button( width / 2 - 100, height - 25, 100, 20, new TranslationTextComponent( "gui.done" ),
+			w -> {
 			options.save();
-			func_231175_as__();
+			closeScreen();
 		} ) );
-		func_230480_a_( new Button( _width / 2 + 5, _height - 25, 100, 20,
-			new TranslationTextComponent( "gui.cancel" ), w -> func_231175_as__() ) );
+		addButton( new Button( width / 2 + 5, height - 25, 100, 20, new TranslationTextComponent( "gui.cancel" ), 
+			w -> closeScreen() ) );
 	}
 	
 	@Override
-	public void func_230430_a_( @Nonnull MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks ) {
+	public void render( @Nonnull MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks ) {
 		
 		Objects.requireNonNull( options );
-		func_230446_a_( matrixStack );
-		options.func_230430_a_( matrixStack, mouseX, mouseY, partialTicks );
-		func_238471_a_( matrixStack, field_230712_o_, field_230704_d_.getString(), field_230708_k_ / 2, 12, 16777215 );
-		super.func_230430_a_( matrixStack, mouseX, mouseY, partialTicks );
-		if( mouseY < 32 || mouseY > field_230709_l_ - 32 ) {
+		renderBackground( matrixStack );
+		options.render( matrixStack, mouseX, mouseY, partialTicks );
+		drawCenteredString( matrixStack, font, title.getString(), width / 2, 12, 16777215 );
+		super.render( matrixStack, mouseX, mouseY, partialTicks );
+		if( mouseY < 32 || mouseY > height - 32 ) {
 			return;
 		}
 		options.forEach( entry -> {
@@ -71,27 +71,26 @@ public abstract class GuiOptions extends Screen {
 				int valueX = value.getX() + 10;
 				int valueY = value.getY() + 10;
 				String formatted_title = value.getTitle().getString();
-				if( mouseX < valueX || mouseX > valueX + field_230712_o_.getStringWidth( formatted_title ) ||
+				if( mouseX < valueX || mouseX > valueX + font.getStringWidth( formatted_title ) ||
 					mouseY < valueY || mouseY > valueY + 9 ) {
 					return;
 				}
 				List<IReorderingProcessor> tooltip = Lists.newArrayList();
-				tooltip.addAll( field_230712_o_.func_238425_b_( new StringTextComponent( value.getDescription() ),
-					200 ) );
-				func_238654_b_( matrixStack, tooltip, mouseX, mouseY );
+				tooltip.addAll( font.trimStringToWidth( new StringTextComponent( value.getDescription() ), 200 ) );
+				renderTooltip( matrixStack, tooltip, mouseX, mouseY );
 			}
 		} );
 	}
 	
 	@Override
-	public void func_231175_as__() {
+	public void closeScreen() {
 		
-		Objects.requireNonNull( field_230706_i_ ).displayGuiScreen( parent );
+		Objects.requireNonNull( minecraft ).displayGuiScreen( parent );
 	}
 	
-	public void addListener( @Nonnull IGuiEventListener listener ) {
+	public void addFromOutsideListener( @Nonnull IGuiEventListener listener ) {
 		
-		field_230705_e_.add( listener );
+		children.add( listener );
 	}
 	
 	@Nonnull
