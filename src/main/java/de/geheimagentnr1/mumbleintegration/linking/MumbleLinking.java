@@ -174,8 +174,8 @@ public class MumbleLinking {
 	@Nonnull
 	private static String getTrimedNameOfDimension( @Nonnull RegistryKey<World> dimensionKey ) {
 		
-		return StringUtils.capitalize( UNDERSCORE_PATTERN.matcher( Objects.requireNonNull(
-			dimensionKey.getLocation() ).getPath() ).replaceAll( " " ) );
+		return StringUtils.capitalize( UNDERSCORE_PATTERN.matcher( Objects.requireNonNull( dimensionKey.getLocation() )
+			.getPath() ).replaceAll( " " ) );
 	}
 	
 	private static float[] vec3dToArray( @Nonnull Vector3d vec3d ) {
