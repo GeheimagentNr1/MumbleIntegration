@@ -44,13 +44,24 @@ public abstract class GuiOptions extends Screen {
 		field_230705_e_.add( options );
 		func_231035_a_( options );
 		
-		func_230480_a_( new Button( _width / 2 - 100, _height - 25, 100, 20,
-			new TranslationTextComponent( "gui.done" ), w -> {
-			options.save();
-			func_231175_as__();
-		} ) );
-		func_230480_a_( new Button( _width / 2 + 5, _height - 25, 100, 20,
-			new TranslationTextComponent( "gui.cancel" ), w -> func_231175_as__()
+		func_230480_a_( new Button(
+			_width / 2 - 100,
+			_height - 25,
+			100,
+			20,
+			new TranslationTextComponent( "gui.done" ),
+			w -> {
+				options.save();
+				func_231175_as__();
+			}
+		) );
+		func_230480_a_( new Button(
+			_width / 2 + 5,
+			_height - 25,
+			100,
+			20,
+			new TranslationTextComponent( "gui.cancel" ),
+			w -> func_231175_as__()
 		) );
 	}
 	
@@ -77,8 +88,10 @@ public abstract class GuiOptions extends Screen {
 					return;
 				}
 				List<ITextProperties> tooltip = Lists.newArrayList();
-				tooltip.addAll( field_230712_o_.func_238425_b_( new StringTextComponent( value.getDescription() ),
-					200 ) );
+				tooltip.addAll( field_230712_o_.func_238425_b_(
+					new StringTextComponent( value.getDescription() ),
+					200
+				) );
 				func_238654_b_( matrixStack, tooltip, mouseX, mouseY );
 			}
 		} );

@@ -99,6 +99,11 @@ public abstract class OptionsEntryValue<T> extends OptionsListWidgetEntry {
 	}
 	
 	protected abstract void drawValue(
-		@Nonnull MatrixStack matrixStack, int entryHeight, int _x, int _y, int mouseX, int mouseY,
+		@Nonnull MatrixStack matrixStack,
+		int entryHeight,
+		int _x,
+		int _y,
+		int mouseX,
+		int mouseY,
 		float partialTicks );
 }

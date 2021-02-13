@@ -23,7 +23,12 @@ public class OptionsListWidget extends AbstractOptionList<OptionsListWidgetEntry
 	private final GuiOptions owner;
 	
 	public OptionsListWidget(
-		@Nonnull GuiOptions _owner, @Nonnull Minecraft client, int x, int _height, int _top, int y,
+		@Nonnull GuiOptions _owner,
+		@Nonnull Minecraft client,
+		int x,
+		int _height,
+		int _top,
+		int y,
 		int entryHeight ) {
 		
 		super( client, x, _height, _top, y, entryHeight );
