@@ -24,8 +24,14 @@ public class ModGuiConfig extends GuiOptions {
 	@Override
 	public OptionsListWidget getOptions() {
 		
-		OptionsListWidget options = new OptionsListWidget( this, Objects.requireNonNull( minecraft ), width + 45,
-			height, 32, height - 32, 30 );
+		OptionsListWidget options = new OptionsListWidget(
+			this,
+			Objects.requireNonNull( minecraft ), width + 45,
+			height,
+			32,
+			height - 32,
+			30
+		);
 		options.add( new OptionsEntryValueBoolean(
 			"Mumble Active",
 			"Should the mumble integration be activ?",
