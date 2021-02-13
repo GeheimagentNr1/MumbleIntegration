@@ -37,7 +37,7 @@ public class ModEventHandler {
 		
 		ModLoadingContext.get().registerExtensionPoint(
 			ExtensionPoint.CONFIGGUIFACTORY, () -> ( mc, parent ) ->
-			new ModGuiConfig( parent )
+				new ModGuiConfig( parent )
 		);
 	}
 }
