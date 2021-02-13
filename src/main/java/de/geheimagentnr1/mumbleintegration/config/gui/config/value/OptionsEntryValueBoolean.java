@@ -14,10 +14,7 @@ public class OptionsEntryValueBoolean extends OptionsEntryValue<Boolean> {
 	private final Button button;
 	
 	public OptionsEntryValueBoolean(
-		@Nonnull String optionName,
-		@Nonnull String _description,
-		boolean _value,
-		@Nonnull Consumer<Boolean> _save ) {
+		@Nonnull String optionName, @Nonnull String _description, boolean _value, @Nonnull Consumer<Boolean> _save ) {
 		
 		super( optionName, _description, _value, _save );
 		button = new Button( 0, 0, 100, 20, String.valueOf( value ), w -> value = !value );

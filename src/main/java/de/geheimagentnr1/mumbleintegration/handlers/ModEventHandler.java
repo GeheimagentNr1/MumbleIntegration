@@ -35,9 +35,8 @@ public class ModEventHandler {
 	@SubscribeEvent
 	public static void handleClientSetupEvent( @Nonnull FMLClientSetupEvent event ) {
 		
-		ModLoadingContext.get().registerExtensionPoint(
-			ExtensionPoint.CONFIGGUIFACTORY,
-			() -> ( mc, parent ) -> new ModGuiConfig( parent )
+		ModLoadingContext.get().registerExtensionPoint( ExtensionPoint.CONFIGGUIFACTORY,
+		                                                () -> ( mc, parent ) -> new ModGuiConfig( parent )
 		);
 	}
 }
