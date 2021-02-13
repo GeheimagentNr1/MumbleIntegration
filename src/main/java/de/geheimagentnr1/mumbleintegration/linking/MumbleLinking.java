@@ -172,7 +172,7 @@ public class MumbleLinking {
 			dimensionType.getRegistryName() ).getPath() ).replaceAll( " " ) );
 	}
 	
-	private static float[] vec3dToArray( Vec3d vec3d ) {
+	private static float[] vec3dToArray( @Nonnull Vec3d vec3d ) {
 		
 		return vec3ToArray( (float)vec3d.x, (float)vec3d.y, -(float)vec3d.z );
 	}
