@@ -50,7 +50,8 @@ public abstract class GuiOptions extends Screen {
 			func_231175_as__();
 		} ) );
 		func_230480_a_( new Button( _width / 2 + 5, _height - 25, 100, 20,
-			new TranslationTextComponent( "gui.cancel" ), w -> func_231175_as__() ) );
+			new TranslationTextComponent( "gui.cancel" ), w -> func_231175_as__()
+		) );
 	}
 	
 	@Override
