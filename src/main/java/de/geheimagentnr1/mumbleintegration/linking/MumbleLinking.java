@@ -112,7 +112,10 @@ public class MumbleLinking {
 				float[] camTop = new float[] { 0.0F, 1.0F, 0.0F };
 				if( !MainConfig.useDimensionChannels() ) {
 					List<RegistryKey<World>> worlds = Objects.requireNonNull( Minecraft.getInstance().getConnection() )
-						.func_239164_m_().stream().sorted().collect( Collectors.toList() );
+						.func_239164_m_()
+						.stream()
+						.sorted()
+						.collect( Collectors.toList() );
 					
 					int index = -1;
 					for( int i = 0; i < worlds.size(); i++ ) {
