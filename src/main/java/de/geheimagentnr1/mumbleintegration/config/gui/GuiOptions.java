@@ -51,7 +51,7 @@ public abstract class GuiOptions extends Screen {
 				options.save();
 				closeScreen();
 			}
-			) );
+		) );
 		addButton( new Button(
 			width / 2 + 5,
 			height - 25, 100, 20, new TranslationTextComponent( "gui.cancel" ),
