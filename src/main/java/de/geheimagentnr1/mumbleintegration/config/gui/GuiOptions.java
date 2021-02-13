@@ -83,9 +83,7 @@ public abstract class GuiOptions extends Screen {
 					return;
 				}
 				List<IReorderingProcessor> tooltip = Lists.newArrayList();
-				tooltip.addAll( font.trimStringToWidth(
-					new StringTextComponent( value.getDescription() ), 200
-				) );
+				tooltip.addAll( font.trimStringToWidth( new StringTextComponent( value.getDescription() ), 200 ) );
 				renderTooltip( matrixStack, tooltip, mouseX, mouseY );
 			}
 		} );
