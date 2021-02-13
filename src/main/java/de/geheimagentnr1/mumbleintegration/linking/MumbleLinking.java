@@ -144,8 +144,15 @@ public class MumbleLinking {
 			if( Desktop.isDesktopSupported() ) {
 				Desktop desktop = Desktop.getDesktop();
 				if( desktop.isSupported( Desktop.Action.BROWSE ) ) {
-					desktop.browse( new URI( "mumble", null, MainConfig.getAddress(), MainConfig.getPort(),
-						buildMumblePath( dimensionType ), null, null ) );
+					desktop.browse( new URI(
+						"mumble",
+						null,
+						MainConfig.getAddress(),
+						MainConfig.getPort(),
+						buildMumblePath( dimensionType ),
+						null,
+						null
+					) );
 				}
 			}
 		} catch( IOException | URISyntaxException | HeadlessException exception ) {
@@ -167,9 +174,8 @@ public class MumbleLinking {
 	@Nonnull
 	private static String getTrimedNameOfDimension( @Nonnull DimensionType dimensionType ) {
 		
-		return StringUtils.capitalize(
-			UNDERSCORE_PATTERN.matcher( Objects.requireNonNull( dimensionType.getRegistryName() ).getPath() )
-				.replaceAll( " " ) );
+		return StringUtils.capitalize( UNDERSCORE_PATTERN.matcher( Objects.requireNonNull( dimensionType.getRegistryName() )
+			                                                           .getPath() ).replaceAll( " " ) );
 	}
 	
 	private static float[] vec3dToArray( @Nonnull Vec3d vec3d ) {

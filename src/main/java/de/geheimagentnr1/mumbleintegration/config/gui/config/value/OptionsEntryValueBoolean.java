@@ -13,7 +13,10 @@ public class OptionsEntryValueBoolean extends OptionsEntryValue<Boolean> {
 	@Nonnull
 	private final Button button;
 	
-	public OptionsEntryValueBoolean( @Nonnull String optionName, @Nonnull String _description, boolean _value,
+	public OptionsEntryValueBoolean(
+		@Nonnull String optionName,
+		@Nonnull String _description,
+		boolean _value,
 		@Nonnull Consumer<Boolean> _save ) {
 		
 		super( optionName, _description, _value, _save );

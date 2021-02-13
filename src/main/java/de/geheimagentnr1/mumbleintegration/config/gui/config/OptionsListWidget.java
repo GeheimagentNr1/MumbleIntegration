@@ -20,8 +20,14 @@ public class OptionsListWidget extends AbstractList<OptionsListWidgetEntry> {
 	@Nonnull
 	private final GuiOptions owner;
 	
-	public OptionsListWidget( @Nonnull GuiOptions _owner, @Nonnull Minecraft client, int x, int _height, int _top,
-		int y, int entryHeight ) {
+	public OptionsListWidget(
+		@Nonnull GuiOptions _owner,
+		@Nonnull Minecraft client,
+		int x,
+		int _height,
+		int _top,
+		int y,
+		int entryHeight ) {
 		
 		super( client, x, _height, _top, y, entryHeight );
 		owner = _owner;
@@ -53,9 +59,12 @@ public class OptionsListWidget extends AbstractList<OptionsListWidgetEntry> {
 		renderHoleBackground( 0, y0, 255, 255 );
 		renderHoleBackground( y1, height, 255, 255 );
 		GlStateManager.enableBlend();
-		GlStateManager.blendFuncSeparate( GlStateManager.SourceFactor.SRC_ALPHA,
-			GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ZERO,
-			GlStateManager.DestFactor.ONE );
+		GlStateManager.blendFuncSeparate(
+			GlStateManager.SourceFactor.SRC_ALPHA,
+			GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA,
+			GlStateManager.SourceFactor.ZERO,
+			GlStateManager.DestFactor.ONE
+		);
 		GlStateManager.disableAlphaTest();
 		GlStateManager.shadeModel( 7425 );
 		GlStateManager.disableTexture();
@@ -102,8 +111,10 @@ public class OptionsListWidget extends AbstractList<OptionsListWidgetEntry> {
 	
 	public void save() {
 		
-		children().stream().filter( entry -> entry instanceof OptionsEntryValue ).map(
-			entry -> (OptionsEntryValue<?>)entry ).forEach( OptionsEntryValue::save );
+		children().stream()
+			.filter( entry -> entry instanceof OptionsEntryValue )
+			.map( entry -> (OptionsEntryValue<?>)entry )
+			.forEach( OptionsEntryValue::save );
 	}
 	
 	public void add( @Nonnull OptionsListWidgetEntry entry ) {
