@@ -22,7 +22,12 @@ public class OptionsListWidget extends AbstractOptionList<OptionsListWidgetEntry
 	@Nonnull
 	private final GuiOptions owner;
 	
-	public OptionsListWidget( @Nonnull GuiOptions _owner, @Nonnull Minecraft client, int x, int _height, int _top,
+	public OptionsListWidget(
+		@Nonnull GuiOptions _owner,
+		@Nonnull Minecraft client,
+		int x,
+		int _height,
+		int _top,
 		int y,
 		int entryHeight ) {
 		
@@ -55,9 +60,12 @@ public class OptionsListWidget extends AbstractOptionList<OptionsListWidgetEntry
 		func_238478_a_( matrixStack, left_start, top_start, mouseX, mouseY, partialTicks );
 		RenderSystem.disableDepthTest();
 		RenderSystem.enableBlend();
-		RenderSystem.blendFuncSeparate( GlStateManager.SourceFactor.SRC_ALPHA,
-			GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ZERO,
-			GlStateManager.DestFactor.ONE );
+		RenderSystem.blendFuncSeparate(
+			GlStateManager.SourceFactor.SRC_ALPHA,
+			GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA,
+			GlStateManager.SourceFactor.ZERO,
+			GlStateManager.DestFactor.ONE
+		);
 		RenderSystem.disableAlphaTest();
 		RenderSystem.shadeModel( 7425 );
 		RenderSystem.disableTexture();
