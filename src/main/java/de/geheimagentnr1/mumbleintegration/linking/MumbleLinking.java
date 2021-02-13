@@ -172,7 +172,7 @@ public class MumbleLinking {
 				.replaceAll( " " ) );
 	}
 	
-	private static float[] vec3dToArray( Vec3d vec3d ) {
+	private static float[] vec3dToArray( @Nonnull Vec3d vec3d ) {
 		
 		return new float[] { (float)vec3d.x, (float)vec3d.y, -(float)vec3d.z };
 	}
