@@ -7,6 +7,8 @@ import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.annotation.Nonnull;
 
@@ -15,6 +17,9 @@ import javax.annotation.Nonnull;
 @Mod.EventBusSubscriber( bus = Mod.EventBusSubscriber.Bus.FORGE )
 public class ForgeEventHandler {
 	
+	
+	@Nonnull
+	private static final Logger LOGGER = LogManager.getLogger();
 	
 	@OnlyIn( Dist.CLIENT )
 	@SubscribeEvent
@@ -34,6 +39,10 @@ public class ForgeEventHandler {
 	@SubscribeEvent
 	public static void handleClientTickEvent( @Nonnull TickEvent.ClientTickEvent event ) {
 		
-		MumbleLinking.updateData();
+		try {
+			MumbleLinking.updateData();
+		} catch( @SuppressWarnings( "ProhibitedExceptionCaught" ) NullPointerException exception ) {
+			LOGGER.error( "Error during mumble update", exception );
+		}
 	}
 }
