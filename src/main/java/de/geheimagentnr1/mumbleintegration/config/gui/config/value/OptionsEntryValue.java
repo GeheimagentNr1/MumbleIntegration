@@ -30,7 +30,10 @@ public abstract class OptionsEntryValue<T> extends OptionsListWidgetEntry {
 	private int y;
 	
 	//package-private
-	OptionsEntryValue( @Nonnull String optionName, @Nonnull String _description, @Nonnull T _value,
+	OptionsEntryValue(
+		@Nonnull String optionName,
+		@Nonnull String _description,
+		@Nonnull T _value,
 		@Nonnull Consumer<T> _save ) {
 		
 		title = new StringTextComponent( optionName );
@@ -40,11 +43,22 @@ public abstract class OptionsEntryValue<T> extends OptionsListWidgetEntry {
 	}
 	
 	@Override
-	public void render( int index, int rowTop, int rowLeft, int width, int height, int mouseX, int mouseY,
-		boolean hovered, float deltaTime ) {
+	public void render(
+		int index,
+		int rowTop,
+		int rowLeft,
+		int width,
+		int height,
+		int mouseX,
+		int mouseY,
+		boolean hovered,
+		float deltaTime ) {
 		
-		client.fontRenderer.drawStringWithShadow( title.getFormattedText(), rowLeft + 10,
-			rowTop + (float)( height / 4 + client.fontRenderer.FONT_HEIGHT / 2 ), 16777215 );
+		client.fontRenderer.drawStringWithShadow( title.getFormattedText(),
+		                                          rowLeft + 10,
+		                                          rowTop + (float)( height / 4 + client.fontRenderer.FONT_HEIGHT / 2 ),
+		                                          16777215
+		);
 		drawValue( height, rowLeft, rowTop, mouseX, mouseY, deltaTime );
 		x = rowLeft;
 		y = rowTop;
