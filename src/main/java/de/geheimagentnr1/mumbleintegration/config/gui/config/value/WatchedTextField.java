@@ -18,7 +18,8 @@ class WatchedTextField extends TextFieldWidget {
 	WatchedTextField(
 		@Nonnull FontRenderer fontIn,
 		int xIn,
-		int yIn, int widthIn,
+		int yIn,
+		int widthIn,
 		int heightIn,
 		@Nonnull OptionsEntryValueInput<?> _watcher ) {
 		
