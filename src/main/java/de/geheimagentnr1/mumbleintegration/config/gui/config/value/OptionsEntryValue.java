@@ -54,10 +54,11 @@ public abstract class OptionsEntryValue<T> extends OptionsListWidgetEntry {
 		boolean hovered,
 		float deltaTime ) {
 		
-		client.fontRenderer.drawStringWithShadow( title.getFormattedText(),
-		                                          rowLeft + 10,
-		                                          rowTop + (float)( height / 4 + client.fontRenderer.FONT_HEIGHT / 2 ),
-		                                          16777215
+		client.fontRenderer.drawStringWithShadow(
+			title.getFormattedText(),
+			rowLeft + 10,
+			rowTop + (float)( height / 4 + client.fontRenderer.FONT_HEIGHT / 2 ),
+			16777215
 		);
 		drawValue( height, rowLeft, rowTop, mouseX, mouseY, deltaTime );
 		x = rowLeft;

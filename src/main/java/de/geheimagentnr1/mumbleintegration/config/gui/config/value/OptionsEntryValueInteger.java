@@ -11,7 +11,10 @@ public class OptionsEntryValueInteger extends OptionsEntryValueInput<Integer> {
 	@Nonnull
 	private static final Pattern INT_PATTERN = Pattern.compile( "[0-9]*" );
 	
-	public OptionsEntryValueInteger( @Nonnull String optionName, @Nonnull String _description, int _value,
+	public OptionsEntryValueInteger(
+		@Nonnull String optionName,
+		@Nonnull String _description,
+		int _value,
 		@Nonnull Consumer<Integer> _save ) {
 		
 		super( optionName, _description, _value, text -> INT_PATTERN.matcher( text ).matches(), _save );

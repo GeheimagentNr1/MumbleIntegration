@@ -45,7 +45,13 @@ public abstract class GuiOptions extends Screen {
 			options.save();
 			onClose();
 		} ) );
-		addButton( new Button( _width / 2 + 5, _height - 25, 100, 20, I18n.format( "gui.cancel" ), w -> onClose() ) );
+		addButton( new Button(
+			_width / 2 + 5,
+			_height - 25,
+			100,
+			20,
+			I18n.format( "gui.cancel" ), w -> onClose()
+		) );
 	}
 	
 	@Override

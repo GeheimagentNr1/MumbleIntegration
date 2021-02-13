@@ -7,7 +7,10 @@ import java.util.function.Consumer;
 public class OptionsEntryValueString extends OptionsEntryValueInput<String> {
 	
 	
-	public OptionsEntryValueString( @Nonnull String optionName, @Nonnull String _description, @Nonnull String _value,
+	public OptionsEntryValueString(
+		@Nonnull String optionName,
+		@Nonnull String _description,
+		@Nonnull String _value,
 		@Nonnull Consumer<String> _save ) {
 		
 		super( optionName, _description, _value, text -> true, _save );
