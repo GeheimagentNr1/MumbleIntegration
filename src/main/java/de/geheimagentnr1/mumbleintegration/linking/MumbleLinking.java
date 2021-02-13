@@ -92,8 +92,9 @@ public class MumbleLinking {
 		if( !MainConfig.isMumbleActive() ) {
 			return;
 		}
-		ClientWorld world = Minecraft.getInstance().world;
-		ClientPlayerEntity player = Minecraft.getInstance().player;
+		Minecraft minecraft = Minecraft.getInstance();
+		ClientWorld world = minecraft.world;
+		ClientPlayerEntity player = minecraft.player;
 		
 		if( world != null && player != null ) {
 			synchronized( UNDERSCORE_PATTERN ) {
@@ -101,7 +102,7 @@ public class MumbleLinking {
 				Objects.requireNonNull( mumble );
 				DimensionType worldDimension = world.getDimension().getType();
 				autoConnect( worldDimension );
-				ActiveRenderInfo activeRenderInfo = Minecraft.getInstance().gameRenderer.getActiveRenderInfo();
+				ActiveRenderInfo activeRenderInfo = minecraft.gameRenderer.getActiveRenderInfo();
 				float[] camPos = vec3dToArray( activeRenderInfo.getProjectedView() );
 				float[] camDir = vec3dToArray( activeRenderInfo.getLookDirection() );
 				float[] camTop = new float[] { 0.0F, 1.0F, 0.0F };
@@ -140,9 +141,14 @@ public class MumbleLinking {
 	private static void connectToMumble( @Nonnull DimensionType dimensionType ) {
 		
 		try {
-			Desktop.getDesktop().browse( new URI( "mumble", null, MainConfig.getAddress(), MainConfig.getPort(),
-				buildMumblePath( dimensionType ), null, null ) );
-		} catch( IOException | URISyntaxException exception ) {
+			if( Desktop.isDesktopSupported() ) {
+				Desktop desktop = Desktop.getDesktop();
+				if( desktop.isSupported( Desktop.Action.BROWSE ) ) {
+					desktop.browse( new URI( "mumble", null, MainConfig.getAddress(), MainConfig.getPort(),
+						buildMumblePath( dimensionType ), null, null ) );
+				}
+			}
+		} catch( IOException | URISyntaxException | HeadlessException exception ) {
 			LOGGER.error( "Connection To Mumble Failed", exception );
 		}
 	}
@@ -166,7 +172,7 @@ public class MumbleLinking {
 				.replaceAll( " " ) );
 	}
 	
-	private static float[] vec3dToArray( @Nonnull Vec3d vec3d ) {
+	private static float[] vec3dToArray( Vec3d vec3d ) {
 		
 		return new float[] { (float)vec3d.x, (float)vec3d.y, -(float)vec3d.z };
 	}
