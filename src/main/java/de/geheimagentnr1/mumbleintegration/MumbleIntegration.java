@@ -23,10 +23,12 @@ public class MumbleIntegration {
 	public MumbleIntegration() {
 		
 		ModLoadingContext.get().registerConfig( ModConfig.Type.CLIENT, MainConfig.CONFIG, MODID + ".toml" );
-		ModLoadingContext.get().registerExtensionPoint( ExtensionPoint.DISPLAYTEST,
-		                                                () -> Pair.of( () -> FMLNetworkConstants.IGNORESERVERONLY,
-		                                                               ( remote, isServer ) -> true
-		                                                )
+		ModLoadingContext.get().registerExtensionPoint(
+			ExtensionPoint.DISPLAYTEST,
+			() -> Pair.of(
+				() -> FMLNetworkConstants.IGNORESERVERONLY,
+				( remote, isServer ) -> true
+			)
 		);
 	}
 }

@@ -31,7 +31,10 @@ public abstract class OptionsEntryValue<T> extends OptionsListWidgetEntry {
 	
 	//package-private
 	OptionsEntryValue(
-		@Nonnull String optionName, @Nonnull String _description, @Nonnull T _value, @Nonnull Consumer<T> _save ) {
+		@Nonnull String optionName,
+		@Nonnull String _description,
+		@Nonnull T _value,
+		@Nonnull Consumer<T> _save ) {
 		
 		title = new StringTextComponent( optionName );
 		description = _description;
