@@ -33,7 +33,12 @@ public abstract class OptionsEntryValueInput<T> extends OptionsEntryValue<T> {
 	}
 	
 	@Override
-	protected void drawValue( @Nonnull MatrixStack matrixStack, int entryHeight, int _x, int _y, int mouseX,
+	protected void drawValue(
+		@Nonnull MatrixStack matrixStack,
+		int entryHeight,
+		int _x,
+		int _y,
+		int mouseX,
 		int mouseY,
 		float partialTicks ) {
 		

@@ -44,13 +44,24 @@ public abstract class OptionsEntryValue<T> extends OptionsListWidgetEntry {
 	}
 	
 	@Override
-	public void func_230432_a_( @Nonnull MatrixStack matrixStack, int index, int rowTop, int rowLeft, int width,
-		int height, int mouseX, int mouseY, boolean hovered, float deltaTime ) {
+	public void func_230432_a_(
+		@Nonnull MatrixStack matrixStack,
+		int index,
+		int rowTop,
+		int rowLeft,
+		int width,
+		int height,
+		int mouseX,
+		int mouseY,
+		boolean hovered,
+		float deltaTime ) {
 		
-		client.fontRenderer.func_238405_a_( matrixStack, title.getString(),
-		                                          rowLeft + 10,
-		                                          rowTop + (float)( height / 4 + client.fontRenderer.FONT_HEIGHT / 2 ),
-		                                          16777215
+		client.fontRenderer.func_238405_a_(
+			matrixStack,
+			title.getString(),
+			rowLeft + 10,
+			rowTop + (float)( height / 4 + client.fontRenderer.FONT_HEIGHT / 2 ),
+			16777215
 		);
 		drawValue( matrixStack, height, rowLeft, rowTop, mouseX, mouseY, deltaTime );
 		x = rowLeft;
@@ -87,6 +98,7 @@ public abstract class OptionsEntryValue<T> extends OptionsListWidgetEntry {
 		return y;
 	}
 	
-	protected abstract void drawValue( @Nonnull MatrixStack matrixStack, int entryHeight, int _x, int _y, int mouseX,
-		int mouseY, float partialTicks );
+	protected abstract void drawValue(
+		@Nonnull MatrixStack matrixStack, int entryHeight, int _x, int _y, int mouseX, int mouseY,
+		float partialTicks );
 }
