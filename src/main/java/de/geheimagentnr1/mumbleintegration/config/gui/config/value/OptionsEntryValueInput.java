@@ -19,8 +19,12 @@ public abstract class OptionsEntryValueInput<T> extends OptionsEntryValue<T> {
 	
 	//package-private
 	@SuppressWarnings( "ThisEscapedInObjectConstruction" )
-	OptionsEntryValueInput( @Nonnull String optionName, @Nonnull String _description, @Nonnull T _value,
-		@Nonnull Predicate<String> validator, @Nonnull Consumer<T> _save ) {
+	OptionsEntryValueInput(
+		@Nonnull String optionName,
+		@Nonnull String _description,
+		@Nonnull T _value,
+		@Nonnull Predicate<String> validator,
+		@Nonnull Consumer<T> _save ) {
 		
 		super( optionName, _description, _value, _save );
 		textField = new WatchedTextField( client.fontRenderer, 0, 0, 98, 18, this );
