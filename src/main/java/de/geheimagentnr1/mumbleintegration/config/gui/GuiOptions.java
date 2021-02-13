@@ -44,13 +44,19 @@ public abstract class GuiOptions extends Screen {
 		children.add( options );
 		setListener( options );
 		
-		addButton( new Button( width / 2 - 100, height - 25, 100, 20, new TranslationTextComponent( "gui.done" ),
+		addButton( new Button(
+			width / 2 - 100,
+			height - 25, 100, 20, new TranslationTextComponent( "gui.done" ),
 			w -> {
 				options.save();
 				closeScreen();
-			} ) );
-		addButton( new Button( width / 2 + 5, height - 25, 100, 20, new TranslationTextComponent( "gui.cancel" ),
-			w -> closeScreen() ) );
+			}
+			) );
+		addButton( new Button(
+			width / 2 + 5,
+			height - 25, 100, 20, new TranslationTextComponent( "gui.cancel" ),
+			w -> closeScreen()
+		) );
 	}
 	
 	@Override
@@ -76,7 +82,9 @@ public abstract class GuiOptions extends Screen {
 					return;
 				}
 				List<IReorderingProcessor> tooltip = Lists.newArrayList();
-				tooltip.addAll( font.trimStringToWidth( new StringTextComponent( value.getDescription() ), 200 ) );
+				tooltip.addAll( font.trimStringToWidth(
+					new StringTextComponent( value.getDescription() ), 200
+				) );
 				renderTooltip( matrixStack, tooltip, mouseX, mouseY );
 			}
 		} );

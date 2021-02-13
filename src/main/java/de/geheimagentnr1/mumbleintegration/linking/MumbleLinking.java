@@ -157,8 +157,15 @@ public class MumbleLinking {
 			if( Desktop.isDesktopSupported() ) {
 				Desktop desktop = Desktop.getDesktop();
 				if( desktop.isSupported( Desktop.Action.BROWSE ) ) {
-					desktop.browse( new URI( "mumble", null, MainConfig.getAddress(), MainConfig.getPort(),
-						buildMumblePath( dimensionKey ), null, null ) );
+					desktop.browse( new URI(
+						"mumble",
+						null,
+						MainConfig.getAddress(),
+						MainConfig.getPort(),
+						buildMumblePath( dimensionKey ),
+						null,
+						null
+					) );
 				}
 			}
 		} catch( IOException | URISyntaxException | HeadlessException exception ) {

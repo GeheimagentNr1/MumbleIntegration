@@ -48,8 +48,10 @@ public class MainConfig {
 		ADDRESS = BUILDER.comment( "Address of the mumble server." ).define( "address", "" );
 		PORT = BUILDER.comment( "Port of the mumble server." ).defineInRange( "port", 64738, 0, 65535 );
 		PATH = BUILDER.comment( "Path of the mumble channel." ).define( "path", "" );
-		USE_DIMENSION_CHANNELS = BUILDER.comment( "Use subchannels for each dimension?" )
-			.define( "use_dimension_channels", false );
+		USE_DIMENSION_CHANNELS = BUILDER.comment( "Use subchannels for each dimension?" ).define(
+			"use_dimension_channels",
+			false
+		);
 		
 		CONFIG = BUILDER.build();
 	}
