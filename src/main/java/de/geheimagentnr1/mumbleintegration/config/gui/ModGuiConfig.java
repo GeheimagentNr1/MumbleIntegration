@@ -26,7 +26,8 @@ public class ModGuiConfig extends GuiOptions {
 		
 		OptionsListWidget options = new OptionsListWidget(
 			this,
-			Objects.requireNonNull( minecraft ), width + 45,
+			Objects.requireNonNull( minecraft ),
+			width + 45,
 			height,
 			32,
 			height - 32,
