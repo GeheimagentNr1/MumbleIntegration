@@ -22,7 +22,7 @@ public class MumbleIntegration {
 	
 	public MumbleIntegration() {
 		
-		ModLoadingContext.get().registerConfig( ModConfig.Type.CLIENT, MainConfig.CONFIG, MODID + ".toml" );
+		ModLoadingContext.get().registerConfig( ModConfig.Type.CLIENT, MainConfig.CONFIG );
 		ModLoadingContext.get().registerExtensionPoint(
 			ExtensionPoint.DISPLAYTEST,
 			() -> Pair.of(
