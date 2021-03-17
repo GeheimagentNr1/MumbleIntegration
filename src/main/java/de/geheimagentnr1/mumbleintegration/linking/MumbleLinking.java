@@ -160,6 +160,7 @@ public class MumbleLinking {
 			if( Desktop.isDesktopSupported() ) {
 				Desktop desktop = Desktop.getDesktop();
 				if( desktop.isSupported( Desktop.Action.BROWSE ) ) {
+					LOGGER.info( "Auto Connecting to mumble" );
 					desktop.browse( new URI(
 						"mumble",
 						null,
@@ -169,7 +170,11 @@ public class MumbleLinking {
 						null,
 						null
 					) );
+				} else {
+					LOGGER.warn( "Auto Connect failed: Desktop Api browse action not supported" );
 				}
+			} else {
+				LOGGER.warn( "Auto Connect failed: Desktop Api not supported" );
 			}
 		} catch( IOException | URISyntaxException | HeadlessException exception ) {
 			LOGGER.error( "Connection To Mumble Failed", exception );
