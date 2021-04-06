@@ -21,9 +21,8 @@ public abstract class OptionsEntryValue<T> extends OptionsListWidgetEntry {
 	@Nonnull
 	private final Consumer<T> save;
 	
-	//package-private
 	@Nonnull
-	T value;
+	private T value;
 	
 	private int x;
 	
@@ -54,24 +53,16 @@ public abstract class OptionsEntryValue<T> extends OptionsListWidgetEntry {
 		boolean hovered,
 		float deltaTime ) {
 		
-		client.fontRenderer.drawStringWithShadow(
+		minecraft.fontRenderer.drawStringWithShadow(
 			title.getFormattedText(),
 			rowLeft + 10,
-			rowTop + (float)( height / 4 + client.fontRenderer.FONT_HEIGHT / 2 ),
+			rowTop + (float)( height / 4 + minecraft.fontRenderer.FONT_HEIGHT / 2 ),
 			16777215
 		);
 		drawValue( height, rowLeft, rowTop, mouseX, mouseY, deltaTime );
 		x = rowLeft;
 		y = rowTop;
 	}
-	
-	public void save() {
-		
-		save.accept( value );
-	}
-	
-	@Nonnull
-	public abstract IGuiEventListener getListener();
 	
 	@Nonnull
 	public TextComponent getTitle() {
@@ -85,6 +76,27 @@ public abstract class OptionsEntryValue<T> extends OptionsListWidgetEntry {
 		return description;
 	}
 	
+	protected abstract void drawValue( int _height, int _x, int _y, int mouseX, int mouseY, float partialTicks );
+	
+	@Nonnull
+	public abstract IGuiEventListener getListener();
+	
+	public void save() {
+		
+		save.accept( value );
+	}
+	
+	@Nonnull
+	public final T getValue() {
+		
+		return value;
+	}
+	
+	public void setValue( @Nonnull T _value ) {
+		
+		value = _value;
+	}
+	
 	public int getX() {
 		
 		return x;
@@ -94,6 +106,4 @@ public abstract class OptionsEntryValue<T> extends OptionsListWidgetEntry {
 		
 		return y;
 	}
-	
-	protected abstract void drawValue( int entryHeight, int _x, int _y, int mouseX, int mouseY, float partialTicks );
 }

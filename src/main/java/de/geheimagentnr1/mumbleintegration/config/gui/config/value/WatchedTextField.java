@@ -14,7 +14,6 @@ class WatchedTextField extends TextFieldWidget {
 	private final OptionsEntryValueInput<?> watcher;
 	
 	//package-private
-	@SuppressWarnings( "SameParameterValue" )
 	WatchedTextField(
 		@Nonnull OptionsEntryValueInput<?> _watcher,
 		@Nonnull FontRenderer fontRenderer,
@@ -31,20 +30,20 @@ class WatchedTextField extends TextFieldWidget {
 	public void writeText( @Nonnull String textToWrite ) {
 		
 		super.writeText( textToWrite );
-		watcher.setValue( getText() );
+		watcher.setInputValue( getText() );
 	}
 	
 	@Override
 	public void setText( @Nonnull String textIn ) {
 		
 		super.setText( textIn );
-		watcher.setValue( getText() );
+		watcher.setInputValue( getText() );
 	}
 	
 	@Override
 	public void deleteWords( int num ) {
 		
 		super.deleteWords( num );
-		watcher.setValue( getText() );
+		watcher.setInputValue( getText() );
 	}
 }

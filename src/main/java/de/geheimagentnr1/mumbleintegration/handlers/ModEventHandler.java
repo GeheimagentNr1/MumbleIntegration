@@ -1,9 +1,9 @@
 package de.geheimagentnr1.mumbleintegration.handlers;
 
-import de.geheimagentnr1.mumbleintegration.config.MainConfig;
+import de.geheimagentnr1.mumbleintegration.MumbleIntegration;
+import de.geheimagentnr1.mumbleintegration.config.ClientConfig;
 import de.geheimagentnr1.mumbleintegration.config.gui.ModGuiConfig;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ExtensionPoint;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -14,24 +14,22 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import javax.annotation.Nonnull;
 
 
-@SuppressWarnings( "unused" )
-@Mod.EventBusSubscriber( bus = Mod.EventBusSubscriber.Bus.MOD )
+@Mod.EventBusSubscriber( modid = MumbleIntegration.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT )
 public class ModEventHandler {
 	
 	
 	@SubscribeEvent
 	public static void handleModConfigLoadingEvent( @Nonnull ModConfig.Loading event ) {
 		
-		MainConfig.handleConfigChange();
+		ClientConfig.handleConfigChange();
 	}
 	
 	@SubscribeEvent
 	public static void handleModConfigReloadingEvent( @Nonnull ModConfig.ConfigReloading event ) {
 		
-		MainConfig.handleConfigChange();
+		ClientConfig.handleConfigChange();
 	}
 	
-	@OnlyIn( Dist.CLIENT )
 	@SubscribeEvent
 	public static void handleClientSetupEvent( @Nonnull FMLClientSetupEvent event ) {
 		
