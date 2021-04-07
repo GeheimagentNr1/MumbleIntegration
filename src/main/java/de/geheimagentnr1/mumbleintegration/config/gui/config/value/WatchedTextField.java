@@ -14,6 +14,7 @@ class WatchedTextField extends TextFieldWidget {
 	private final OptionsEntryValueInput<?> watcher;
 	
 	//package-private
+	@SuppressWarnings( "SameParameterValue" )
 	WatchedTextField(
 		@Nonnull OptionsEntryValueInput<?> _watcher,
 		@Nonnull FontRenderer fontRenderer,
