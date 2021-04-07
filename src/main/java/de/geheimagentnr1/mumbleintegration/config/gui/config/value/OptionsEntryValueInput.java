@@ -27,15 +27,15 @@ public abstract class OptionsEntryValueInput<T> extends OptionsEntryValue<T> {
 		@Nonnull Consumer<T> _save ) {
 		
 		super( optionName, _description, _value, _save );
-		textField = new WatchedTextField( client.fontRenderer, 0, 0, 98, 18, this );
-		textField.setText( String.valueOf( value ) );
+		textField = new WatchedTextField( minecraft.fontRenderer, 0, 0, 98, 18, this );
+		textField.setText( String.valueOf( getValue() ) );
 		textField.setValidator( validator );
 	}
 	
 	@Override
 	protected void drawValue(
 		@Nonnull MatrixStack matrixStack,
-		int entryHeight,
+		int _height,
 		int _x,
 		int _y,
 		int mouseX,
@@ -43,7 +43,7 @@ public abstract class OptionsEntryValueInput<T> extends OptionsEntryValue<T> {
 		float partialTicks ) {
 		
 		textField.field_230690_l_ = _x + 135;
-		textField.field_230691_m_ = _y + entryHeight / 6;
+		textField.field_230691_m_ = _y + _height / 6;
 		textField.func_230430_a_( matrixStack, mouseX, mouseY, partialTicks );
 	}
 	
@@ -55,7 +55,7 @@ public abstract class OptionsEntryValueInput<T> extends OptionsEntryValue<T> {
 	}
 	
 	//package-private
-	abstract void setValue( @Nonnull String text );
+	abstract void setInputValue( @Nonnull String text );
 	
 	@Nonnull
 	@Override

@@ -36,9 +36,9 @@ public abstract class GuiOptions extends Screen {
 	}
 	
 	@Override
-	public void func_231158_b_( @Nonnull Minecraft client, int _width, int _height ) {
+	public void func_231158_b_( @Nonnull Minecraft _minecraft, int _width, int _height ) {
 		
-		super.func_231158_b_( client, _width, _height );
+		super.func_231158_b_( _minecraft, _width, _height );
 		
 		options = getOptions();
 		field_230705_e_.add( options );
@@ -68,8 +68,8 @@ public abstract class GuiOptions extends Screen {
 	@Override
 	public void func_230430_a_( @Nonnull MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks ) {
 		
-		Objects.requireNonNull( options );
 		func_230446_a_( matrixStack );
+		Objects.requireNonNull( options );
 		options.func_230430_a_( matrixStack, mouseX, mouseY, partialTicks );
 		func_238471_a_( matrixStack, field_230712_o_, field_230704_d_.getString(), field_230708_k_ / 2, 12, 16777215 );
 		super.func_230430_a_( matrixStack, mouseX, mouseY, partialTicks );
@@ -79,10 +79,10 @@ public abstract class GuiOptions extends Screen {
 		options.forEach( entry -> {
 			if( entry instanceof OptionsEntryValue ) {
 				OptionsEntryValue<?> value = (OptionsEntryValue<?>)entry;
-				
 				int valueX = value.getX() + 10;
 				int valueY = value.getY() + 10;
 				String formatted_title = value.getTitle().getString();
+				
 				if( mouseX < valueX || mouseX > valueX + field_230712_o_.getStringWidth( formatted_title ) ||
 					mouseY < valueY || mouseY > valueY + 9 ) {
 					return;
@@ -100,7 +100,8 @@ public abstract class GuiOptions extends Screen {
 	@Override
 	public void func_231175_as__() {
 		
-		Objects.requireNonNull( field_230706_i_ ).displayGuiScreen( parent );
+		Objects.requireNonNull( field_230706_i_ );
+		field_230706_i_.displayGuiScreen( parent );
 	}
 	
 	public void addListener( @Nonnull IGuiEventListener listener ) {

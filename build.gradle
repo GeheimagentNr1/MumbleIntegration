@@ -146,8 +146,8 @@ shadowJar {
     classifier ""
     configurations = [project.configurations.shadow]
 
-    relocate 'com.skaggsm.jmumblelink', 'libs.com.skaggsm.jmumblelink'
-    relocate 'com.skaggsm.sharedmemory', 'libs.com.skaggsm.sharedmemory'
+    relocate 'com.skaggsm.jmumblelink', 'lib.com.skaggsm.jmumblelink'
+    relocate 'com.skaggsm.sharedmemory', 'lib.com.skaggsm.sharedmemory'
 }
 
 reobf {

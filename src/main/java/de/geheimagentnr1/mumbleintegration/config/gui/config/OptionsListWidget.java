@@ -24,14 +24,14 @@ public class OptionsListWidget extends AbstractOptionList<OptionsListWidgetEntry
 	
 	public OptionsListWidget(
 		@Nonnull GuiOptions _owner,
-		@Nonnull Minecraft client,
+		@Nonnull Minecraft _minecraft,
 		int x,
 		int _height,
 		int _top,
 		int y,
 		int entryHeight ) {
 		
-		super( client, x, _height, _top, y, entryHeight );
+		super( _minecraft, x, _height, _top, y, entryHeight );
 		
 		owner = _owner;
 	}
@@ -46,8 +46,6 @@ public class OptionsListWidget extends AbstractOptionList<OptionsListWidgetEntry
 	public void func_230430_a_( @Nonnull MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks ) {
 		
 		func_230433_a_( matrixStack );
-		int sp = func_230952_d_();
-		int spss = sp + 6;
 		RenderSystem.disableLighting();
 		RenderSystem.disableFog();
 		Tessellator tessellator = Tessellator.getInstance();
@@ -70,43 +68,101 @@ public class OptionsListWidget extends AbstractOptionList<OptionsListWidgetEntry
 		RenderSystem.shadeModel( 7425 );
 		RenderSystem.disableTexture();
 		bufferBuilder.begin( 7, DefaultVertexFormats.POSITION_COLOR_TEX );
-		bufferBuilder.pos( field_230675_l_, field_230672_i_ + 4, 0.0D ).color( 0, 0, 0, 0 ).tex( 0.0F, 1.0F )
+		bufferBuilder.pos( field_230675_l_, field_230672_i_ + 4, 0.0D )
+			.color( 0, 0, 0, 0 )
+			.tex( 0.0F, 1.0F )
 			.endVertex();
-		bufferBuilder.pos( field_230674_k_, field_230672_i_ + 4, 0.0D ).color( 0, 0, 0, 0 ).tex( 1.0F, 1.0F )
+		bufferBuilder.pos( field_230674_k_, field_230672_i_ + 4, 0.0D )
+			.color( 0, 0, 0, 0 )
+			.tex( 1.0F, 1.0F )
 			.endVertex();
-		bufferBuilder.pos( field_230674_k_, field_230672_i_, 0.0D ).color( 0, 0, 0, 255 ).tex( 1.0F, 0.0F ).endVertex();
-		bufferBuilder.pos( field_230675_l_, field_230672_i_, 0.0D ).color( 0, 0, 0, 255 ).tex( 0.0F, 0.0F ).endVertex();
-		bufferBuilder.pos( field_230675_l_, field_230673_j_, 0.0D ).color( 0, 0, 0, 255 ).tex( 0.0F, 1.0F ).endVertex();
-		bufferBuilder.pos( field_230674_k_, field_230673_j_, 0.0D ).color( 0, 0, 0, 255 ).tex( 1.0F, 1.0F ).endVertex();
-		bufferBuilder.pos( field_230674_k_, field_230673_j_ - 4, 0.0D ).color( 0, 0, 0, 0 ).tex( 1.0F, 0.0F )
+		bufferBuilder.pos( field_230674_k_, field_230672_i_, 0.0D )
+			.color( 0, 0, 0, 255 )
+			.tex( 1.0F, 0.0F )
 			.endVertex();
-		bufferBuilder.pos( field_230675_l_, field_230673_j_ - 4, 0.0D ).color( 0, 0, 0, 0 ).tex( 0.0F, 0.0F )
+		bufferBuilder.pos( field_230675_l_, field_230672_i_, 0.0D )
+			.color( 0, 0, 0, 255 )
+			.tex( 0.0F, 0.0F )
+			.endVertex();
+		bufferBuilder.pos( field_230675_l_, field_230673_j_, 0.0D )
+			.color( 0, 0, 0, 255 )
+			.tex( 0.0F, 1.0F )
+			.endVertex();
+		bufferBuilder.pos( field_230674_k_, field_230673_j_, 0.0D )
+			.color( 0, 0, 0, 255 )
+			.tex( 1.0F, 1.0F )
+			.endVertex();
+		bufferBuilder.pos( field_230674_k_, field_230673_j_ - 4, 0.0D )
+			.color( 0, 0, 0, 0 )
+			.tex( 1.0F, 0.0F )
+			.endVertex();
+		bufferBuilder.pos( field_230675_l_, field_230673_j_ - 4, 0.0D )
+			.color( 0, 0, 0, 0 )
+			.tex( 0.0F, 0.0F )
 			.endVertex();
 		tessellator.draw();
-		int mpy = Math.max( 0, func_230945_b_() - ( field_230673_j_ - field_230672_i_ - 4 ) );
-		if( mpy > 0 ) {
-			int yp = (int)( (float)( ( field_230673_j_ - field_230672_i_ ) * ( field_230673_j_ - field_230672_i_ ) ) /
-				func_230945_b_() );
-			yp = MathHelper.clamp( yp, 32, field_230673_j_ - field_230672_i_ - 8 );
-			int ye =
-				(int)func_230966_l_() * ( field_230673_j_ - field_230672_i_ - yp ) / mpy + field_230672_i_;
-			if( ye < field_230672_i_ ) {
-				ye = field_230672_i_;
-			}
+		int maxPosition = Math.max( 0, func_230945_b_() - ( field_230673_j_ - field_230672_i_ - 4 ) );
+		if( maxPosition > 0 ) {
+			int yCurrentPos = MathHelper.clamp(
+				( field_230673_j_ - field_230672_i_ ) * ( field_230673_j_ - field_230672_i_ ) / func_230945_b_(),
+				32,
+				field_230673_j_ - field_230672_i_ - 8
+			);
+			int yEndPos = Math.max(
+				(int)func_230966_l_() * ( field_230673_j_ - field_230672_i_ - yCurrentPos ) / maxPosition +
+					field_230672_i_,
+				field_230672_i_
+			);
 			
 			bufferBuilder.begin( 7, DefaultVertexFormats.POSITION_COLOR_TEX );
-			bufferBuilder.pos( sp, field_230673_j_, 0.0D ).color( 0, 0, 0, 255 ).tex( 0.0F, 1.0F ).endVertex();
-			bufferBuilder.pos( spss, field_230673_j_, 0.0D ).color( 0, 0, 0, 255 ).tex( 1.0F, 1.0F ).endVertex();
-			bufferBuilder.pos( spss, field_230672_i_, 0.0D ).color( 0, 0, 0, 255 ).tex( 1.0F, 0.0F ).endVertex();
-			bufferBuilder.pos( sp, field_230672_i_, 0.0D ).color( 0, 0, 0, 255 ).tex( 0.0F, 0.0F ).endVertex();
-			bufferBuilder.pos( sp, ye + yp, 0.0D ).color( 128, 128, 128, 255 ).tex( 0.0F, 1.0F ).endVertex();
-			bufferBuilder.pos( spss, ye + yp, 0.0D ).color( 128, 128, 128, 255 ).tex( 1.0F, 1.0F ).endVertex();
-			bufferBuilder.pos( spss, ye, 0.0D ).color( 128, 128, 128, 255 ).tex( 1.0F, 0.0F ).endVertex();
-			bufferBuilder.pos( sp, ye, 0.0D ).color( 128, 128, 128, 255 ).tex( 0.0F, 0.0F ).endVertex();
-			bufferBuilder.pos( sp, ye + yp - 1, 0.0D ).color( 192, 192, 192, 255 ).tex( 0.0F, 1.0F ).endVertex();
-			bufferBuilder.pos( spss - 1, ye + yp - 1, 0.0D ).color( 192, 192, 192, 255 ).tex( 1.0F, 1.0F ).endVertex();
-			bufferBuilder.pos( spss - 1, ye, 0.0D ).color( 192, 192, 192, 255 ).tex( 1.0F, 0.0F ).endVertex();
-			bufferBuilder.pos( sp, ye, 0.0D ).color( 192, 192, 192, 255 ).tex( 0.0F, 0.0F ).endVertex();
+			bufferBuilder.pos( func_230952_d_(), field_230673_j_, 0.0D )
+				.color( 0, 0, 0, 255 )
+				.tex( 0.0F, 1.0F )
+				.endVertex();
+			bufferBuilder.pos( func_230952_d_() + 6, field_230673_j_, 0.0D )
+				.color( 0, 0, 0, 255 )
+				.tex( 1.0F, 1.0F )
+				.endVertex();
+			bufferBuilder.pos( func_230952_d_() + 6, field_230672_i_, 0.0D )
+				.color( 0, 0, 0, 255 )
+				.tex( 1.0F, 0.0F )
+				.endVertex();
+			bufferBuilder.pos( func_230952_d_(), field_230672_i_, 0.0D )
+				.color( 0, 0, 0, 255 )
+				.tex( 0.0F, 0.0F )
+				.endVertex();
+			bufferBuilder.pos( func_230952_d_(), yEndPos + yCurrentPos, 0.0D )
+				.color( 128, 128, 128, 255 )
+				.tex( 0.0F, 1.0F )
+				.endVertex();
+			bufferBuilder.pos( func_230952_d_() + 6, yEndPos + yCurrentPos, 0.0D )
+				.color( 128, 128, 128, 255 )
+				.tex( 1.0F, 1.0F )
+				.endVertex();
+			bufferBuilder.pos( func_230952_d_() + 6, yEndPos, 0.0D )
+				.color( 128, 128, 128, 255 )
+				.tex( 1.0F, 0.0F )
+				.endVertex();
+			bufferBuilder.pos( func_230952_d_(), yEndPos, 0.0D )
+				.color( 128, 128, 128, 255 )
+				.tex( 0.0F, 0.0F )
+				.endVertex();
+			bufferBuilder.pos( func_230952_d_(), yEndPos + yCurrentPos - 1, 0.0D )
+				.color( 192, 192, 192, 255 )
+				.tex( 0.0F, 1.0F )
+				.endVertex();
+			bufferBuilder.pos( func_230952_d_() + 5, yEndPos + yCurrentPos - 1, 0.0D )
+				.color( 192, 192, 192, 255 )
+				.tex( 1.0F, 1.0F )
+				.endVertex();
+			bufferBuilder.pos( func_230952_d_() + 5, yEndPos, 0.0D )
+				.color( 192, 192, 192, 255 )
+				.tex( 1.0F, 0.0F )
+				.endVertex();
+			bufferBuilder.pos( func_230952_d_(), yEndPos, 0.0D )
+				.color( 192, 192, 192, 255 )
+				.tex( 0.0F, 0.0F )
+				.endVertex();
 			tessellator.draw();
 		}
 		func_230447_a_( matrixStack, mouseX, mouseY );
@@ -118,8 +174,7 @@ public class OptionsListWidget extends AbstractOptionList<OptionsListWidgetEntry
 	
 	public void save() {
 		
-		func_231039_at__()
-			.stream()
+		func_231039_at__().stream()
 			.filter( entry -> entry instanceof OptionsEntryValue )
 			.map( entry -> (OptionsEntryValue<?>)entry )
 			.forEach( OptionsEntryValue::save );
