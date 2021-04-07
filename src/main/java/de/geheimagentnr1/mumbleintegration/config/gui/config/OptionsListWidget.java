@@ -103,7 +103,7 @@ public class OptionsListWidget extends AbstractOptionList<OptionsListWidgetEntry
 		tessellator.draw();
 		int maxPosition = Math.max( 0, getMaxPosition() - ( y1 - y0 - 4 ) );
 		if( maxPosition > 0 ) {
-			int yCurrentPos = MathHelper.clamp( ( y1 - y0 ) * ( y1 - y0 )  / getMaxPosition() , 32, y1 - y0 - 8 );
+			int yCurrentPos = MathHelper.clamp( ( y1 - y0 ) * ( y1 - y0 ) / getMaxPosition(), 32, y1 - y0 - 8 );
 			int yEndPos = Math.max( getScrollbarPosition() * ( y1 - y0 - yCurrentPos ) / maxPosition + y0, y0 );
 			
 			bufferBuilder.begin( 7, DefaultVertexFormats.POSITION_COLOR_TEX );

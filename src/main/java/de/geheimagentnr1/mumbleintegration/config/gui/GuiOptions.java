@@ -45,7 +45,12 @@ public abstract class GuiOptions extends Screen {
 		children.add( options );
 		setListener( options );
 		
-		addButton( new Button( _width / 2 - 100, _height - 25, 100, 20, new TranslationTextComponent( "gui.done" ),
+		addButton( new Button(
+			_width / 2 - 100,
+			_height - 25,
+			100,
+			20,
+			new TranslationTextComponent( "gui.done" ),
 			w -> {
 				options.save();
 				closeScreen();
