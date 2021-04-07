@@ -1,8 +1,8 @@
 package de.geheimagentnr1.mumbleintegration.handlers;
 
-import de.geheimagentnr1.mumbleintegration.linking.MumbleLinking;
+import de.geheimagentnr1.mumbleintegration.MumbleIntegration;
+import de.geheimagentnr1.mumbleintegration.linking.MumbleLinker;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -13,36 +13,32 @@ import org.apache.logging.log4j.Logger;
 import javax.annotation.Nonnull;
 
 
-@SuppressWarnings( "unused" )
-@Mod.EventBusSubscriber( bus = Mod.EventBusSubscriber.Bus.FORGE )
+@Mod.EventBusSubscriber( modid = MumbleIntegration.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT )
 public class ForgeEventHandler {
 	
 	
 	@Nonnull
-	private static final Logger LOGGER = LogManager.getLogger();
+	private static final Logger LOGGER = LogManager.getLogger( ForgeEventHandler.class );
 	
-	@OnlyIn( Dist.CLIENT )
 	@SubscribeEvent
 	public static void handleLoggedInEvent( @Nonnull ClientPlayerNetworkEvent.LoggedInEvent event ) {
 		
-		MumbleLinking.link();
+		MumbleLinker.link();
 	}
 	
-	@OnlyIn( Dist.CLIENT )
 	@SubscribeEvent
 	public static void handleLoggedOutEvent( @Nonnull ClientPlayerNetworkEvent.LoggedOutEvent event ) {
 		
-		MumbleLinking.unlink();
+		MumbleLinker.unlink();
 	}
 	
-	@OnlyIn( Dist.CLIENT )
 	@SubscribeEvent
 	public static void handleClientTickEvent( @Nonnull TickEvent.ClientTickEvent event ) {
 		
 		try {
-			MumbleLinking.updateData();
+			MumbleLinker.updateData();
 		} catch( @SuppressWarnings( "ProhibitedExceptionCaught" ) NullPointerException exception ) {
-			LOGGER.error( "Error during mumble update", exception );
+			LOGGER.error( "Error during mumble data update", exception );
 		}
 	}
 }

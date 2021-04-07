@@ -18,8 +18,8 @@ public class OptionsEntryValueString extends OptionsEntryValueInput<String> {
 	
 	//package-private
 	@Override
-	void setValue( @Nonnull String text ) {
+	void setInputValue( @Nonnull String text ) {
 		
-		value = text;
+		setValue( text );
 	}
 }

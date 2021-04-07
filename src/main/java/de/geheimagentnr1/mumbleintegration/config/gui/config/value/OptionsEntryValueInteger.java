@@ -22,12 +22,12 @@ public class OptionsEntryValueInteger extends OptionsEntryValueInput<Integer> {
 	
 	//package-private
 	@Override
-	void setValue( @Nonnull String text ) {
+	void setInputValue( @Nonnull String text ) {
 		
 		try {
-			value = Integer.valueOf( text );
+			setValue( Integer.valueOf( text ) );
 		} catch( NumberFormatException ignored ) {
-			value = 0;
+			setValue( 0 );
 		}
 	}
 }

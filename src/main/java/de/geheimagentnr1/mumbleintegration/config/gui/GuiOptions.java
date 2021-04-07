@@ -37,25 +37,31 @@ public abstract class GuiOptions extends Screen {
 	
 	@SuppressWarnings( "ParameterHidesMemberVariable" )
 	@Override
-	public void init( @Nonnull Minecraft minecraft, int width, int height ) {
+	public void init( @Nonnull Minecraft _minecraft, int _width, int _height ) {
 		
-		super.init( minecraft, width, height );
+		super.init( _minecraft, _width, _height );
 		
 		options = getOptions();
 		children.add( options );
 		setListener( options );
 		
 		addButton( new Button(
-			width / 2 - 100,
-			height - 25, 100, 20, new TranslationTextComponent( "gui.done" ),
+			_width / 2 - 100,
+			_height - 25,
+			100,
+			20,
+			new TranslationTextComponent( "gui.done" ),
 			w -> {
 				options.save();
 				closeScreen();
 			}
 		) );
 		addButton( new Button(
-			width / 2 + 5,
-			height - 25, 100, 20, new TranslationTextComponent( "gui.cancel" ),
+			_width / 2 + 5,
+			_height - 25,
+			100,
+			20,
+			new TranslationTextComponent( "gui.cancel" ),
 			w -> closeScreen()
 		) );
 	}
@@ -63,8 +69,8 @@ public abstract class GuiOptions extends Screen {
 	@Override
 	public void render( @Nonnull MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks ) {
 		
-		Objects.requireNonNull( options );
 		renderBackground( matrixStack );
+		Objects.requireNonNull( options );
 		options.render( matrixStack, mouseX, mouseY, partialTicks );
 		drawCenteredString( matrixStack, font, title.getString(), width / 2, 12, 16777215 );
 		super.render( matrixStack, mouseX, mouseY, partialTicks );
@@ -74,10 +80,10 @@ public abstract class GuiOptions extends Screen {
 		options.forEach( entry -> {
 			if( entry instanceof OptionsEntryValue ) {
 				OptionsEntryValue<?> value = (OptionsEntryValue<?>)entry;
-				
 				int valueX = value.getX() + 10;
 				int valueY = value.getY() + 10;
 				String formatted_title = value.getTitle().getString();
+				
 				if( mouseX < valueX || mouseX > valueX + font.getStringWidth( formatted_title ) ||
 					mouseY < valueY || mouseY > valueY + 9 ) {
 					return;
@@ -92,7 +98,8 @@ public abstract class GuiOptions extends Screen {
 	@Override
 	public void closeScreen() {
 		
-		Objects.requireNonNull( minecraft ).displayGuiScreen( parent );
+		Objects.requireNonNull( minecraft );
+		minecraft.displayGuiScreen( parent );
 	}
 	
 	public void addFromOutsideListener( @Nonnull IGuiEventListener listener ) {
