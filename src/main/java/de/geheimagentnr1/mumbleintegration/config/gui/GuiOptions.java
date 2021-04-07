@@ -36,9 +36,9 @@ public abstract class GuiOptions extends Screen {
 	}
 	
 	@Override
-	public void init( @Nonnull Minecraft minecraft, int width, int height ) {
+	public void init( @Nonnull Minecraft _minecraft, int width, int height ) {
 		
-		super.init( minecraft, width, height );
+		super.init( _minecraft, width, height );
 		
 		options = getOptions();
 		children.add( options );
@@ -62,8 +62,8 @@ public abstract class GuiOptions extends Screen {
 	@Override
 	public void render( @Nonnull MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks ) {
 		
-		Objects.requireNonNull( options );
 		renderBackground( matrixStack );
+		Objects.requireNonNull( options );
 		options.render( matrixStack, mouseX, mouseY, partialTicks );
 		drawCenteredString( matrixStack, font, title.getString(), width / 2, 12, 16777215 );
 		super.render( matrixStack, mouseX, mouseY, partialTicks );
@@ -73,10 +73,10 @@ public abstract class GuiOptions extends Screen {
 		options.forEach( entry -> {
 			if( entry instanceof OptionsEntryValue ) {
 				OptionsEntryValue<?> value = (OptionsEntryValue<?>)entry;
-				
 				int valueX = value.getX() + 10;
 				int valueY = value.getY() + 10;
 				String formatted_title = value.getTitle().getString();
+				
 				if( mouseX < valueX || mouseX > valueX + font.getStringWidth( formatted_title ) ||
 					mouseY < valueY || mouseY > valueY + 9 ) {
 					return;
@@ -91,7 +91,8 @@ public abstract class GuiOptions extends Screen {
 	@Override
 	public void closeScreen() {
 		
-		Objects.requireNonNull( minecraft ).displayGuiScreen( parent );
+		Objects.requireNonNull( minecraft );
+		field_230706_i_.displayGuiScreen( parent );
 	}
 	
 	public void addFromOutsideListener( @Nonnull IGuiEventListener listener ) {

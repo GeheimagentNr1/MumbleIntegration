@@ -10,10 +10,10 @@ public abstract class OptionsListWidgetEntry extends AbstractOptionList.Entry<Op
 	
 	
 	@Nonnull
-	protected final Minecraft client;
+	protected final Minecraft minecraft;
 	
 	protected OptionsListWidgetEntry() {
 		
-		client = Minecraft.getInstance();
+		minecraft = Minecraft.getInstance();
 	}
 }
