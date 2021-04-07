@@ -33,18 +33,25 @@ public abstract class GuiOptions extends Screen {
 	}
 	
 	@Override
-	public void init( @Nonnull Minecraft client, int _width, int _height ) {
+	public void init( @Nonnull Minecraft _minecraft, int _width, int _height ) {
 		
-		super.init( client, _width, _height );
+		super.init( _minecraft, _width, _height );
 		
 		options = getOptions();
 		children.add( options );
 		setFocused( options );
 		
-		addButton( new Button( _width / 2 - 100, _height - 25, 100, 20, I18n.format( "gui.done" ), w -> {
-			options.save();
-			onClose();
-		} ) );
+		addButton( new Button(
+			_width / 2 - 100,
+			_height - 25,
+			100,
+			20,
+			I18n.format( "gui.done" ),
+			w -> {
+				options.save();
+				onClose();
+			}
+		) );
 		addButton( new Button(
 			_width / 2 + 5,
 			_height - 25,
@@ -57,8 +64,8 @@ public abstract class GuiOptions extends Screen {
 	@Override
 	public void render( int mouseX, int mouseY, float partialTicks ) {
 		
-		Objects.requireNonNull( options );
 		renderBackground();
+		Objects.requireNonNull( options );
 		options.render( mouseX, mouseY, partialTicks );
 		drawCenteredString( font, title.getFormattedText(), width / 2, 12, 16777215 );
 		super.render( mouseX, mouseY, partialTicks );
@@ -68,10 +75,10 @@ public abstract class GuiOptions extends Screen {
 		options.forEach( entry -> {
 			if( entry instanceof OptionsEntryValue ) {
 				OptionsEntryValue<?> value = (OptionsEntryValue<?>)entry;
-				
 				int valueX = value.getX() + 10;
 				int valueY = value.getY() + 10;
 				String formatted_title = value.getTitle().getFormattedText();
+				
 				if( mouseX < valueX || mouseX > valueX + font.getStringWidth( formatted_title ) ||
 					mouseY < valueY || mouseY > valueY + 9 ) {
 					return;
@@ -86,7 +93,8 @@ public abstract class GuiOptions extends Screen {
 	@Override
 	public void onClose() {
 		
-		Objects.requireNonNull( minecraft ).displayGuiScreen( parent );
+		Objects.requireNonNull( minecraft );
+		minecraft.displayGuiScreen( parent );
 	}
 	
 	public void addListener( @Nonnull IGuiEventListener listener ) {

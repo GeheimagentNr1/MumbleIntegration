@@ -2,7 +2,7 @@ package de.geheimagentnr1.mumbleintegration.linking;
 
 import com.skaggsm.jmumblelink.MumbleLink;
 import com.skaggsm.jmumblelink.MumbleLinkImpl;
-import de.geheimagentnr1.mumbleintegration.config.MainConfig;
+import de.geheimagentnr1.mumbleintegration.config.ClientConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.renderer.ActiveRenderInfo;
@@ -24,12 +24,11 @@ import java.util.Objects;
 import java.util.regex.Pattern;
 
 
-@SuppressWarnings( { "SynchronizationOnStaticField", "NonThreadSafeLazyInitialization" } )
-public class MumbleLinking {
+public class MumbleLinker {
 	
 	
 	@Nonnull
-	private static final Logger LOGGER = LogManager.getLogger();
+	private static final Logger LOGGER = LogManager.getLogger( MumbleLinker.class );
 	
 	@Nonnull
 	private static final Pattern UNDERSCORE_PATTERN = Pattern.compile( "_" );
@@ -48,12 +47,10 @@ public class MumbleLinking {
 	
 	public static void link() {
 		
-		synchronized( UNDERSCORE_PATTERN ) {
-			ensureLinking();
-		}
+		ensureLinking();
 	}
 	
-	private static void ensureLinking() {
+	private static synchronized void ensureLinking() {
 		
 		if( mumble == null ) {
 			LOGGER.info( "Linking to VoIP client..." );
@@ -68,12 +65,10 @@ public class MumbleLinking {
 	
 	public static void unlink() {
 		
-		synchronized( UNDERSCORE_PATTERN ) {
-			ensureUnlinking();
-		}
+		ensureUnlinking();
 	}
 	
-	private static void ensureUnlinking() {
+	private static synchronized void ensureUnlinking() {
 		
 		if( mumble != null ) {
 			LOGGER.info( "Unlinking from VoIP client..." );
@@ -88,9 +83,9 @@ public class MumbleLinking {
 		dimension = null;
 	}
 	
-	public static void updateData() {
+	public static synchronized void updateData() {
 		
-		if( !MainConfig.isMumbleActive() ) {
+		if( !ClientConfig.isMumbleActive() ) {
 			return;
 		}
 		Minecraft minecraft = Minecraft.getInstance();
@@ -98,34 +93,32 @@ public class MumbleLinking {
 		ClientPlayerEntity player = minecraft.player;
 		
 		if( world != null && player != null ) {
-			synchronized( UNDERSCORE_PATTERN ) {
-				ensureLinking();
-				Objects.requireNonNull( mumble );
-				DimensionType worldDimension = world.getDimension().getType();
-				autoConnect( worldDimension );
-				ActiveRenderInfo activeRenderInfo = minecraft.gameRenderer.getActiveRenderInfo();
-				float[] camPos = vec3dToArray( activeRenderInfo.getProjectedView() );
-				float[] camDir = vec3fToArray( activeRenderInfo.getViewVector() );
-				float[] camTop = new float[] { 0.0F, 1.0F, 0.0F };
-				if( !MainConfig.useDimensionChannels() ) {
-					camPos[1] += worldDimension.getId() << 9;
-				}
-				mumble.incrementUiTick();
-				mumble.setAvatarPosition( camPos );
-				mumble.setAvatarFront( camDir );
-				mumble.setAvatarTop( camTop );
-				mumble.setCameraPosition( camPos );
-				mumble.setCameraFront( camDir );
-				mumble.setCameraTop( camTop );
-				mumble.setIdentity( player.getUniqueID().toString() );
+			ensureLinking();
+			Objects.requireNonNull( mumble );
+			DimensionType worldDimension = world.getDimension().getType();
+			autoConnect( worldDimension );
+			ActiveRenderInfo activeRenderInfo = minecraft.gameRenderer.getActiveRenderInfo();
+			float[] camPos = vec3dToArray( activeRenderInfo.getProjectedView() );
+			float[] camDir = vec3fToArray( activeRenderInfo.getViewVector() );
+			float[] camTop = new float[] { 0.0F, 1.0F, 0.0F };
+			if( !ClientConfig.useDimensionChannels() ) {
+				camPos[1] += worldDimension.getId() << 9;
 			}
+			mumble.incrementUiTick();
+			mumble.setAvatarPosition( camPos );
+			mumble.setAvatarFront( camDir );
+			mumble.setAvatarTop( camTop );
+			mumble.setCameraPosition( camPos );
+			mumble.setCameraFront( camDir );
+			mumble.setCameraTop( camTop );
+			mumble.setIdentity( player.getUniqueID().toString() );
 		}
 	}
 	
-	private static void autoConnect( @Nonnull DimensionType worldDimension ) {
+	private static synchronized void autoConnect( @Nonnull DimensionType worldDimension ) {
 		
-		if( MainConfig.shouldAutoConnect() ) {
-			if( MainConfig.useDimensionChannels() ) {
+		if( ClientConfig.shouldAutoConnect() ) {
+			if( ClientConfig.useDimensionChannels() ) {
 				if( dimension != worldDimension ) {
 					dimension = worldDimension;
 					connectToMumble( dimension );
@@ -149,8 +142,8 @@ public class MumbleLinking {
 					desktop.browse( new URI(
 						"mumble",
 						null,
-						MainConfig.getAddress(),
-						MainConfig.getPort(),
+						ClientConfig.getAddress(),
+						ClientConfig.getPort(),
 						buildMumblePath( dimensionType ),
 						null,
 						null
@@ -169,9 +162,9 @@ public class MumbleLinking {
 	@Nonnull
 	private static String buildMumblePath( @Nonnull DimensionType dimensionType ) {
 		
-		String path = "/" + MainConfig.getPath();
+		String path = "/" + ClientConfig.getPath();
 		
-		if( !MainConfig.useDimensionChannels() ) {
+		if( !ClientConfig.useDimensionChannels() ) {
 			return path;
 		}
 		return path + "/" + getTrimedNameOfDimension( dimensionType );
@@ -180,9 +173,10 @@ public class MumbleLinking {
 	@Nonnull
 	private static String getTrimedNameOfDimension( @Nonnull DimensionType dimensionType ) {
 		
-		return StringUtils.capitalize( UNDERSCORE_PATTERN.matcher( Objects.requireNonNull(
-			dimensionType.getRegistryName() )
-			                                                           .getPath() ).replaceAll( " " ) );
+		return StringUtils.capitalize( UNDERSCORE_PATTERN.matcher(
+			Objects.requireNonNull(
+			dimensionType.getRegistryName() ).getPath() ).replaceAll( " " )
+		);
 	}
 	
 	private static float[] vec3dToArray( @Nonnull Vec3d vec3d ) {

@@ -20,16 +20,30 @@ public class OptionsEntryValueBoolean extends OptionsEntryValue<Boolean> {
 		@Nonnull Consumer<Boolean> _save ) {
 		
 		super( optionName, _description, _value, _save );
-		button = new Button( 0, 0, 100, 20, String.valueOf( value ), w -> value = !value );
+		button = new Button(
+			0,
+			0,
+			100,
+			20,
+			buildShownText(),
+			pressedButton -> {
+				setValue( !getValue() );
+				pressedButton.setMessage( buildShownText() );
+			}
+		);
 	}
 	
 	@Override
-	protected void drawValue( int entryHeight, int _x, int _y, int mouseX, int mouseY, float partialTicks ) {
+	protected void drawValue( int _height, int _x, int _y, int mouseX, int mouseY, float partialTicks ) {
 		
 		button.x = _x + 135;
-		button.y = _y + entryHeight / 6;
-		button.setMessage( String.valueOf( value ) );
+		button.y = _y + _height / 6;
 		button.render( mouseX, mouseY, partialTicks );
+	}
+	
+	private String buildShownText() {
+		
+		return getValue() ? "Yes" : "No";
 	}
 	
 	@Nonnull
