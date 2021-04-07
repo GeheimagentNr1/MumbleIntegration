@@ -86,8 +86,8 @@ public class OptionsListWidget extends AbstractList<OptionsListWidgetEntry> {
 			.endVertex();
 		bufferBuilder.pos( x0, y1, 0.0D )
 			.color( 0, 0, 0, 255 )
-			.tex( 0.0F, 1.0F
-			).endVertex();
+			.tex( 0.0F, 1.0F )
+			.endVertex();
 		bufferBuilder.pos( x1, y1, 0.0D )
 			.color( 0, 0, 0, 255 )
 			.tex( 1.0F, 1.0F ).endVertex();
