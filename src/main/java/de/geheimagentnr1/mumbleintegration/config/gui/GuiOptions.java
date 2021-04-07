@@ -57,7 +57,8 @@ public abstract class GuiOptions extends Screen {
 			_height - 25,
 			100,
 			20,
-			I18n.format( "gui.cancel" ), w -> onClose()
+			I18n.format( "gui.cancel" ),
+			w -> onClose()
 		) );
 	}
 	

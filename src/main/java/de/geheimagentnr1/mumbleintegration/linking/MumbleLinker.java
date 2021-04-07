@@ -174,8 +174,7 @@ public class MumbleLinker {
 	private static String getTrimedNameOfDimension( @Nonnull DimensionType dimensionType ) {
 		
 		return StringUtils.capitalize( UNDERSCORE_PATTERN.matcher(
-			Objects.requireNonNull(
-			dimensionType.getRegistryName() ).getPath() ).replaceAll( " " )
+			Objects.requireNonNull( dimensionType.getRegistryName() ).getPath() ).replaceAll( " " )
 		);
 	}
 	
