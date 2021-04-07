@@ -31,6 +31,6 @@ class WatchedTextField extends TextFieldWidget {
 	
 	private void initResponder() {
 		
-		setResponder( watcher::setValue );
+		setResponder( watcher::setInputValue );
 	}
 }

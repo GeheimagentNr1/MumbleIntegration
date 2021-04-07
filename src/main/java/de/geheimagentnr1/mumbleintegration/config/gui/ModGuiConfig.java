@@ -1,6 +1,6 @@
 package de.geheimagentnr1.mumbleintegration.config.gui;
 
-import de.geheimagentnr1.mumbleintegration.config.MainConfig;
+import de.geheimagentnr1.mumbleintegration.config.ClientConfig;
 import de.geheimagentnr1.mumbleintegration.config.gui.config.OptionsListWidget;
 import de.geheimagentnr1.mumbleintegration.config.gui.config.value.OptionsEntryValueBoolean;
 import de.geheimagentnr1.mumbleintegration.config.gui.config.value.OptionsEntryValueInteger;
@@ -17,16 +17,17 @@ public class ModGuiConfig extends GuiOptions {
 	
 	public ModGuiConfig( @Nonnull Screen parent ) {
 		
-		super( parent, new StringTextComponent( MainConfig.mod_name ) );
+		super( parent, new StringTextComponent( ClientConfig.getModName() ) );
 	}
 	
 	@Nonnull
 	@Override
 	public OptionsListWidget getOptions() {
 		
+		Objects.requireNonNull( field_230706_i_ );
 		OptionsListWidget options = new OptionsListWidget(
 			this,
-			Objects.requireNonNull( field_230706_i_ ),
+			field_230706_i_,
 			field_230708_k_ + 45, field_230709_l_,
 			32,
 			field_230709_l_ - 32,
@@ -35,38 +36,38 @@ public class ModGuiConfig extends GuiOptions {
 		options.add( new OptionsEntryValueBoolean(
 			"Mumble Active",
 			"Should the mumble integration be activ?",
-			MainConfig.MUMBLE_ACTIVE.get(),
-			MainConfig.MUMBLE_ACTIVE::set
+			ClientConfig.isMumbleActive(),
+			ClientConfig::setMumbleActive
 		) );
 		options.add( new OptionsEntryValueBoolean(
 			"Auto Connect",
 			"Should mumble be started automated?",
-			MainConfig.AUTO_CONNECT.get(),
-			MainConfig.AUTO_CONNECT::set
+			ClientConfig.shouldAutoConnect(),
+			ClientConfig::setAutoConnect
 		) );
 		options.add( new OptionsEntryValueString(
 			"Address",
 			"Address of the mumble server.",
-			MainConfig.ADDRESS.get(),
-			MainConfig.ADDRESS::set
+			ClientConfig.getAddress(),
+			ClientConfig::setAddress
 		) );
 		options.add( new OptionsEntryValueInteger(
 			"Port",
 			"Port of the mumble server.",
-			MainConfig.PORT.get(),
-			MainConfig.PORT::set
+			ClientConfig.getPort(),
+			ClientConfig::setPort
 		) );
 		options.add( new OptionsEntryValueString(
 			"Path",
 			"Path of the mumble channel.",
-			MainConfig.PATH.get(),
-			MainConfig.PATH::set
+			ClientConfig.getPath(),
+			ClientConfig::setPath
 		) );
 		options.add( new OptionsEntryValueBoolean(
 			"Use Dimension Channels",
 			"Use subchannels for each dimension?",
-			MainConfig.USE_DIMENSION_CHANNELS.get(),
-			MainConfig.USE_DIMENSION_CHANNELS::set
+			ClientConfig.useDimensionChannels(),
+			ClientConfig::setUseDimensionChannels
 		) );
 		return options;
 	}
