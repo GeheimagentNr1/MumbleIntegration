@@ -34,7 +34,7 @@ credits="Thanks for the logo goes to Muse31" #optional
 authors="GeheimagentNr1" #optional
 # The description text for the mod (multi line!) (#mandatory)
 description='''
-This mod sends position data to the Mumble via shared memory.
+Shares position data with Mumble with the Mumble Link plugin for positional audio.
 '''
 # A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
 [[dependencies.mumbleintegration]] #optional

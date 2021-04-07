@@ -22,9 +22,8 @@ public abstract class OptionsEntryValue<T> extends OptionsListWidgetEntry {
 	@Nonnull
 	private final Consumer<T> save;
 	
-	//package-private
 	@Nonnull
-	T value;
+	private T value;
 	
 	private int x;
 	
@@ -56,25 +55,17 @@ public abstract class OptionsEntryValue<T> extends OptionsListWidgetEntry {
 		boolean hovered,
 		float deltaTime ) {
 		
-		client.fontRenderer.drawStringWithShadow(
+		minecraft.fontRenderer.drawStringWithShadow(
 			matrixStack,
 			title.getString(),
 			rowLeft + 10,
-			rowTop + (float)( height / 4 + client.fontRenderer.FONT_HEIGHT / 2 ),
+			rowTop + (float)( height / 4 + minecraft.fontRenderer.FONT_HEIGHT / 2 ),
 			16777215
 		);
 		drawValue( matrixStack, height, rowLeft, rowTop, mouseX, mouseY, deltaTime );
 		x = rowLeft;
 		y = rowTop;
 	}
-	
-	public void save() {
-		
-		save.accept( value );
-	}
-	
-	@Nonnull
-	public abstract IGuiEventListener getParentListener();
 	
 	@Nonnull
 	public TextComponent getTitle() {
@@ -88,6 +79,36 @@ public abstract class OptionsEntryValue<T> extends OptionsListWidgetEntry {
 		return description;
 	}
 	
+	protected abstract void drawValue(
+		@Nonnull MatrixStack matrixStack,
+		int _height,
+		int _x,
+		int _y,
+		int mouseX,
+		int mouseY,
+		float partialTicks );
+	
+	@Nonnull
+	public abstract IGuiEventListener getParentListener();
+	
+	public void save() {
+		
+		save.accept( value );
+	}
+	
+	//package-private
+	@Nonnull
+	final T getValue() {
+		
+		return value;
+	}
+	
+	//package-private
+	void setValue( @Nonnull T _value ) {
+		
+		value = _value;
+	}
+	
 	public int getX() {
 		
 		return x;
@@ -97,13 +118,4 @@ public abstract class OptionsEntryValue<T> extends OptionsListWidgetEntry {
 		
 		return y;
 	}
-	
-	protected abstract void drawValue(
-		@Nonnull MatrixStack matrixStack,
-		int entryHeight,
-		int _x,
-		int _y,
-		int mouseX,
-		int mouseY,
-		float partialTicks );
 }

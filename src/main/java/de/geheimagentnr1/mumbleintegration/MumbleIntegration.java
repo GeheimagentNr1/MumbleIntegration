@@ -1,6 +1,6 @@
 package de.geheimagentnr1.mumbleintegration;
 
-import de.geheimagentnr1.mumbleintegration.config.MainConfig;
+import de.geheimagentnr1.mumbleintegration.config.ClientConfig;
 import net.minecraftforge.fml.ExtensionPoint;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
@@ -11,24 +11,20 @@ import org.apache.commons.lang3.tuple.Pair;
 import javax.annotation.Nonnull;
 
 
-@SuppressWarnings( { "UtilityClassWithPublicConstructor", "unused" } )
+@SuppressWarnings( "UtilityClassWithPublicConstructor" )
 @Mod( MumbleIntegration.MODID )
 public class MumbleIntegration {
 	
 	
-	//package-private
 	@Nonnull
-	static final String MODID = "mumbleintegration";
+	public static final String MODID = "mumbleintegration";
 	
 	public MumbleIntegration() {
 		
-		ModLoadingContext.get().registerConfig( ModConfig.Type.CLIENT, MainConfig.CONFIG );
+		ModLoadingContext.get().registerConfig( ModConfig.Type.CLIENT, ClientConfig.CONFIG );
 		ModLoadingContext.get().registerExtensionPoint(
 			ExtensionPoint.DISPLAYTEST,
-			() -> Pair.of(
-				() -> FMLNetworkConstants.IGNORESERVERONLY,
-				( remote, isServer ) -> true
-			)
+			() -> Pair.of( () -> FMLNetworkConstants.IGNORESERVERONLY, ( remote, isServer ) -> true )
 		);
 	}
 }

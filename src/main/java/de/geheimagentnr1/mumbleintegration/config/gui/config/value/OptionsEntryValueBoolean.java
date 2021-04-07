@@ -24,13 +24,23 @@ public class OptionsEntryValueBoolean extends OptionsEntryValue<Boolean> {
 		@Nonnull Consumer<Boolean> _save ) {
 		
 		super( optionName, _description, _value, _save );
-		button = new Button( 0, 0, 100, 20, new StringTextComponent( String.valueOf( value ) ), w -> value = !value );
+		button = new Button(
+			0,
+			0,
+			100,
+			20,
+			buildShownText(),
+			pressedButton -> {
+				setValue( !getValue() );
+				pressedButton.setMessage( buildShownText() );
+			}
+		);
 	}
 	
 	@Override
 	protected void drawValue(
 		@Nonnull MatrixStack matrixStack,
-		int entryHeight,
+		int _height,
 		int _x,
 		int _y,
 		int mouseX,
@@ -38,9 +48,13 @@ public class OptionsEntryValueBoolean extends OptionsEntryValue<Boolean> {
 		float partialTicks ) {
 		
 		button.x = _x + 135;
-		button.y = _y + entryHeight / 6;
-		button.setMessage( new StringTextComponent( String.valueOf( value ) ) );
+		button.y = _y + _height / 6;
 		button.render( matrixStack, mouseX, mouseY, partialTicks );
+	}
+	
+	private StringTextComponent buildShownText() {
+		
+		return new StringTextComponent( getValue() ? "Yes" : "No" );
 	}
 	
 	@Nonnull
