@@ -86,13 +86,15 @@ public abstract class OptionsEntryValue<T> extends OptionsListWidgetEntry {
 		save.accept( value );
 	}
 	
+	//package-private
 	@Nonnull
-	public final T getValue() {
+	final T getValue() {
 		
 		return value;
 	}
 	
-	public void setValue( @Nonnull T _value ) {
+	//package-private
+	void setValue( @Nonnull T _value ) {
 		
 		value = _value;
 	}
