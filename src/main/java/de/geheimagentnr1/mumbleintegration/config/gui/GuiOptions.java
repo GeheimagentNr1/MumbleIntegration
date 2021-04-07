@@ -36,25 +36,26 @@ public abstract class GuiOptions extends Screen {
 	}
 	
 	@Override
-	public void init( @Nonnull Minecraft _minecraft, int width, int height ) {
+	public void init( @Nonnull Minecraft _minecraft, int _width, int _height ) {
 		
-		super.init( _minecraft, width, height );
+		super.init( _minecraft, _width, _height );
 		
 		options = getOptions();
 		children.add( options );
 		setListener( options );
 		
-		addButton( new Button(
-			width / 2 - 100,
-			height - 25, 100, 20, new TranslationTextComponent( "gui.done" ),
+		addButton( new Button( _width / 2 - 100, _height - 25, 100, 20, new TranslationTextComponent( "gui.done" ),
 			w -> {
 				options.save();
 				closeScreen();
 			}
 		) );
 		addButton( new Button(
-			width / 2 + 5,
-			height - 25, 100, 20, new TranslationTextComponent( "gui.cancel" ),
+			_width / 2 + 5,
+			_height - 25,
+			100,
+			20,
+			new TranslationTextComponent( "gui.cancel" ),
 			w -> closeScreen()
 		) );
 	}
@@ -92,7 +93,7 @@ public abstract class GuiOptions extends Screen {
 	public void closeScreen() {
 		
 		Objects.requireNonNull( minecraft );
-		field_230706_i_.displayGuiScreen( parent );
+		minecraft.displayGuiScreen( parent );
 	}
 	
 	public void addFromOutsideListener( @Nonnull IGuiEventListener listener ) {

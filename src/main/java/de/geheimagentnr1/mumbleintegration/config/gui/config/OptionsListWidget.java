@@ -72,22 +72,6 @@ public class OptionsListWidget extends AbstractOptionList<OptionsListWidgetEntry
 			.color( 0, 0, 0, 0 )
 			.tex( 0.0F, 1.0F )
 			.endVertex();
-		bufferBuilder.pos( field_230674_k_, field_230672_i_ + 4, 0.0D )
-			.color( 0, 0, 0, 0 )
-			.tex( 1.0F, 1.0F )
-			.endVertex();
-		bufferBuilder.pos( field_230674_k_, field_230672_i_, 0.0D )
-			.color( 0, 0, 0, 255 )
-			.tex( 1.0F, 0.0F )
-			.endVertex();
-		bufferBuilder.pos( field_230675_l_, field_230672_i_, 0.0D )
-			.color( 0, 0, 0, 255 )
-			.tex( 0.0F, 0.0F )
-			.endVertex();
-		bufferBuilder.pos( field_230675_l_, field_230673_j_, 0.0D )
-			.color( 0, 0, 0, 255 )
-			.tex( 0.0F, 1.0F )
-			.endVertex();
 		bufferBuilder.pos( x1, y0 + 4, 0.0D )
 			.color( 0, 0, 0, 0 )
 			.tex( 1.0F, 1.0F )
@@ -120,54 +104,54 @@ public class OptionsListWidget extends AbstractOptionList<OptionsListWidgetEntry
 		int maxPosition = Math.max( 0, getMaxPosition() - ( y1 - y0 - 4 ) );
 		if( maxPosition > 0 ) {
 			int yCurrentPos = MathHelper.clamp( ( y1 - y0 ) * ( y1 - y0 ) / getMaxPosition(), 32, y1 - y0 - 8 );
-			int yEndPos = Math.max( (int)getScrollbarPosition() * ( y1 - y0 - yCurrentPos ) / maxPosition + y0, y0 );
+			int yEndPos = Math.max( getScrollbarPosition() * ( y1 - y0 - yCurrentPos ) / maxPosition + y0, y0 );
 			
 			bufferBuilder.begin( 7, DefaultVertexFormats.POSITION_COLOR_TEX );
-			bufferBuilder.pos( func_230952_d_(), y1, 0.0D )
+			bufferBuilder.pos( getScrollbarPosition(), y1, 0.0D )
 				.color( 0, 0, 0, 255 )
 				.tex( 0.0F, 1.0F )
 				.endVertex();
-			bufferBuilder.pos( func_230952_d_() + 6, y1, 0.0D )
+			bufferBuilder.pos( getScrollbarPosition() + 6, y1, 0.0D )
 				.color( 0, 0, 0, 255 )
 				.tex( 1.0F, 1.0F )
 				.endVertex();
-			bufferBuilder.pos( func_230952_d_() + 6, y0, 0.0D )
+			bufferBuilder.pos( getScrollbarPosition() + 6, y0, 0.0D )
 				.color( 0, 0, 0, 255 )
 				.tex( 1.0F, 0.0F )
 				.endVertex();
-			bufferBuilder.pos( func_230952_d_(), y0, 0.0D )
+			bufferBuilder.pos( getScrollbarPosition(), y0, 0.0D )
 				.color( 0, 0, 0, 255 )
 				.tex( 0.0F, 0.0F )
 				.endVertex();
-			bufferBuilder.pos( func_230952_d_(), yEndPos + yCurrentPos, 0.0D )
+			bufferBuilder.pos( getScrollbarPosition(), yEndPos + yCurrentPos, 0.0D )
 				.color( 128, 128, 128, 255 )
 				.tex( 0.0F, 1.0F )
 				.endVertex();
-			bufferBuilder.pos( func_230952_d_() + 6, yEndPos + yCurrentPos, 0.0D )
+			bufferBuilder.pos( getScrollbarPosition() + 6, yEndPos + yCurrentPos, 0.0D )
 				.color( 128, 128, 128, 255 )
 				.tex( 1.0F, 1.0F )
 				.endVertex();
-			bufferBuilder.pos( func_230952_d_() + 6, yEndPos, 0.0D )
+			bufferBuilder.pos( getScrollbarPosition() + 6, yEndPos, 0.0D )
 				.color( 128, 128, 128, 255 )
 				.tex( 1.0F, 0.0F )
 				.endVertex();
-			bufferBuilder.pos( func_230952_d_(), yEndPos, 0.0D )
+			bufferBuilder.pos( getScrollbarPosition(), yEndPos, 0.0D )
 				.color( 128, 128, 128, 255 )
 				.tex( 0.0F, 0.0F )
 				.endVertex();
-			bufferBuilder.pos( func_230952_d_(), yEndPos + yCurrentPos - 1, 0.0D )
+			bufferBuilder.pos( getScrollbarPosition(), yEndPos + yCurrentPos - 1, 0.0D )
 				.color( 192, 192, 192, 255 )
 				.tex( 0.0F, 1.0F )
 				.endVertex();
-			bufferBuilder.pos( func_230952_d_() + 5, yEndPos + yCurrentPos - 1, 0.0D )
+			bufferBuilder.pos( getScrollbarPosition() + 5, yEndPos + yCurrentPos - 1, 0.0D )
 				.color( 192, 192, 192, 255 )
 				.tex( 1.0F, 1.0F )
 				.endVertex();
-			bufferBuilder.pos( func_230952_d_() + 5, yEndPos, 0.0D )
+			bufferBuilder.pos( getScrollbarPosition() + 5, yEndPos, 0.0D )
 				.color( 192, 192, 192, 255 )
 				.tex( 1.0F, 0.0F )
 				.endVertex();
-			bufferBuilder.pos( func_230952_d_(), yEndPos, 0.0D )
+			bufferBuilder.pos( getScrollbarPosition(), yEndPos, 0.0D )
 				.color( 192, 192, 192, 255 )
 				.tex( 0.0F, 0.0F )
 				.endVertex();
