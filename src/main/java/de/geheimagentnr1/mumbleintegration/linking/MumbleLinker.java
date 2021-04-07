@@ -100,7 +100,7 @@ public class MumbleLinker {
 			ActiveRenderInfo activeRenderInfo = minecraft.gameRenderer.getActiveRenderInfo();
 			float[] camPos = vec3dToArray( activeRenderInfo.getProjectedView() );
 			float[] camDir = vec3fToArray( activeRenderInfo.getViewVector() );
-			float[] camTop = new float[] { 0.0F, 1.0F, 0.0F };
+			float[] camTop = vec3dToArray( activeRenderInfo.getUpDirection() );
 			if( !ClientConfig.useDimensionChannels() ) {
 				camPos[1] += worldDimension.getId() << 9;
 			}
