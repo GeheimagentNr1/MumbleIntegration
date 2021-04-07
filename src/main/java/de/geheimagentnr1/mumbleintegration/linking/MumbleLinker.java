@@ -106,18 +106,18 @@ public class MumbleLinker {
 			float[] camTop = new float[] { 0.0F, 1.0F, 0.0F };
 			if( !ClientConfig.useDimensionChannels() ) {
 				List<RegistryKey<World>> worlds = Objects.requireNonNull( Minecraft.getInstance().getConnection() )
-						.func_239164_m_()
-						.stream()
-						.sorted()
-						.collect( Collectors.toList() );
-					
-					int index = -1;
-					for( int i = 0; i < worlds.size(); i++ ) {
-						if( worlds.get( i ).equals( world.func_234923_W_() ) ) {
-							index = i;
-						}
+					.func_239164_m_()
+					.stream()
+					.sorted()
+					.collect( Collectors.toList() );
+				
+				int index = -1;
+				for( int i = 0; i < worlds.size(); i++ ) {
+					if( worlds.get( i ).equals( world.func_234923_W_() ) ) {
+						index = i;
 					}
-					camPos[1] += index << 9;
+				}
+				camPos[1] += index << 9;
 			}
 			mumble.incrementUiTick();
 			mumble.setAvatarPosition( camPos );

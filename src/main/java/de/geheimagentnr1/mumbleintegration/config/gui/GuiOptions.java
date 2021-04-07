@@ -101,7 +101,7 @@ public abstract class GuiOptions extends Screen {
 	public void func_231175_as__() {
 		
 		Objects.requireNonNull( field_230706_i_ );
-		minecraft.displayGuiScreen( parent );
+		field_230706_i_.displayGuiScreen( parent );
 	}
 	
 	public void addListener( @Nonnull IGuiEventListener listener ) {

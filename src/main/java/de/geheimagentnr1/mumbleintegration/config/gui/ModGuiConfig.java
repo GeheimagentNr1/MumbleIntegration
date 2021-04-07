@@ -28,7 +28,8 @@ public class ModGuiConfig extends GuiOptions {
 		OptionsListWidget options = new OptionsListWidget(
 			this,
 			field_230706_i_,
-			field_230708_k_ + 45, field_230709_l_,
+			field_230708_k_ + 45,
+			field_230709_l_,
 			32,
 			field_230709_l_ - 32,
 			30

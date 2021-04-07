@@ -32,7 +32,7 @@ public class OptionsEntryValueBoolean extends OptionsEntryValue<Boolean> {
 			buildShownText(),
 			pressedButton -> {
 				setValue( !getValue() );
-				pressedButton.setMessage( buildShownText() );
+				pressedButton.func_238482_a_( buildShownText() );
 			}
 		);
 	}
@@ -49,7 +49,6 @@ public class OptionsEntryValueBoolean extends OptionsEntryValue<Boolean> {
 		
 		button.field_230690_l_ = _x + 135;
 		button.field_230691_m_ = _y + _height / 6;
-		button.func_238482_a_( new StringTextComponent( String.valueOf( value ) ) );
 		button.func_230430_a_( matrixStack, mouseX, mouseY, partialTicks );
 	}
 	
