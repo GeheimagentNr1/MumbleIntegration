@@ -66,7 +66,7 @@ public class OptionsEntryValueBoolean extends OptionsEntryValue<Boolean> {
 	
 	@Nonnull
 	@Override
-	public List<? extends IGuiEventListener> getEventListeners() {
+	public List<? extends IGuiEventListener> children() {
 		
 		return ImmutableList.of();
 	}

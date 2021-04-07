@@ -55,11 +55,11 @@ public abstract class OptionsEntryValue<T> extends OptionsListWidgetEntry {
 		boolean hovered,
 		float deltaTime ) {
 		
-		minecraft.fontRenderer.drawStringWithShadow(
+		minecraft.font.drawShadow(
 			matrixStack,
 			title.getString(),
 			rowLeft + 10,
-			rowTop + (float)( height / 4 + minecraft.fontRenderer.FONT_HEIGHT / 2 ),
+			rowTop + (float)( height / 4 + minecraft.font.lineHeight / 2 ),
 			16777215
 		);
 		drawValue( matrixStack, height, rowLeft, rowTop, mouseX, mouseY, deltaTime );

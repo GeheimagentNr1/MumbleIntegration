@@ -49,8 +49,8 @@ public class OptionsListWidget extends AbstractOptionList<OptionsListWidgetEntry
 		RenderSystem.disableLighting();
 		RenderSystem.disableFog();
 		Tessellator tessellator = Tessellator.getInstance();
-		BufferBuilder bufferBuilder = tessellator.getBuffer();
-		minecraft.getTextureManager().bindTexture( BACKGROUND_LOCATION );
+		BufferBuilder bufferBuilder = tessellator.getBuilder();
+		minecraft.getTextureManager().bind( BACKGROUND_LOCATION );
 		RenderSystem.color4f( 1.0F, 1.0F, 1.0F, 1.0F );
 		int left_start = getRowLeft();
 		int top_start = y0 + 4 - (int)getScrollAmount();
@@ -68,94 +68,94 @@ public class OptionsListWidget extends AbstractOptionList<OptionsListWidgetEntry
 		RenderSystem.shadeModel( 7425 );
 		RenderSystem.disableTexture();
 		bufferBuilder.begin( 7, DefaultVertexFormats.POSITION_COLOR_TEX );
-		bufferBuilder.pos( x0, y0 + 4, 0.0D )
+		bufferBuilder.vertex( x0, y0 + 4, 0.0D )
 			.color( 0, 0, 0, 0 )
-			.tex( 0.0F, 1.0F )
+			.uv( 0.0F, 1.0F )
 			.endVertex();
-		bufferBuilder.pos( x1, y0 + 4, 0.0D )
+		bufferBuilder.vertex( x1, y0 + 4, 0.0D )
 			.color( 0, 0, 0, 0 )
-			.tex( 1.0F, 1.0F )
+			.uv( 1.0F, 1.0F )
 			.endVertex();
-		bufferBuilder.pos( x1, y0, 0.0D )
+		bufferBuilder.vertex( x1, y0, 0.0D )
 			.color( 0, 0, 0, 255 )
-			.tex( 1.0F, 0.0F )
+			.uv( 1.0F, 0.0F )
 			.endVertex();
-		bufferBuilder.pos( x0, y0, 0.0D )
+		bufferBuilder.vertex( x0, y0, 0.0D )
 			.color( 0, 0, 0, 255 )
-			.tex( 0.0F, 0.0F )
+			.uv( 0.0F, 0.0F )
 			.endVertex();
-		bufferBuilder.pos( x0, y1, 0.0D )
+		bufferBuilder.vertex( x0, y1, 0.0D )
 			.color( 0, 0, 0, 255 )
-			.tex( 0.0F, 1.0F )
+			.uv( 0.0F, 1.0F )
 			.endVertex();
-		bufferBuilder.pos( x1, y1, 0.0D )
+		bufferBuilder.vertex( x1, y1, 0.0D )
 			.color( 0, 0, 0, 255 )
-			.tex( 1.0F, 1.0F )
+			.uv( 1.0F, 1.0F )
 			.endVertex();
-		bufferBuilder.pos( x1, y1 - 4, 0.0D )
+		bufferBuilder.vertex( x1, y1 - 4, 0.0D )
 			.color( 0, 0, 0, 0 )
-			.tex( 1.0F, 0.0F )
+			.uv( 1.0F, 0.0F )
 			.endVertex();
-		bufferBuilder.pos( x0, y1 - 4, 0.0D )
+		bufferBuilder.vertex( x0, y1 - 4, 0.0D )
 			.color( 0, 0, 0, 0 )
-			.tex( 0.0F, 0.0F )
+			.uv( 0.0F, 0.0F )
 			.endVertex();
-		tessellator.draw();
+		tessellator.end();
 		int maxPosition = Math.max( 0, getMaxPosition() - ( y1 - y0 - 4 ) );
 		if( maxPosition > 0 ) {
 			int yCurrentPos = MathHelper.clamp( ( y1 - y0 ) * ( y1 - y0 ) / getMaxPosition(), 32, y1 - y0 - 8 );
 			int yEndPos = Math.max( getScrollbarPosition() * ( y1 - y0 - yCurrentPos ) / maxPosition + y0, y0 );
 			
 			bufferBuilder.begin( 7, DefaultVertexFormats.POSITION_COLOR_TEX );
-			bufferBuilder.pos( getScrollbarPosition(), y1, 0.0D )
+			bufferBuilder.vertex( getScrollbarPosition(), y1, 0.0D )
 				.color( 0, 0, 0, 255 )
-				.tex( 0.0F, 1.0F )
+				.uv( 0.0F, 1.0F )
 				.endVertex();
-			bufferBuilder.pos( getScrollbarPosition() + 6, y1, 0.0D )
+			bufferBuilder.vertex( getScrollbarPosition() + 6, y1, 0.0D )
 				.color( 0, 0, 0, 255 )
-				.tex( 1.0F, 1.0F )
+				.uv( 1.0F, 1.0F )
 				.endVertex();
-			bufferBuilder.pos( getScrollbarPosition() + 6, y0, 0.0D )
+			bufferBuilder.vertex( getScrollbarPosition() + 6, y0, 0.0D )
 				.color( 0, 0, 0, 255 )
-				.tex( 1.0F, 0.0F )
+				.uv( 1.0F, 0.0F )
 				.endVertex();
-			bufferBuilder.pos( getScrollbarPosition(), y0, 0.0D )
+			bufferBuilder.vertex( getScrollbarPosition(), y0, 0.0D )
 				.color( 0, 0, 0, 255 )
-				.tex( 0.0F, 0.0F )
+				.uv( 0.0F, 0.0F )
 				.endVertex();
-			bufferBuilder.pos( getScrollbarPosition(), yEndPos + yCurrentPos, 0.0D )
+			bufferBuilder.vertex( getScrollbarPosition(), yEndPos + yCurrentPos, 0.0D )
 				.color( 128, 128, 128, 255 )
-				.tex( 0.0F, 1.0F )
+				.uv( 0.0F, 1.0F )
 				.endVertex();
-			bufferBuilder.pos( getScrollbarPosition() + 6, yEndPos + yCurrentPos, 0.0D )
+			bufferBuilder.vertex( getScrollbarPosition() + 6, yEndPos + yCurrentPos, 0.0D )
 				.color( 128, 128, 128, 255 )
-				.tex( 1.0F, 1.0F )
+				.uv( 1.0F, 1.0F )
 				.endVertex();
-			bufferBuilder.pos( getScrollbarPosition() + 6, yEndPos, 0.0D )
+			bufferBuilder.vertex( getScrollbarPosition() + 6, yEndPos, 0.0D )
 				.color( 128, 128, 128, 255 )
-				.tex( 1.0F, 0.0F )
+				.uv( 1.0F, 0.0F )
 				.endVertex();
-			bufferBuilder.pos( getScrollbarPosition(), yEndPos, 0.0D )
+			bufferBuilder.vertex( getScrollbarPosition(), yEndPos, 0.0D )
 				.color( 128, 128, 128, 255 )
-				.tex( 0.0F, 0.0F )
+				.uv( 0.0F, 0.0F )
 				.endVertex();
-			bufferBuilder.pos( getScrollbarPosition(), yEndPos + yCurrentPos - 1, 0.0D )
+			bufferBuilder.vertex( getScrollbarPosition(), yEndPos + yCurrentPos - 1, 0.0D )
 				.color( 192, 192, 192, 255 )
-				.tex( 0.0F, 1.0F )
+				.uv( 0.0F, 1.0F )
 				.endVertex();
-			bufferBuilder.pos( getScrollbarPosition() + 5, yEndPos + yCurrentPos - 1, 0.0D )
+			bufferBuilder.vertex( getScrollbarPosition() + 5, yEndPos + yCurrentPos - 1, 0.0D )
 				.color( 192, 192, 192, 255 )
-				.tex( 1.0F, 1.0F )
+				.uv( 1.0F, 1.0F )
 				.endVertex();
-			bufferBuilder.pos( getScrollbarPosition() + 5, yEndPos, 0.0D )
+			bufferBuilder.vertex( getScrollbarPosition() + 5, yEndPos, 0.0D )
 				.color( 192, 192, 192, 255 )
-				.tex( 1.0F, 0.0F )
+				.uv( 1.0F, 0.0F )
 				.endVertex();
-			bufferBuilder.pos( getScrollbarPosition(), yEndPos, 0.0D )
+			bufferBuilder.vertex( getScrollbarPosition(), yEndPos, 0.0D )
 				.color( 192, 192, 192, 255 )
-				.tex( 0.0F, 0.0F )
+				.uv( 0.0F, 0.0F )
 				.endVertex();
-			tessellator.draw();
+			tessellator.end();
 		}
 		renderDecorations( matrixStack, mouseX, mouseY );
 		RenderSystem.enableTexture();
@@ -166,7 +166,7 @@ public class OptionsListWidget extends AbstractOptionList<OptionsListWidgetEntry
 	
 	public void save() {
 		
-		getEventListeners().stream()
+		children().stream()
 			.filter( entry -> entry instanceof OptionsEntryValue )
 			.map( entry -> (OptionsEntryValue<?>)entry )
 			.forEach( OptionsEntryValue::save );
@@ -182,7 +182,7 @@ public class OptionsListWidget extends AbstractOptionList<OptionsListWidgetEntry
 	
 	public void forEach( @Nonnull Consumer<OptionsListWidgetEntry> consumer ) {
 		
-		for( OptionsListWidgetEntry value : getEventListeners() ) {
+		for( OptionsListWidgetEntry value : children() ) {
 			consumer.accept( value );
 		}
 	}

@@ -23,13 +23,13 @@ public abstract class OptionsEntryValueInput<T> extends OptionsEntryValue<T> {
 		@Nonnull String optionName,
 		@Nonnull String _description,
 		@Nonnull T _value,
-		@Nonnull Predicate<String> validator,
+		@Nonnull Predicate<String> filter,
 		@Nonnull Consumer<T> _save ) {
 		
 		super( optionName, _description, _value, _save );
-		textField = new WatchedTextField( minecraft.fontRenderer, 0, 0, 98, 18, this );
-		textField.setText( String.valueOf( getValue() ) );
-		textField.setValidator( validator );
+		textField = new WatchedTextField( minecraft.font, 0, 0, 98, 18, this );
+		textField.setValue( String.valueOf( getValue() ) );
+		textField.setFilter( filter );
 	}
 	
 	@Override
@@ -59,7 +59,7 @@ public abstract class OptionsEntryValueInput<T> extends OptionsEntryValue<T> {
 	
 	@Nonnull
 	@Override
-	public List<? extends IGuiEventListener> getEventListeners() {
+	public List<? extends IGuiEventListener> children() {
 		
 		return ImmutableList.of();
 	}

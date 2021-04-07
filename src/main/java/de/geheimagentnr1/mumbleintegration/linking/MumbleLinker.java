@@ -92,28 +92,28 @@ public class MumbleLinker {
 			return;
 		}
 		Minecraft minecraft = Minecraft.getInstance();
-		ClientWorld world = minecraft.world;
+		ClientWorld world = minecraft.level;
 		ClientPlayerEntity player = minecraft.player;
 		
 		if( world != null && player != null ) {
 			ensureLinking();
 			Objects.requireNonNull( mumble );
-			RegistryKey<World> worldDimension = world.getDimensionKey();
+			RegistryKey<World> worldDimension = world.dimension();
 			autoConnect( worldDimension );
-			ActiveRenderInfo activeRenderInfo = minecraft.gameRenderer.getActiveRenderInfo();
-			float[] camPos = vec3dToArray( activeRenderInfo.getProjectedView() );
-			float[] camDir = vec3fToArray( activeRenderInfo.getViewVector() );
+			ActiveRenderInfo activeRenderInfo = minecraft.gameRenderer.getMainCamera();
+			float[] camPos = vec3dToArray( activeRenderInfo.getPosition() );
+			float[] camDir = vec3fToArray( activeRenderInfo.getLookVector() );
 			float[] camTop = new float[] { 0.0F, 1.0F, 0.0F };
 			if( !ClientConfig.useDimensionChannels() ) {
 				List<RegistryKey<World>> worlds = Objects.requireNonNull( Minecraft.getInstance().getConnection() )
-					.func_239164_m_()
+					.levels()
 					.stream()
 					.sorted()
 					.collect( Collectors.toList() );
 				
 				int index = -1;
 				for( int i = 0; i < worlds.size(); i++ ) {
-					if( worlds.get( i ).equals( world.getDimensionKey() ) ) {
+					if( worlds.get( i ).equals( world.dimension() ) ) {
 						index = i;
 					}
 				}
@@ -126,7 +126,7 @@ public class MumbleLinker {
 			mumble.setCameraPosition( camPos );
 			mumble.setCameraFront( camDir );
 			mumble.setCameraTop( camTop );
-			mumble.setIdentity( player.getUniqueID().toString() );
+			mumble.setIdentity( player.getStringUUID() );
 		}
 	}
 	
@@ -189,7 +189,7 @@ public class MumbleLinker {
 	private static String getTrimedNameOfDimension( @Nonnull RegistryKey<World> dimensionKey ) {
 		
 		return StringUtils.capitalize( UNDERSCORE_PATTERN.matcher(
-			Objects.requireNonNull( dimensionKey.getLocation() ).getPath() ).replaceAll( " " )
+			Objects.requireNonNull( dimensionKey.location() ).getPath() ).replaceAll( " " )
 		);
 	}
 	
@@ -200,7 +200,7 @@ public class MumbleLinker {
 	
 	private static float[] vec3fToArray( @Nonnull Vector3f vector3f ) {
 		
-		return vec3ToArray( vector3f.getX(), vector3f.getY(), -vector3f.getZ() );
+		return vec3ToArray( vector3f.x(), vector3f.y(), -vector3f.z() );
 	}
 	
 	private static float[] vec3ToArray( float x, float y, float z ) {

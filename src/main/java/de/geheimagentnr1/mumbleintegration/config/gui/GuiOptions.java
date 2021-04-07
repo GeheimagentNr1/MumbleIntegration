@@ -35,7 +35,6 @@ public abstract class GuiOptions extends Screen {
 		parent = _parent;
 	}
 	
-	@SuppressWarnings( "ParameterHidesMemberVariable" )
 	@Override
 	public void init( @Nonnull Minecraft _minecraft, int _width, int _height ) {
 		
@@ -43,7 +42,7 @@ public abstract class GuiOptions extends Screen {
 		
 		options = getOptions();
 		children.add( options );
-		setListener( options );
+		setFocused( options );
 		
 		addButton( new Button(
 			_width / 2 - 100,
@@ -53,7 +52,7 @@ public abstract class GuiOptions extends Screen {
 			new TranslationTextComponent( "gui.done" ),
 			w -> {
 				options.save();
-				closeScreen();
+				onClose();
 			}
 		) );
 		addButton( new Button(
@@ -62,7 +61,7 @@ public abstract class GuiOptions extends Screen {
 			100,
 			20,
 			new TranslationTextComponent( "gui.cancel" ),
-			w -> closeScreen()
+			w -> onClose()
 		) );
 	}
 	
@@ -84,22 +83,22 @@ public abstract class GuiOptions extends Screen {
 				int valueY = value.getY() + 10;
 				String formatted_title = value.getTitle().getString();
 				
-				if( mouseX < valueX || mouseX > valueX + font.getStringWidth( formatted_title ) ||
+				if( mouseX < valueX || mouseX > valueX + font.width( formatted_title ) ||
 					mouseY < valueY || mouseY > valueY + 9 ) {
 					return;
 				}
 				List<IReorderingProcessor> tooltip = Lists.newArrayList();
-				tooltip.addAll( font.trimStringToWidth( new StringTextComponent( value.getDescription() ), 200 ) );
+				tooltip.addAll( font.split( new StringTextComponent( value.getDescription() ), 200 ) );
 				renderTooltip( matrixStack, tooltip, mouseX, mouseY );
 			}
 		} );
 	}
 	
 	@Override
-	public void closeScreen() {
+	public void onClose() {
 		
 		Objects.requireNonNull( minecraft );
-		minecraft.displayGuiScreen( parent );
+		minecraft.setScreen( parent );
 	}
 	
 	public void addFromOutsideListener( @Nonnull IGuiEventListener listener ) {
