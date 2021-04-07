@@ -103,7 +103,7 @@ public class MumbleLinker {
 			ActiveRenderInfo activeRenderInfo = minecraft.gameRenderer.getMainCamera();
 			float[] camPos = vec3dToArray( activeRenderInfo.getPosition() );
 			float[] camDir = vec3fToArray( activeRenderInfo.getLookVector() );
-			float[] camTop = new float[] { 0.0F, 1.0F, 0.0F };
+			float[] camTop = vec3fToArray( activeRenderInfo.getUpVector() );
 			if( !ClientConfig.useDimensionChannels() ) {
 				List<RegistryKey<World>> worlds = Objects.requireNonNull( Minecraft.getInstance().getConnection() )
 					.levels()
