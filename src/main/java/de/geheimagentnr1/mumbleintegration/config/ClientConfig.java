@@ -44,15 +44,15 @@ public class ClientConfig {
 	
 	static {
 		
-		MUMBLE_ACTIVE = BUILDER.comment( "Should the mumble integration be active?" )
+		MUMBLE_ACTIVE = BUILDER.comment( "Should the Mumble integration be active?" )
 			.define( "mumble_active", false );
-		AUTO_CONNECT = BUILDER.comment( "Should mumble be connect automated?" )
+		AUTO_CONNECT = BUILDER.comment( "Should Mumble be connect automated?" )
 			.define( "auto_connect", false );
-		ADDRESS = BUILDER.comment( "Address of the mumble server." )
+		ADDRESS = BUILDER.comment( "Address of the Mumble server." )
 			.define( "address", "" );
-		PORT = BUILDER.comment( "Port of the mumble server." )
+		PORT = BUILDER.comment( "Port of the Mumble server." )
 			.defineInRange( "port", 64738, 0, 65535 );
-		PATH = BUILDER.comment( "Path of the mumble channel." )
+		PATH = BUILDER.comment( "Path of the Mumble channel." )
 			.define( "path", "" );
 		USE_DIMENSION_CHANNELS = BUILDER.comment( "Use subchannels for each dimension?" )
 			.define( "use_dimension_channels", false );
