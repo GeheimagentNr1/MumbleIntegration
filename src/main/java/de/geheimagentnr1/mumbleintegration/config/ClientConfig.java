@@ -72,14 +72,14 @@ public class ClientConfig {
 	
 	private static void printConfig() {
 		
-		LOGGER.info( "Loading \"{}\" Config", MOD_NAME );
+		LOGGER.info( "Loading \"{}\" Client Config", MOD_NAME );
 		LOGGER.info( "{} = {}", MUMBLE_ACTIVE.getPath(), MUMBLE_ACTIVE.get() );
 		LOGGER.info( "{} = {}", AUTO_CONNECT.getPath(), AUTO_CONNECT.get() );
 		LOGGER.info( "{} = {}", ADDRESS.getPath(), ADDRESS.get() );
 		LOGGER.info( "{} = {}", PORT.getPath(), PORT.get() );
 		LOGGER.info( "{} = {}", PATH.getPath(), PATH.get() );
 		LOGGER.info( "{} = {}", USE_DIMENSION_CHANNELS.getPath(), USE_DIMENSION_CHANNELS.get() );
-		LOGGER.info( "\"{}\" Config loaded", MOD_NAME );
+		LOGGER.info( "\"{}\" Client Config loaded", MOD_NAME );
 	}
 	
 	@Nonnull
