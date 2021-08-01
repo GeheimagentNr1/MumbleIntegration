@@ -197,7 +197,7 @@
   {
     "project": "asm",
     "description": "ASM, a very small and fast Java bytecode manipulation framework",
-    "version": "9.0",
+    "version": "9.1",
     "developers": [
       "Eric Bruneton",
       "Eugene Kuleshov",
@@ -211,12 +211,12 @@
         "license_url": "https://asm.ow2.io/license.html"
       }
     ],
-    "dependency": "org.ow2.asm:asm:9.0"
+    "dependency": "org.ow2.asm:asm:9.1"
   },
   {
     "project": "asm-analysis",
     "description": "Static code analysis API of ASM, a very small and fast Java bytecode manipulation framework",
-    "version": "9.0",
+    "version": "9.1",
     "developers": [
       "Eric Bruneton",
       "Eugene Kuleshov",
@@ -230,12 +230,12 @@
         "license_url": "https://asm.ow2.io/license.html"
       }
     ],
-    "dependency": "org.ow2.asm:asm-analysis:9.0"
+    "dependency": "org.ow2.asm:asm-analysis:9.1"
   },
   {
     "project": "asm-commons",
     "description": "Usefull class adapters based on ASM, a very small and fast Java bytecode manipulation framework",
-    "version": "9.0",
+    "version": "9.1",
     "developers": [
       "Eric Bruneton",
       "Eugene Kuleshov",
@@ -249,12 +249,12 @@
         "license_url": "https://asm.ow2.io/license.html"
       }
     ],
-    "dependency": "org.ow2.asm:asm-commons:9.0"
+    "dependency": "org.ow2.asm:asm-commons:9.1"
   },
   {
     "project": "asm-tree",
     "description": "Tree API of ASM, a very small and fast Java bytecode manipulation framework",
-    "version": "9.0",
+    "version": "9.1",
     "developers": [
       "Eric Bruneton",
       "Eugene Kuleshov",
@@ -268,12 +268,12 @@
         "license_url": "https://asm.ow2.io/license.html"
       }
     ],
-    "dependency": "org.ow2.asm:asm-tree:9.0"
+    "dependency": "org.ow2.asm:asm-tree:9.1"
   },
   {
     "project": "asm-util",
     "description": "Utilities for ASM, a very small and fast Java bytecode manipulation framework",
-    "version": "9.0",
+    "version": "9.1",
     "developers": [
       "Eric Bruneton",
       "Eugene Kuleshov",
@@ -287,7 +287,7 @@
         "license_url": "https://asm.ow2.io/license.html"
       }
     ],
-    "dependency": "org.ow2.asm:asm-util:9.0"
+    "dependency": "org.ow2.asm:asm-util:9.1"
   },
   {
     "project": "authlib",
@@ -445,12 +445,12 @@
   {
     "project": "forge",
     "description": null,
-    "version": "1.16.5-36.1.4_mapped_official_1.16.5",
+    "version": "1.16.5-36.2.2_mapped_official_1.16.5",
     "developers": [],
     "url": null,
     "year": null,
     "licenses": [],
-    "dependency": "net.minecraftforge:forge:1.16.5-36.1.4_mapped_official_1.16.5"
+    "dependency": "net.minecraftforge:forge:1.16.5-36.2.2_mapped_official_1.16.5"
   },
   {
     "project": "Forge Service Provider Interface",
@@ -536,6 +536,23 @@
     "dependency": "com.ibm.icu:icu4j:66.1"
   },
   {
+    "project": "IntelliJ IDEA Annotations",
+    "description": "A set of annotations used for code inspection support and code documentation.",
+    "version": "13.0",
+    "developers": [
+      "JetBrains Team"
+    ],
+    "url": "http://www.jetbrains.org",
+    "year": null,
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "org.jetbrains:annotations:13.0"
+  },
+  {
     "project": "Java Native Access",
     "description": "Java Native Access",
     "version": "4.4.0",
@@ -577,17 +594,12 @@
   {
     "project": "java-mumble-link",
     "description": null,
-    "version": "0.2.4",
+    "version": "0.2.6",
     "developers": [],
-    "url": "https://github.com/magneticflux-/java-mumble-link",
+    "url": null,
     "year": null,
-    "licenses": [
-      {
-        "license": "The MIT License",
-        "license_url": "https://github.com/magneticflux-/java-mumble-link/blob/master/LICENSE"
-      }
-    ],
-    "dependency": "com.skaggsm:java-mumble-link:0.2.4"
+    "licenses": [],
+    "dependency": "com.skaggsm:java-mumble-link:0.2.6"
   },
   {
     "project": "javabridge",
@@ -698,17 +710,80 @@
   {
     "project": "jvm-shared-memory",
     "description": null,
-    "version": "0.2.2",
+    "version": "0.2.7",
     "developers": [],
-    "url": "https://github.com/magneticflux-/jvm-shared-memory",
+    "url": null,
+    "year": null,
+    "licenses": [],
+    "dependency": "com.skaggsm:jvm-shared-memory:0.2.7"
+  },
+  {
+    "project": "Kotlin Stdlib",
+    "description": "Kotlin Standard Library for JVM",
+    "version": "1.5.10",
+    "developers": [
+      "Kotlin Team"
+    ],
+    "url": "https://kotlinlang.org/",
     "year": null,
     "licenses": [
       {
-        "license": "The MIT License",
-        "license_url": "https://github.com/magneticflux-/jvm-shared-memory/blob/master/LICENSE"
+        "license": "The Apache License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "com.skaggsm:jvm-shared-memory:0.2.2"
+    "dependency": "org.jetbrains.kotlin:kotlin-stdlib:1.5.10"
+  },
+  {
+    "project": "Kotlin Stdlib Common",
+    "description": "Kotlin Common Standard Library",
+    "version": "1.5.10",
+    "developers": [
+      "Kotlin Team"
+    ],
+    "url": "https://kotlinlang.org/",
+    "year": null,
+    "licenses": [
+      {
+        "license": "The Apache License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "org.jetbrains.kotlin:kotlin-stdlib-common:1.5.10"
+  },
+  {
+    "project": "Kotlin Stdlib Jdk7",
+    "description": "Kotlin Standard Library JDK 7 extension",
+    "version": "1.5.10",
+    "developers": [
+      "Kotlin Team"
+    ],
+    "url": "https://kotlinlang.org/",
+    "year": null,
+    "licenses": [
+      {
+        "license": "The Apache License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.5.10"
+  },
+  {
+    "project": "Kotlin Stdlib Jdk8",
+    "description": "Kotlin Standard Library JDK 8 extension",
+    "version": "1.5.10",
+    "developers": [
+      "Kotlin Team"
+    ],
+    "url": "https://kotlinlang.org/",
+    "year": null,
+    "licenses": [
+      {
+        "license": "The Apache License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.5.10"
   },
   {
     "project": "LWJGL",
@@ -970,12 +1045,12 @@
   {
     "project": "patchy",
     "description": null,
-    "version": "1.1",
+    "version": "1.2.3",
     "developers": [],
     "url": null,
     "year": null,
     "licenses": [],
-    "dependency": "com.mojang:patchy:1.1"
+    "dependency": "com.mojang:patchy:1.2.3"
   },
   {
     "project": "Plexus Common Utilities",
