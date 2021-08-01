@@ -157,12 +157,15 @@ dependencies {
     // implementation fg.deobf("com.tterrag.registrate:Registrate:MC${mc_version}-${registrate_version}") // Adds registrate as a dependency
 
     implementation("com.skaggsm:java-mumble-link:${java_mumble_link_version}") {
+        exclude group: 'org.jetbrains.kotlin', module: 'kotlin-stdlib-jdk8'
         exclude group: 'net.java.dev.jna'
     }
     shadow("com.skaggsm:java-mumble-link:${java_mumble_link_version}") {
+        exclude group: 'org.jetbrains.kotlin', module: 'kotlin-stdlib-jdk8'
         exclude group: 'net.java.dev.jna'
     }
     runtimeOnly("com.skaggsm:java-mumble-link:${java_mumble_link_version}") {
+        exclude group: 'org.jetbrains.kotlin', module: 'kotlin-stdlib-jdk8'
         exclude group: 'net.java.dev.jna'
     }
 

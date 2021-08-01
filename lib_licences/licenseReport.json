@@ -641,23 +641,6 @@
     "dependency": "com.ibm.icu:icu4j:66.1"
   },
   {
-    "project": "IntelliJ IDEA Annotations",
-    "description": "A set of annotations used for code inspection support and code documentation.",
-    "version": "13.0",
-    "developers": [
-      "JetBrains Team"
-    ],
-    "url": "http://www.jetbrains.org",
-    "year": null,
-    "licenses": [
-      {
-        "license": "The Apache Software License, Version 2.0",
-        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
-      }
-    ],
-    "dependency": "org.jetbrains:annotations:13.0"
-  },
-  {
     "project": "Java Native Access",
     "description": "Java Native Access",
     "version": "5.8.0",
@@ -858,74 +841,6 @@
     "year": null,
     "licenses": [],
     "dependency": "com.skaggsm:jvm-shared-memory:0.2.7"
-  },
-  {
-    "project": "Kotlin Stdlib",
-    "description": "Kotlin Standard Library for JVM",
-    "version": "1.5.10",
-    "developers": [
-      "Kotlin Team"
-    ],
-    "url": "https://kotlinlang.org/",
-    "year": null,
-    "licenses": [
-      {
-        "license": "The Apache License, Version 2.0",
-        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
-      }
-    ],
-    "dependency": "org.jetbrains.kotlin:kotlin-stdlib:1.5.10"
-  },
-  {
-    "project": "Kotlin Stdlib Common",
-    "description": "Kotlin Common Standard Library",
-    "version": "1.5.10",
-    "developers": [
-      "Kotlin Team"
-    ],
-    "url": "https://kotlinlang.org/",
-    "year": null,
-    "licenses": [
-      {
-        "license": "The Apache License, Version 2.0",
-        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
-      }
-    ],
-    "dependency": "org.jetbrains.kotlin:kotlin-stdlib-common:1.5.10"
-  },
-  {
-    "project": "Kotlin Stdlib Jdk7",
-    "description": "Kotlin Standard Library JDK 7 extension",
-    "version": "1.5.10",
-    "developers": [
-      "Kotlin Team"
-    ],
-    "url": "https://kotlinlang.org/",
-    "year": null,
-    "licenses": [
-      {
-        "license": "The Apache License, Version 2.0",
-        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
-      }
-    ],
-    "dependency": "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.5.10"
-  },
-  {
-    "project": "Kotlin Stdlib Jdk8",
-    "description": "Kotlin Standard Library JDK 8 extension",
-    "version": "1.5.10",
-    "developers": [
-      "Kotlin Team"
-    ],
-    "url": "https://kotlinlang.org/",
-    "year": null,
-    "licenses": [
-      {
-        "license": "The Apache License, Version 2.0",
-        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
-      }
-    ],
-    "dependency": "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.5.10"
   },
   {
     "project": "LWJGL",
