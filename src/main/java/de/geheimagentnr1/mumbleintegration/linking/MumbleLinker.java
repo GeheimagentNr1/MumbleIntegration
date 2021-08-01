@@ -1,16 +1,16 @@
 package de.geheimagentnr1.mumbleintegration.linking;
 
+import com.mojang.math.Vector3f;
 import com.skaggsm.jmumblelink.MumbleLink;
 import com.skaggsm.jmumblelink.MumbleLinkImpl;
 import de.geheimagentnr1.mumbleintegration.config.ClientConfig;
+import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.player.ClientPlayerEntity;
-import net.minecraft.client.renderer.ActiveRenderInfo;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.util.RegistryKey;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.math.vector.Vector3f;
-import net.minecraft.world.World;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -40,7 +40,7 @@ public class MumbleLinker {
 	private static MumbleLink mumble = null;
 	
 	@Nullable
-	private static RegistryKey<World> dimension = null;
+	private static ResourceKey<Level> dimension = null;
 	
 	static {
 		// Required to open URIs
@@ -92,20 +92,20 @@ public class MumbleLinker {
 			return;
 		}
 		Minecraft minecraft = Minecraft.getInstance();
-		ClientWorld world = minecraft.level;
-		ClientPlayerEntity player = minecraft.player;
+		ClientLevel level = minecraft.level;
+		LocalPlayer player = minecraft.player;
 		
-		if( world != null && player != null ) {
+		if( level != null && player != null ) {
 			ensureLinking();
 			Objects.requireNonNull( mumble );
-			RegistryKey<World> worldDimension = world.dimension();
+			ResourceKey<Level> worldDimension = level.dimension();
 			autoConnect( worldDimension );
-			ActiveRenderInfo activeRenderInfo = minecraft.gameRenderer.getMainCamera();
-			float[] camPos = vec3dToArray( activeRenderInfo.getPosition() );
-			float[] camDir = vec3fToArray( activeRenderInfo.getLookVector() );
-			float[] camTop = vec3fToArray( activeRenderInfo.getUpVector() );
+			Camera camera = minecraft.gameRenderer.getMainCamera();
+			float[] camPos = vec3dToArray( camera.getPosition() );
+			float[] camDir = vec3fToArray( camera.getLookVector() );
+			float[] camTop = vec3fToArray( camera.getUpVector() );
 			if( !ClientConfig.useDimensionChannels() ) {
-				List<RegistryKey<World>> worlds = Objects.requireNonNull( Minecraft.getInstance().getConnection() )
+				List<ResourceKey<Level>> worlds = Objects.requireNonNull( Minecraft.getInstance().getConnection() )
 					.levels()
 					.stream()
 					.sorted()
@@ -113,7 +113,7 @@ public class MumbleLinker {
 				
 				int index = -1;
 				for( int i = 0; i < worlds.size(); i++ ) {
-					if( worlds.get( i ).equals( world.dimension() ) ) {
+					if( worlds.get( i ).equals( level.dimension() ) ) {
 						index = i;
 					}
 				}
@@ -130,7 +130,7 @@ public class MumbleLinker {
 		}
 	}
 	
-	private static synchronized void autoConnect( @Nonnull RegistryKey<World> worldDimension ) {
+	private static synchronized void autoConnect( @Nonnull ResourceKey<Level> worldDimension ) {
 		
 		if( ClientConfig.shouldAutoConnect() ) {
 			if( ClientConfig.useDimensionChannels() ) {
@@ -147,7 +147,7 @@ public class MumbleLinker {
 		}
 	}
 	
-	private static void connectToMumble( @Nonnull RegistryKey<World> dimensionKey ) {
+	private static void connectToMumble( @Nonnull ResourceKey<Level> dimensionKey ) {
 		
 		try {
 			if( Desktop.isDesktopSupported() ) {
@@ -175,7 +175,7 @@ public class MumbleLinker {
 	}
 	
 	@Nonnull
-	private static String buildMumblePath( @Nonnull RegistryKey<World> dimensionKey ) {
+	private static String buildMumblePath( @Nonnull ResourceKey<Level> dimensionKey ) {
 		
 		String path = "/" + ClientConfig.getPath();
 		
@@ -186,14 +186,14 @@ public class MumbleLinker {
 	}
 	
 	@Nonnull
-	private static String getTrimedNameOfDimension( @Nonnull RegistryKey<World> dimensionKey ) {
+	private static String getTrimedNameOfDimension( @Nonnull ResourceKey<Level> dimensionKey ) {
 		
 		return StringUtils.capitalize( UNDERSCORE_PATTERN.matcher(
 			Objects.requireNonNull( dimensionKey.location() ).getPath() ).replaceAll( " " )
 		);
 	}
 	
-	private static float[] vec3dToArray( @Nonnull Vector3d vec3d ) {
+	private static float[] vec3dToArray( @Nonnull Vec3 vec3d ) {
 		
 		return vec3ToArray( (float)vec3d.x, (float)vec3d.y, -(float)vec3d.z );
 	}
