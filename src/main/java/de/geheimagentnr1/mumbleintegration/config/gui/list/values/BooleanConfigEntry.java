@@ -40,12 +40,7 @@ public class BooleanConfigEntry extends ValueConfigEntry<Boolean> {
 	}
 	
 	@Override
-	protected void drawValue(
-		@Nonnull PoseStack poseStack,
-		int rowTop,
-		int mouseX,
-		int mouseY,
-		float partialTicks ) {
+	protected void drawValue( @Nonnull PoseStack poseStack, int rowTop, int mouseX, int mouseY, float partialTicks ) {
 		
 		button.y = rowTop;
 		button.render( poseStack, mouseX, mouseY, partialTicks );

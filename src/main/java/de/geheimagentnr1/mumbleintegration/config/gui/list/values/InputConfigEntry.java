@@ -16,6 +16,7 @@ import java.util.function.Predicate;
 
 public abstract class InputConfigEntry<T> extends ValueConfigEntry<T> {
 	
+	
 	@Nonnull
 	private final EditBox textField;
 	
@@ -36,12 +37,7 @@ public abstract class InputConfigEntry<T> extends ValueConfigEntry<T> {
 	}
 	
 	@Override
-	protected void drawValue(
-		@Nonnull PoseStack poseStack,
-		int rowTop,
-		int mouseX,
-		int mouseY,
-		float partialTicks ) {
+	protected void drawValue( @Nonnull PoseStack poseStack, int rowTop, int mouseX, int mouseY, float partialTicks ) {
 		
 		textField.y = rowTop;
 		textField.render( poseStack, mouseX, mouseY, partialTicks );

@@ -26,10 +26,7 @@ public abstract class ConfigEntry extends ContainerObjectSelectionList.Entry<Con
 	private final TextComponent description;
 	
 	
-	protected ConfigEntry(
-		@Nonnull Minecraft _minecraft,
-		@Nonnull String _title,
-		@Nonnull String _description ) {
+	protected ConfigEntry( @Nonnull Minecraft _minecraft, @Nonnull String _title, @Nonnull String _description ) {
 		
 		minecraft = _minecraft;
 		title = _title;

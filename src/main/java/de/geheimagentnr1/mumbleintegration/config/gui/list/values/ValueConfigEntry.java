@@ -25,7 +25,7 @@ public abstract class ValueConfigEntry<T> extends ConfigEntry {
 		@Nonnull T _value,
 		@Nonnull Consumer<T> _saver ) {
 		
-		super(_minecraft, title, description );
+		super( _minecraft, title, description );
 		value = _value;
 		saver = _saver;
 	}

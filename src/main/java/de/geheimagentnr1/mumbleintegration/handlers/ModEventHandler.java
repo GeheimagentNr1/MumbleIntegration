@@ -35,9 +35,7 @@ public class ModEventHandler {
 		
 		ModLoadingContext.get().registerExtensionPoint(
 			ConfigGuiHandler.ConfigGuiFactory.class,
-			() -> new ConfigGuiHandler.ConfigGuiFactory(
-				( minecraft, screen ) -> new ModConfigScreen( screen )
-			)
+			() -> new ConfigGuiHandler.ConfigGuiFactory( ( minecraft, screen ) -> new ModConfigScreen( screen ) )
 		);
 	}
 }
