@@ -50,7 +50,9 @@ public class MumbleLinker {
 	
 	public static void link() {
 		
-		ensureLinking();
+		if( ClientConfig.isMumbleActive() ) {
+			ensureLinking();
+		}
 	}
 	
 	private static synchronized void ensureLinking() {
