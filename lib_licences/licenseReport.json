@@ -217,7 +217,7 @@
   {
     "project": "Apache Log4j API",
     "description": "The Apache Log4j API",
-    "version": "2.14.1",
+    "version": "2.17.1",
     "developers": [],
     "url": null,
     "year": null,
@@ -227,12 +227,12 @@
         "license_url": "https://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "org.apache.logging.log4j:log4j-api:2.14.1"
+    "dependency": "org.apache.logging.log4j:log4j-api:2.17.1"
   },
   {
     "project": "Apache Log4j Core",
     "description": "The Apache Log4j Implementation",
-    "version": "2.14.1",
+    "version": "2.17.1",
     "developers": [],
     "url": null,
     "year": null,
@@ -242,12 +242,12 @@
         "license_url": "https://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "org.apache.logging.log4j:log4j-core:2.14.1"
+    "dependency": "org.apache.logging.log4j:log4j-core:2.17.1"
   },
   {
     "project": "Apache Log4j SLF4J 1.8+ Binding",
     "description": "The Apache Log4j SLF4J 1.8 API binding to Log4j 2 Core",
-    "version": "2.14.1",
+    "version": "2.15.0",
     "developers": [],
     "url": null,
     "year": null,
@@ -257,7 +257,7 @@
         "license_url": "https://www.apache.org/licenses/LICENSE-2.0.txt"
       }
     ],
-    "dependency": "org.apache.logging.log4j:log4j-slf4j18-impl:2.14.1"
+    "dependency": "org.apache.logging.log4j:log4j-slf4j18-impl:2.15.0"
   },
   {
     "project": "asm",
@@ -377,14 +377,14 @@
   {
     "project": "Bootstrap launcher",
     "description": "Allows bootstrapping a modularized environment from a classpath one",
-    "version": "0.1.16",
+    "version": "0.1.17",
     "developers": [
       "cpw"
     ],
     "url": "https://github.com/cpw/bootstraplauncher",
     "year": null,
     "licenses": [],
-    "dependency": "cpw.mods:bootstraplauncher:0.1.16"
+    "dependency": "cpw.mods:bootstraplauncher:0.1.17"
   },
   {
     "project": "brigadier",
@@ -455,7 +455,7 @@
   {
     "project": "Core Mods",
     "description": "Core modding framework for use with forge",
-    "version": "5.0.1",
+    "version": "5.0.2",
     "developers": [
       "cpw"
     ],
@@ -467,7 +467,7 @@
         "license_url": "https://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt"
       }
     ],
-    "dependency": "net.minecraftforge:coremods:5.0.1"
+    "dependency": "net.minecraftforge:coremods:5.0.2"
   },
   {
     "project": "datafixerupper",
@@ -482,7 +482,7 @@
   {
     "project": "Event Bus",
     "description": "High performance Event Bus library",
-    "version": "5.0.3",
+    "version": "5.0.7",
     "developers": [
       "cpw",
       "LexManos"
@@ -495,7 +495,7 @@
         "license_url": "https://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt"
       }
     ],
-    "dependency": "net.minecraftforge:eventbus:5.0.3"
+    "dependency": "net.minecraftforge:eventbus:5.0.7"
   },
   {
     "project": "fastutil",
@@ -532,7 +532,7 @@
   {
     "project": "fmlcore",
     "description": "Modifactions to Minecraft to enable mod developers.",
-    "version": "1.17.1-37.0.18",
+    "version": "1.17.1-37.1.1",
     "developers": [],
     "url": "https://github.com/MinecraftForge/MinecraftForge",
     "year": null,
@@ -542,12 +542,12 @@
         "license_url": "https://github.com/MinecraftForge/MinecraftForge/blob/1.13-pre/LICENSE.txt"
       }
     ],
-    "dependency": "net.minecraftforge:fmlcore:1.17.1-37.0.18"
+    "dependency": "net.minecraftforge:fmlcore:1.17.1-37.1.1"
   },
   {
     "project": "fmlloader",
     "description": "Modifactions to Minecraft to enable mod developers.",
-    "version": "1.17.1-37.0.18",
+    "version": "1.17.1-37.1.1",
     "developers": [],
     "url": "https://github.com/MinecraftForge/MinecraftForge",
     "year": null,
@@ -557,22 +557,22 @@
         "license_url": "https://github.com/MinecraftForge/MinecraftForge/blob/1.13-pre/LICENSE.txt"
       }
     ],
-    "dependency": "net.minecraftforge:fmlloader:1.17.1-37.0.18"
+    "dependency": "net.minecraftforge:fmlloader:1.17.1-37.1.1"
   },
   {
     "project": "forge",
     "description": null,
-    "version": "1.17.1-37.0.18_mapped_official_1.17.1",
+    "version": "1.17.1-37.1.1_mapped_official_1.17.1",
     "developers": [],
     "url": null,
     "year": null,
     "licenses": [],
-    "dependency": "net.minecraftforge:forge:1.17.1-37.0.18_mapped_official_1.17.1"
+    "dependency": "net.minecraftforge:forge:1.17.1-37.1.1_mapped_official_1.17.1"
   },
   {
     "project": "Forge Service Provider Interface",
     "description": "API for services which can plug into forge, or which are used by forge in other places",
-    "version": "4.0.9",
+    "version": "4.0.11",
     "developers": [
       "cpw"
     ],
@@ -584,7 +584,7 @@
         "license_url": "https://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt"
       }
     ],
-    "dependency": "net.minecraftforge:forgespi:4.0.9"
+    "dependency": "net.minecraftforge:forgespi:4.0.11"
   },
   {
     "project": "Gson",
@@ -724,7 +724,7 @@
   {
     "project": "javafmllanguage",
     "description": "Modifactions to Minecraft to enable mod developers.",
-    "version": "1.17.1-37.0.18",
+    "version": "1.17.1-37.1.1",
     "developers": [],
     "url": "https://github.com/MinecraftForge/MinecraftForge",
     "year": null,
@@ -734,7 +734,7 @@
         "license_url": "https://github.com/MinecraftForge/MinecraftForge/blob/1.13-pre/LICENSE.txt"
       }
     ],
-    "dependency": "net.minecraftforge:javafmllanguage:1.17.1-37.0.18"
+    "dependency": "net.minecraftforge:javafmllanguage:1.17.1-37.1.1"
   },
   {
     "project": "JInput",
@@ -989,7 +989,7 @@
   {
     "project": "mclanguage",
     "description": "Modifactions to Minecraft to enable mod developers.",
-    "version": "1.17.1-37.0.18",
+    "version": "1.17.1-37.1.1",
     "developers": [],
     "url": "https://github.com/MinecraftForge/MinecraftForge",
     "year": null,
@@ -999,7 +999,7 @@
         "license_url": "https://github.com/MinecraftForge/MinecraftForge/blob/1.13-pre/LICENSE.txt"
       }
     ],
-    "dependency": "net.minecraftforge:mclanguage:1.17.1-37.0.18"
+    "dependency": "net.minecraftforge:mclanguage:1.17.1-37.1.1"
   },
   {
     "project": "MergeTool",
@@ -1019,16 +1019,31 @@
     "dependency": "net.minecraftforge:mergetool:1.1.3"
   },
   {
+    "project": "mixin",
+    "description": "Mixin",
+    "version": "0.8.4",
+    "developers": [],
+    "url": "http://www.spongepowered.org/",
+    "year": null,
+    "licenses": [
+      {
+        "license": "MIT license",
+        "license_url": "http://opensource.org/licenses/MIT"
+      }
+    ],
+    "dependency": "org.spongepowered:mixin:0.8.4"
+  },
+  {
     "project": "Mod Launcher",
     "description": "Common ModLauncher framework",
-    "version": "9.0.7",
+    "version": "9.0.21",
     "developers": [
       "cpw"
     ],
-    "url": "https://github.com/cpw/modlauncher",
+    "url": "https://github.com/McModLauncher/modlauncher",
     "year": null,
     "licenses": [],
-    "dependency": "cpw.mods:modlauncher:9.0.7"
+    "dependency": "cpw.mods:modlauncher:9.0.21"
   },
   {
     "project": "Netty/All-in-One",
@@ -1082,7 +1097,7 @@
   {
     "project": "OpenJDK Nashorn",
     "description": "Nashorn is an Open Source JavaScript (ECMAScript 5.1 and some 6 features) engine for the JVM.",
-    "version": "15.1.1",
+    "version": "15.3",
     "developers": [
       "Attila Szegedi"
     ],
@@ -1094,7 +1109,7 @@
         "license_url": "https://github.com/openjdk/nashorn/blob/main/LICENSE"
       }
     ],
-    "dependency": "org.openjdk.nashorn:nashorn-core:15.1.1"
+    "dependency": "org.openjdk.nashorn:nashorn-core:15.3"
   },
   {
     "project": "oshi-core",
@@ -1139,14 +1154,14 @@
   {
     "project": "Secure Modular Jar handler",
     "description": "Making the Java modular system provide security information",
-    "version": "0.9.47",
+    "version": "0.9.61",
     "developers": [
       "cpw"
     ],
-    "url": "https://github.com/cpw/securejarhandler",
+    "url": "https://github.com/McModLauncher/securejarhandler",
     "year": null,
     "licenses": [],
-    "dependency": "cpw.mods:securejarhandler:0.9.47"
+    "dependency": "cpw.mods:securejarhandler:0.9.61"
   },
   {
     "project": "SLF4J API Module",
