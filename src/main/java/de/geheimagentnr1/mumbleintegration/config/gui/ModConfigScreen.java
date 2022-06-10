@@ -8,8 +8,7 @@ import de.geheimagentnr1.mumbleintegration.config.gui.list.ConfigList;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.TooltipAccessor;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.util.FormattedCharSequence;
 
 import javax.annotation.Nonnull;
@@ -27,7 +26,7 @@ public class ModConfigScreen extends Screen {
 	
 	public ModConfigScreen( Screen _parent ) {
 		
-		super( new TextComponent( ClientConfig.getModName() ) );
+		super( Component.literal( ClientConfig.getModName() ) );
 		parent = _parent;
 	}
 	
@@ -41,7 +40,7 @@ public class ModConfigScreen extends Screen {
 			height - 25,
 			100,
 			20,
-			new TranslatableComponent( "gui.done" ),
+			Component.translatable( "gui.done" ),
 			w -> {
 				configList.save();
 				onClose();
@@ -52,7 +51,7 @@ public class ModConfigScreen extends Screen {
 			height - 25,
 			100,
 			20,
-			new TranslatableComponent( "gui.cancel" ),
+			Component.translatable( "gui.cancel" ),
 			w -> onClose()
 		) );
 	}

@@ -6,7 +6,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.narration.NarratableEntry;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 
 import javax.annotation.Nonnull;
 import java.util.List;
@@ -30,7 +30,7 @@ public abstract class InputConfigEntry<T> extends ValueConfigEntry<T> {
 		@Nonnull Predicate<String> filter ) {
 		
 		super( _minecraft, title, description, value, saver );
-		textField = new EditBox( minecraft.font, 220, 0, 98, 18, new TextComponent( "" ) );
+		textField = new EditBox( minecraft.font, 220, 0, 98, 18, Component.literal( "" ) );
 		textField.setResponder( this::setInputValue );
 		textField.setValue( String.valueOf( getValue() ) );
 		textField.setFilter( filter );

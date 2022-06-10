@@ -7,7 +7,6 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.narration.NarratableEntry;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 
 import javax.annotation.Nonnull;
 import java.util.List;
@@ -36,7 +35,7 @@ public class BooleanConfigEntry extends ValueConfigEntry<Boolean> {
 	
 	private Component buildShownText() {
 		
-		return new TextComponent( getValue() ? "Yes" : "No" );
+		return Component.literal( getValue() ? "Yes" : "No" );
 	}
 	
 	@Override
