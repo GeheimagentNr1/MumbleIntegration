@@ -4,7 +4,7 @@ import de.geheimagentnr1.mumbleintegration.MumbleIntegration;
 import de.geheimagentnr1.mumbleintegration.config.ClientConfig;
 import de.geheimagentnr1.mumbleintegration.config.gui.ModConfigScreen;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.ConfigGuiHandler;
+import net.minecraftforge.client.ConfigScreenHandler;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
@@ -34,8 +34,8 @@ public class ModEventHandler {
 	public static void handleClientSetupEvent( @Nonnull FMLClientSetupEvent event ) {
 		
 		ModLoadingContext.get().registerExtensionPoint(
-			ConfigGuiHandler.ConfigGuiFactory.class,
-			() -> new ConfigGuiHandler.ConfigGuiFactory( ( minecraft, screen ) -> new ModConfigScreen( screen ) )
+			ConfigScreenHandler.ConfigScreenFactory.class,
+			() -> new ConfigScreenHandler.ConfigScreenFactory( ( minecraft, screen ) -> new ModConfigScreen( screen ) )
 		);
 	}
 }

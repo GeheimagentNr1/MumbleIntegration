@@ -21,13 +21,13 @@ public class ForgeEventHandler {
 	private static final Logger LOGGER = LogManager.getLogger( ForgeEventHandler.class );
 	
 	@SubscribeEvent
-	public static void handleLoggedInEvent( @Nonnull ClientPlayerNetworkEvent.LoggedInEvent event ) {
+	public static void handleLoggingInEvent( @Nonnull ClientPlayerNetworkEvent.LoggingIn event ) {
 		
 		MumbleLinker.link();
 	}
 	
 	@SubscribeEvent
-	public static void handleLoggedOutEvent( @Nonnull ClientPlayerNetworkEvent.LoggedOutEvent event ) {
+	public static void handleLoggingOutEvent( @Nonnull ClientPlayerNetworkEvent.LoggingOut event ) {
 		
 		MumbleLinker.unlink();
 	}
