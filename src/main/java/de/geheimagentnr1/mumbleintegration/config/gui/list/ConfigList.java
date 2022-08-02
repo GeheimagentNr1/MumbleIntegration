@@ -30,31 +30,36 @@ public class ConfigList extends ContainerObjectSelectionList<ConfigEntry> {
 				ClientConfig.isMumbleActive(),
 				ClientConfig::setMumbleActive
 			),
-			new BooleanConfigEntry( minecraft,
+			new BooleanConfigEntry(
+				minecraft,
 				"Auto Connect",
 				"Should mumble be started automated?",
 				ClientConfig.shouldAutoConnect(),
 				ClientConfig::setAutoConnect
 			),
-			new StringConfigEntry( minecraft,
+			new StringConfigEntry(
+				minecraft,
 				"Address",
 				"Address of the mumble server.",
 				ClientConfig.getAddress(),
 				ClientConfig::setAddress
 			),
-			new IntegerConfigEntry( minecraft,
+			new IntegerConfigEntry(
+				minecraft,
 				"Port",
 				"Port of the mumble server.",
 				ClientConfig.getPort(),
 				ClientConfig::setPort
 			),
-			new StringConfigEntry( minecraft,
+			new StringConfigEntry(
+				minecraft,
 				"Path",
 				"Path of the mumble channel.",
 				ClientConfig.getPath(),
 				ClientConfig::setPath
 			),
-			new BooleanConfigEntry( minecraft,
+			new BooleanConfigEntry(
+				minecraft,
 				"Use Dimension Channels",
 				"Use subchannels for each dimension?",
 				ClientConfig.useDimensionChannels(),
