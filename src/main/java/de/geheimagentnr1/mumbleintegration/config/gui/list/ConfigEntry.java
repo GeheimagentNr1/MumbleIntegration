@@ -4,7 +4,6 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.ContainerObjectSelectionList;
-import net.minecraft.client.gui.components.TooltipAccessor;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.FormattedCharSequence;
 
@@ -13,7 +12,7 @@ import java.util.List;
 import java.util.Objects;
 
 
-public abstract class ConfigEntry extends ContainerObjectSelectionList.Entry<ConfigEntry> implements TooltipAccessor {
+public abstract class ConfigEntry extends ContainerObjectSelectionList.Entry<ConfigEntry> {
 	
 	
 	@Nonnull
@@ -66,7 +65,6 @@ public abstract class ConfigEntry extends ContainerObjectSelectionList.Entry<Con
 	public abstract void save();
 	
 	@Nonnull
-	@Override
 	public List<FormattedCharSequence> getTooltip() {
 		
 		return minecraft.font.split( description, 200 );

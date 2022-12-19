@@ -6,7 +6,6 @@ import de.geheimagentnr1.mumbleintegration.config.ClientConfig;
 import de.geheimagentnr1.mumbleintegration.config.gui.list.ConfigEntry;
 import de.geheimagentnr1.mumbleintegration.config.gui.list.ConfigList;
 import net.minecraft.client.gui.components.Button;
-import net.minecraft.client.gui.components.TooltipAccessor;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.FormattedCharSequence;
@@ -35,25 +34,24 @@ public class ModConfigScreen extends Screen {
 		
 		configList = new ConfigList( minecraft, width, height, 32, height - 32, 25 );
 		addWidget( configList );
-		addRenderableWidget( new Button(
-			width / 2 - 100,
-			height - 25,
-			100,
-			20,
-			Component.translatable( "gui.done" ),
-			w -> {
-				configList.save();
-				onClose();
-			}
-		) );
-		addRenderableWidget( new Button(
-			width / 2 + 5,
-			height - 25,
-			100,
-			20,
-			Component.translatable( "gui.cancel" ),
-			w -> onClose()
-		) );
+		addRenderableWidget(
+			Button.builder(
+					Component.translatable( "gui.done" ),
+					w -> {
+						configList.save();
+						onClose();
+					}
+				)
+				.pos( width / 2 - 100, height - 25 )
+				.size( 100, 20 )
+				.build()
+		);
+		addRenderableWidget(
+			Button.builder( Component.translatable( "gui.cancel" ), w -> onClose() )
+				.pos( width / 2 + 5, height - 25 )
+				.size( 100, 20 )
+				.build()
+		);
 	}
 	
 	@Override
@@ -72,9 +70,7 @@ public class ModConfigScreen extends Screen {
 	private List<FormattedCharSequence> tooltipAt( int mouseX, int mouseY ) {
 		
 		Optional<ConfigEntry> optional = configList.getMouseOver( mouseX, mouseY );
-		return optional.isPresent() && optional.get() instanceof TooltipAccessor
-			? ( (TooltipAccessor)optional.get() ).getTooltip()
-			: ImmutableList.of();
+		return optional.map( ConfigEntry::getTooltip ).orElseGet( ImmutableList::of );
 	}
 	
 	@Override

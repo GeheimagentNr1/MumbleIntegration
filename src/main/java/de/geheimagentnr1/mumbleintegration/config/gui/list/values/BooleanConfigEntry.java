@@ -27,10 +27,15 @@ public class BooleanConfigEntry extends ValueConfigEntry<Boolean> {
 		@Nonnull Consumer<Boolean> saver ) {
 		
 		super( _minecraft, title, description, value, saver );
-		button = new Button( 220, 0, 100, 20, buildShownText(), pressedButton -> {
-			setValue( !getValue() );
-			pressedButton.setMessage( buildShownText() );
-		} );
+		button = Button.builder(
+				buildShownText(), pressedButton -> {
+					setValue( !getValue() );
+					pressedButton.setMessage( buildShownText() );
+				}
+			)
+			.pos( 220, 0 )
+			.size( 100, 20 )
+			.build();
 	}
 	
 	private Component buildShownText() {
@@ -41,7 +46,7 @@ public class BooleanConfigEntry extends ValueConfigEntry<Boolean> {
 	@Override
 	protected void drawValue( @Nonnull PoseStack poseStack, int rowTop, int mouseX, int mouseY, float partialTicks ) {
 		
-		button.y = rowTop;
+		button.setY( rowTop );
 		button.render( poseStack, mouseX, mouseY, partialTicks );
 	}
 	

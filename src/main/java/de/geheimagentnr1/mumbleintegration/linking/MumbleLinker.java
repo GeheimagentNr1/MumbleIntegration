@@ -1,6 +1,5 @@
 package de.geheimagentnr1.mumbleintegration.linking;
 
-import com.mojang.math.Vector3f;
 import com.skaggsm.jmumblelink.MumbleLink;
 import com.skaggsm.jmumblelink.MumbleLinkImpl;
 import de.geheimagentnr1.mumbleintegration.config.ClientConfig;
@@ -14,6 +13,7 @@ import net.minecraft.world.phys.Vec3;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.joml.Vector3f;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
