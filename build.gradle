@@ -5,7 +5,7 @@ plugins {
     id("com.jaredsburrows.license") version "0.9.0"
     id "net.linguica.maven-settings" version "0.5"
     id "com.github.johnrengelman.shadow" version "7.1.2"
-    id 'io.github.CDAGaming.cursegradle' version '1.6.0'
+    id 'io.github.CDAGaming.cursegradle' version '1.6.1'
     id "com.modrinth.minotaur" version "2.+"
 }
 
