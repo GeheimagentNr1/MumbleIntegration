@@ -1,8 +1,8 @@
 package de.geheimagentnr1.mumbleintegration.config.gui.list;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.ContainerObjectSelectionList;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.FormattedCharSequence;
@@ -34,7 +34,7 @@ public abstract class ConfigEntry extends ContainerObjectSelectionList.Entry<Con
 	
 	@Override
 	public void render(
-		@Nonnull PoseStack poseStack,
+		@Nonnull GuiGraphics guiGraphics,
 		int index,
 		int rowTop,
 		int rowLeft,
@@ -43,24 +43,24 @@ public abstract class ConfigEntry extends ContainerObjectSelectionList.Entry<Con
 		int mouseX,
 		int mouseY,
 		boolean hovered,
-		float partialTicks ) {
+		float partialTick ) {
 		
-		minecraft.font.draw(
-			poseStack,
+		guiGraphics.drawString(
+			minecraft.font,
 			title,
 			rowLeft + 80,
-			rowTop + (float)( height / 4 + minecraft.font.lineHeight / 2 ),
+			rowTop + height / 4 + minecraft.font.lineHeight / 2,
 			Objects.requireNonNull( ChatFormatting.WHITE.getColor() )
 		);
-		drawValue( poseStack, rowTop, mouseX, mouseY, partialTicks );
+		drawValue( guiGraphics, rowTop, mouseX, mouseY, partialTick );
 	}
 	
 	protected abstract void drawValue(
-		@Nonnull PoseStack poseStack,
+		@Nonnull GuiGraphics guiGraphics,
 		int rowTop,
 		int mouseX,
 		int mouseY,
-		float partialTicks );
+		float partialTick );
 	
 	public abstract void save();
 	

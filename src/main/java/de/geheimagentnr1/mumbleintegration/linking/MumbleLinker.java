@@ -24,7 +24,6 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 
 public class MumbleLinker {
@@ -111,7 +110,7 @@ public class MumbleLinker {
 					.levels()
 					.stream()
 					.sorted()
-					.collect( Collectors.toList() );
+					.toList();
 				
 				int index = -1;
 				for( int i = 0; i < worlds.size(); i++ ) {

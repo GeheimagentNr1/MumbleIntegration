@@ -1,10 +1,10 @@
 package de.geheimagentnr1.mumbleintegration.config.gui;
 
 import com.google.common.collect.ImmutableList;
-import com.mojang.blaze3d.vertex.PoseStack;
 import de.geheimagentnr1.mumbleintegration.config.ClientConfig;
 import de.geheimagentnr1.mumbleintegration.config.gui.list.ConfigEntry;
 import de.geheimagentnr1.mumbleintegration.config.gui.list.ConfigList;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
@@ -55,15 +55,15 @@ public class ModConfigScreen extends Screen {
 	}
 	
 	@Override
-	public void render( @Nonnull PoseStack poseStack, int mouseX, int mouseY, float partialTicks ) {
+	public void render( @Nonnull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick ) {
 		
-		renderBackground( poseStack );
-		configList.render( poseStack, mouseX, mouseY, partialTicks );
-		drawCenteredString( poseStack, font, title, width / 2, 5, 16777215 );
-		super.render( poseStack, mouseX, mouseY, partialTicks );
+		renderBackground( guiGraphics );
+		configList.render( guiGraphics, mouseX, mouseY, partialTick );
+		guiGraphics.drawCenteredString( font, title, width / 2, 5, 16777215 );
+		super.render( guiGraphics, mouseX, mouseY, partialTick );
 		List<FormattedCharSequence> list = tooltipAt( mouseX, mouseY );
 		if( list != null ) {
-			renderTooltip( poseStack, list, mouseX, mouseY );
+			guiGraphics.renderTooltip( font, list, mouseX, mouseY );
 		}
 	}
 	

@@ -1,0 +1,38 @@
+repositories {
+    mavenCentral()
+    maven {
+        url = 'https://maven.skaggsm.com/releases'
+    }
+}
+
+jarJar.enable()
+
+configurations {
+    implementation.extendsFrom jarJar
+}
+
+dependencies {
+    jarJar("com.skaggsm:java-mumble-link:[${java_mumble_link_version},)") {
+        jarJar.pin(it, "${java_mumble_link_version}")
+        exclude group: 'org.jetbrains.kotlin', module: 'kotlin-stdlib-jdk8'
+        exclude group: 'net.java.dev.jna'
+    }
+    jarJar("com.skaggsm:jvm-shared-memory:[0.2.7,)") {
+        jarJar.pin(it, "0.2.7")
+        exclude group: 'org.jetbrains.kotlin', module: 'kotlin-stdlib-jdk8'
+        exclude group: 'net.java.dev.jna'
+    }
+}
+
+tasks.jarJar.configure {
+    archiveClassifier = ""
+}
+tasks.jarJar.finalizedBy("reobfJarJar")
+
+reobf {
+    jarJar {}
+}
+
+jar {
+    archiveClassifier = "slim"
+}

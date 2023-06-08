@@ -1,8 +1,8 @@
 package de.geheimagentnr1.mumbleintegration.config.gui.list.values;
 
 import com.google.common.collect.ImmutableList;
-import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.narration.NarratableEntry;
@@ -44,10 +44,15 @@ public class BooleanConfigEntry extends ValueConfigEntry<Boolean> {
 	}
 	
 	@Override
-	protected void drawValue( @Nonnull PoseStack poseStack, int rowTop, int mouseX, int mouseY, float partialTicks ) {
+	protected void drawValue(
+		@Nonnull GuiGraphics guiGraphics,
+		int rowTop,
+		int mouseX,
+		int mouseY,
+		float partialTick ) {
 		
 		button.setY( rowTop );
-		button.render( poseStack, mouseX, mouseY, partialTicks );
+		button.render( guiGraphics, mouseX, mouseY, partialTick );
 	}
 	
 	@Nonnull

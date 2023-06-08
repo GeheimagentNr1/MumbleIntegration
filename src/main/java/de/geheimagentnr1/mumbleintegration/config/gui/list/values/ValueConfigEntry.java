@@ -20,12 +20,12 @@ public abstract class ValueConfigEntry<T> extends ConfigEntry {
 	//package-private
 	ValueConfigEntry(
 		@Nonnull Minecraft _minecraft,
-		@Nonnull String title,
-		@Nonnull String description,
+		@Nonnull String _title,
+		@Nonnull String _description,
 		@Nonnull T _value,
 		@Nonnull Consumer<T> _saver ) {
 		
-		super( _minecraft, title, description );
+		super( _minecraft, _title, _description );
 		value = _value;
 		saver = _saver;
 	}
