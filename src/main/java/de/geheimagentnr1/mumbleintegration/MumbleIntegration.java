@@ -1,23 +1,37 @@
 package de.geheimagentnr1.mumbleintegration;
 
+import de.geheimagentnr1.minecraft_forge_api.AbstractMod;
 import de.geheimagentnr1.mumbleintegration.config.ClientConfig;
-import net.minecraftforge.fml.ModLoadingContext;
+import de.geheimagentnr1.mumbleintegration.linking.MumbleLinker;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.config.ModConfig;
-
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.NotNull;
 
 
-@SuppressWarnings( "UtilityClassWithPublicConstructor" )
 @Mod( MumbleIntegration.MODID )
-public class MumbleIntegration {
+public class MumbleIntegration extends AbstractMod {
 	
 	
-	@Nonnull
-	public static final String MODID = "mumbleintegration";
+	@NotNull
+	static final String MODID = "mumbleintegration";
 	
-	public MumbleIntegration() {
+	@NotNull
+	@Override
+	public String getModId() {
 		
-		ModLoadingContext.get().registerConfig( ModConfig.Type.CLIENT, ClientConfig.CONFIG );
+		return MODID;
+	}
+	
+	@Override
+	protected void initMod() {
+		
+		DistExecutor.safeRunWhenOn(
+			Dist.CLIENT,
+			() -> () -> {
+				MumbleLinker mumbleLinker = registerEventHandler( new MumbleLinker( this ) );
+				registerConfig( abstractMod -> new ClientConfig( abstractMod, mumbleLinker ) );
+			}
+		);
 	}
 }

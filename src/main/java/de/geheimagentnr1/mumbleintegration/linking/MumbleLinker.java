@@ -2,7 +2,11 @@ package de.geheimagentnr1.mumbleintegration.linking;
 
 import com.skaggsm.jmumblelink.MumbleLink;
 import com.skaggsm.jmumblelink.MumbleLinkImpl;
+import de.geheimagentnr1.minecraft_forge_api.AbstractMod;
+import de.geheimagentnr1.minecraft_forge_api.events.ForgeEventHandlerInterface;
 import de.geheimagentnr1.mumbleintegration.config.ClientConfig;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -10,12 +14,15 @@ import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
+import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.config.ModConfig;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.awt.*;
 import java.io.IOException;
@@ -26,20 +33,24 @@ import java.util.Objects;
 import java.util.regex.Pattern;
 
 
-public class MumbleLinker {
+@Log4j2
+@RequiredArgsConstructor
+public class MumbleLinker implements ForgeEventHandlerInterface {
 	
 	
-	@Nonnull
-	private static final Logger LOGGER = LogManager.getLogger( MumbleLinker.class );
-	
-	@Nonnull
+	@NotNull
 	private static final Pattern UNDERSCORE_PATTERN = Pattern.compile( "_" );
 	
-	@Nullable
-	private static MumbleLink mumble = null;
+	@NotNull
+	private final AbstractMod abstractMod;
+	
+	private ClientConfig clientConfig;
 	
 	@Nullable
-	private static ResourceKey<Level> dimension = null;
+	private MumbleLink mumble = null;
+	
+	@Nullable
+	private ResourceKey<Level> dimension = null;
 	
 	static {
 		// Required to open URIs
@@ -47,49 +58,59 @@ public class MumbleLinker {
 		System.setProperty( "java.awt.headless", "false" );
 	}
 	
-	public static void link() {
+	@NotNull
+	private ClientConfig clientConfig() {
 		
-		if( ClientConfig.isMumbleActive() ) {
+		if( clientConfig == null ) {
+			clientConfig = abstractMod.getConfig( ModConfig.Type.CLIENT, ClientConfig.class )
+				.orElseThrow( () -> new IllegalStateException( "MumbleIntgration#ClientConfig not found" ) );
+		}
+		return clientConfig;
+	}
+	
+	public void link() {
+		
+		if( clientConfig().isMumbleActive() ) {
 			ensureLinking();
 		}
 	}
 	
-	private static synchronized void ensureLinking() {
+	private synchronized void ensureLinking() {
 		
 		if( mumble == null ) {
-			LOGGER.info( "Linking to VoIP client..." );
+			log.info( "Linking to VoIP client..." );
 			mumble = new MumbleLinkImpl();
 			mumble.setUiVersion( 2 );
 			mumble.setName( "Minecraft Mumble Integration Mod" );
 			mumble.setContext( "Minecraft" );
 			mumble.setDescription( "A Minecraft mod that provides position data to VoIP clients." );
-			LOGGER.info( "Linked" );
+			log.info( "Linked" );
 		}
 	}
 	
-	public static void unlink() {
+	public void unlink() {
 		
 		ensureUnlinking();
 	}
 	
-	private static synchronized void ensureUnlinking() {
+	private synchronized void ensureUnlinking() {
 		
 		if( mumble != null ) {
-			LOGGER.info( "Unlinking from VoIP client..." );
+			log.info( "Unlinking from VoIP client..." );
 			try {
 				mumble.close();
 			} catch( IOException exception ) {
-				LOGGER.error( "Failed to close mumble connection", exception );
+				log.error( "Failed to close mumble connection", exception );
 			}
 			mumble = null;
-			LOGGER.info( "Unlinked" );
+			log.info( "Unlinked" );
 		}
 		dimension = null;
 	}
 	
-	public static synchronized void updateData() {
+	private synchronized void updateData() {
 		
-		if( !ClientConfig.isMumbleActive() ) {
+		if( !clientConfig().isMumbleActive() ) {
 			return;
 		}
 		Minecraft minecraft = Minecraft.getInstance();
@@ -98,14 +119,13 @@ public class MumbleLinker {
 		
 		if( level != null && player != null ) {
 			ensureLinking();
-			Objects.requireNonNull( mumble );
 			ResourceKey<Level> worldDimension = level.dimension();
 			autoConnect( worldDimension );
 			Camera camera = minecraft.gameRenderer.getMainCamera();
 			float[] camPos = vec3dToArray( camera.getPosition() );
 			float[] camDir = vec3fToArray( camera.getLookVector() );
 			float[] camTop = vec3fToArray( camera.getUpVector() );
-			if( !ClientConfig.useDimensionChannels() ) {
+			if( !clientConfig().useDimensionChannels() ) {
 				List<ResourceKey<Level>> worlds = Objects.requireNonNull( Minecraft.getInstance().getConnection() )
 					.levels()
 					.stream()
@@ -120,6 +140,7 @@ public class MumbleLinker {
 				}
 				camPos[1] += index << 9;
 			}
+			Objects.requireNonNull( mumble );
 			mumble.incrementUiTick();
 			mumble.setAvatarPosition( camPos );
 			mumble.setAvatarFront( camDir );
@@ -131,10 +152,10 @@ public class MumbleLinker {
 		}
 	}
 	
-	private static synchronized void autoConnect( @Nonnull ResourceKey<Level> worldDimension ) {
+	private synchronized void autoConnect( @NotNull ResourceKey<Level> worldDimension ) {
 		
-		if( ClientConfig.shouldAutoConnect() ) {
-			if( ClientConfig.useDimensionChannels() ) {
+		if( clientConfig().shouldAutoConnect() ) {
+			if( clientConfig().useDimensionChannels() ) {
 				if( dimension != worldDimension ) {
 					dimension = worldDimension;
 					connectToMumble( dimension );
@@ -148,64 +169,88 @@ public class MumbleLinker {
 		}
 	}
 	
-	private static void connectToMumble( @Nonnull ResourceKey<Level> dimensionKey ) {
+	private void connectToMumble( @NotNull ResourceKey<Level> dimensionKey ) {
 		
 		try {
 			if( Desktop.isDesktopSupported() ) {
 				Desktop desktop = Desktop.getDesktop();
 				if( desktop.isSupported( Desktop.Action.BROWSE ) ) {
-					LOGGER.info( "Auto Connecting to mumble" );
+					log.info( "Auto Connecting to mumble" );
 					desktop.browse( new URI(
 						"mumble",
 						null,
-						ClientConfig.getAddress(),
-						ClientConfig.getPort(),
+						clientConfig().getAddress(),
+						clientConfig().getPort(),
 						buildMumblePath( dimensionKey ),
 						null,
 						null
 					) );
 				} else {
-					LOGGER.warn( "Auto Connect failed: Desktop Api browse action not supported" );
+					log.warn( "Auto Connect failed: Desktop Api browse action not supported" );
 				}
 			} else {
-				LOGGER.warn( "Auto Connect failed: Desktop Api not supported" );
+				log.warn( "Auto Connect failed: Desktop Api not supported" );
 			}
 		} catch( IOException | URISyntaxException | HeadlessException exception ) {
-			LOGGER.error( "Connection To Mumble Failed", exception );
+			log.error( "Connection To Mumble Failed", exception );
 		}
 	}
 	
-	@Nonnull
-	private static String buildMumblePath( @Nonnull ResourceKey<Level> dimensionKey ) {
+	@NotNull
+	private String buildMumblePath( @NotNull ResourceKey<Level> dimensionKey ) {
 		
-		String path = "/" + ClientConfig.getPath();
+		String path = "/" + clientConfig().getPath();
 		
-		if( !ClientConfig.useDimensionChannels() ) {
+		if( !clientConfig().useDimensionChannels() ) {
 			return path;
 		}
 		return path + "/" + getTrimedNameOfDimension( dimensionKey );
 	}
 	
-	@Nonnull
-	private static String getTrimedNameOfDimension( @Nonnull ResourceKey<Level> dimensionKey ) {
+	@NotNull
+	private String getTrimedNameOfDimension( @NotNull ResourceKey<Level> dimensionKey ) {
 		
 		return StringUtils.capitalize( UNDERSCORE_PATTERN.matcher(
 			Objects.requireNonNull( dimensionKey.location() ).getPath() ).replaceAll( " " )
 		);
 	}
 	
-	private static float[] vec3dToArray( @Nonnull Vec3 vec3d ) {
+	private float[] vec3dToArray( @NotNull Vec3 vec3d ) {
 		
 		return vec3ToArray( (float)vec3d.x, (float)vec3d.y, -(float)vec3d.z );
 	}
 	
-	private static float[] vec3fToArray( @Nonnull Vector3f vector3f ) {
+	private float[] vec3fToArray( @NotNull Vector3f vector3f ) {
 		
 		return vec3ToArray( vector3f.x(), vector3f.y(), -vector3f.z() );
 	}
 	
-	private static float[] vec3ToArray( float x, float y, float z ) {
+	private float[] vec3ToArray( float x, float y, float z ) {
 		
 		return new float[] { x, y, z };
+	}
+	
+	@Override
+	public void handlePlayerLoggedInEvent( @NotNull PlayerEvent.PlayerLoggedInEvent event ) {
+		
+		link();
+	}
+	
+	@SubscribeEvent
+	@Override
+	public void handleClientPlayerNetworkLoggingOutEvent( @NotNull ClientPlayerNetworkEvent.LoggingOut event ) {
+		
+		unlink();
+	}
+	
+	@SubscribeEvent
+	@Override
+	public void handleClientTickEvent( @NotNull TickEvent.ClientTickEvent event ) {
+		
+		try {
+			updateData();
+		} catch( @SuppressWarnings( "ProhibitedExceptionCaught" ) NullPointerException exception ) {
+			log.error( "Error during mumble data update", exception );
+		}
 	}
 }

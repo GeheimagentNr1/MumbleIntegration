@@ -1,82 +1,78 @@
 package de.geheimagentnr1.mumbleintegration.config.gui;
 
-import com.google.common.collect.ImmutableList;
+import de.geheimagentnr1.minecraft_forge_api.AbstractMod;
+import de.geheimagentnr1.minecraft_forge_api.config.gui.AbstractConfigScreen;
+import de.geheimagentnr1.minecraft_forge_api.config.gui.list.ConfigEntry;
+import de.geheimagentnr1.minecraft_forge_api.config.gui.list.values.BooleanConfigEntry;
+import de.geheimagentnr1.minecraft_forge_api.config.gui.list.values.IntegerConfigEntry;
+import de.geheimagentnr1.minecraft_forge_api.config.gui.list.values.StringConfigEntry;
 import de.geheimagentnr1.mumbleintegration.config.ClientConfig;
-import de.geheimagentnr1.mumbleintegration.config.gui.list.ConfigEntry;
-import de.geheimagentnr1.mumbleintegration.config.gui.list.ConfigList;
-import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.network.chat.Component;
-import net.minecraft.util.FormattedCharSequence;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 
-public class ModConfigScreen extends Screen {
+public class ModConfigScreen extends AbstractConfigScreen<ClientConfig> {
 	
 	
-	private final Screen parent;
-	
-	private ConfigList configList;
-	
-	public ModConfigScreen( Screen _parent ) {
+	public ModConfigScreen(
+		@NotNull AbstractMod _abstractMod,
+		@NotNull ClientConfig _config,
+		@NotNull Screen _parent ) {
 		
-		super( Component.literal( ClientConfig.getModName() ) );
-		parent = _parent;
+		super( _abstractMod, _config, _parent );
 	}
 	
+	@NotNull
 	@Override
-	protected void init() {
-		
-		configList = new ConfigList( minecraft, width, height, 32, height - 32, 25 );
-		addWidget( configList );
-		addRenderableWidget(
-			Button.builder(
-					Component.translatable( "gui.done" ),
-					w -> {
-						configList.save();
-						onClose();
-					}
-				)
-				.pos( width / 2 - 100, height - 25 )
-				.size( 100, 20 )
-				.build()
-		);
-		addRenderableWidget(
-			Button.builder( Component.translatable( "gui.cancel" ), w -> onClose() )
-				.pos( width / 2 + 5, height - 25 )
-				.size( 100, 20 )
-				.build()
-		);
-	}
-	
-	@Override
-	public void render( @Nonnull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick ) {
-		
-		renderBackground( guiGraphics );
-		configList.render( guiGraphics, mouseX, mouseY, partialTick );
-		guiGraphics.drawCenteredString( font, title, width / 2, 5, 16777215 );
-		super.render( guiGraphics, mouseX, mouseY, partialTick );
-		List<FormattedCharSequence> list = tooltipAt( mouseX, mouseY );
-		if( list != null ) {
-			guiGraphics.renderTooltip( font, list, mouseX, mouseY );
-		}
-	}
-	
-	private List<FormattedCharSequence> tooltipAt( int mouseX, int mouseY ) {
-		
-		Optional<ConfigEntry> optional = configList.getMouseOver( mouseX, mouseY );
-		return optional.map( ConfigEntry::getTooltip ).orElseGet( ImmutableList::of );
-	}
-	
-	@Override
-	public void onClose() {
+	protected List<ConfigEntry> configEntries() {
 		
 		Objects.requireNonNull( minecraft );
-		minecraft.setScreen( parent );
+		return List.of(
+			new BooleanConfigEntry(
+				minecraft,
+				"Mumble Active",
+				"Should the mumble integration be activ?",
+				config.isMumbleActive(),
+				config::setMumbleActive
+			),
+			new BooleanConfigEntry(
+				minecraft,
+				"Auto Connect",
+				"Should mumble be started automated?",
+				config.shouldAutoConnect(),
+				config::setAutoConnect
+			),
+			new StringConfigEntry(
+				minecraft,
+				"Address",
+				"Address of the mumble server.",
+				config.getAddress(),
+				config::setAddress
+			),
+			new IntegerConfigEntry(
+				minecraft,
+				"Port",
+				"Port of the mumble server.",
+				config.getPort(),
+				config::setPort
+			),
+			new StringConfigEntry(
+				minecraft,
+				"Path",
+				"Path of the mumble channel.",
+				config.getPath(),
+				config::setPath
+			),
+			new BooleanConfigEntry(
+				minecraft,
+				"Use Dimension Channels",
+				"Use subchannels for each dimension?",
+				config.useDimensionChannels(),
+				config::setUseDimensionChannels
+			)
+		);
 	}
 }
