@@ -1,6 +1,7 @@
 repositories {
     maven {
-        url = 'https://maven.skaggsm.com/releases'
+        name = "skaggsm"
+        url = uri("https://maven.skaggsm.com/releases")
     }
 }
 
