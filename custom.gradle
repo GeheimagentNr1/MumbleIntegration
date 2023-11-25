@@ -6,7 +6,7 @@ repositories {
 }
 
 dependencies {
-    implementation("com.skaggsm:java-mumble-link:${java_mumble_link_version}") {
+    minecraftLibrary("com.skaggsm:java-mumble-link:${java_mumble_link_version}") {
         exclude group: 'org.jetbrains.kotlin', module: 'kotlin-stdlib-jdk8'
         exclude group: 'net.java.dev.jna'
     }
