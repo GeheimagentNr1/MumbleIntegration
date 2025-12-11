@@ -1,92 +1,91 @@
 package de.geheimagentnr1.mumbleintegration.config;
 
-import de.geheimagentnr1.minecraft_forge_api.AbstractMod;
-import de.geheimagentnr1.minecraft_forge_api.config.AbstractConfig;
+import de.geheimagentnr1.mumbleintegration.MumbleIntegration;
 import de.geheimagentnr1.mumbleintegration.config.gui.ModConfigScreen;
 import de.geheimagentnr1.mumbleintegration.linking.MumbleLinker;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.ConfigScreenHandler;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.ModLoadingContext;
-import net.minecraftforge.fml.config.ModConfig;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.ModList;
+import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
+import net.neoforged.neoforge.common.ModConfigSpec;
 import org.jetbrains.annotations.NotNull;
 
 
-public class ClientConfig extends AbstractConfig {
+public class ClientConfig {
 	
 	
 	@NotNull
-	private static final String MUMBLE_ACTIVE_KEY = "mumble_active";
+	private final ModConfigSpec spec;
 	
 	@NotNull
-	private static final String AUTO_CONNECT_KEY = "auto_connect";
+	private final ModConfigSpec.BooleanValue mumbleActive;
 	
 	@NotNull
-	private static final String ADDRESS_KEY = "address";
+	private final ModConfigSpec.BooleanValue autoConnect;
 	
 	@NotNull
-	private static final String PORT_KEY = "port";
+	private final ModConfigSpec.ConfigValue<String> address;
 	
 	@NotNull
-	private static final String PATH_KEY = "path";
+	private final ModConfigSpec.IntValue port;
 	
 	@NotNull
-	private static final String USE_DIMENSION_CHANNELS_KEY = "use_dimension_channels";
+	private final ModConfigSpec.ConfigValue<String> path;
+	
+	@NotNull
+	private final ModConfigSpec.BooleanValue useDimensionChannels;
 	
 	@NotNull
 	private final MumbleLinker mumbleLinker;
 	
-	public ClientConfig( @NotNull AbstractMod _abstractMod, @NotNull MumbleLinker _mumbleLinker ) {
+	public ClientConfig( @NotNull MumbleLinker _mumbleLinker ) {
 		
-		super( _abstractMod );
 		mumbleLinker = _mumbleLinker;
+		
+		ModConfigSpec.Builder builder = new ModConfigSpec.Builder();
+		
+		mumbleActive = builder
+			.comment( "Should the Mumble integration be active?" )
+			.define( "mumble_active", false );
+		
+		autoConnect = builder
+			.comment( "Should Mumble be connect automated?" )
+			.define( "auto_connect", false );
+		
+		address = builder
+			.comment( "Address of the Mumble server." )
+			.define( "address", "" );
+		
+		port = builder
+			.comment( "Port of the Mumble server." )
+			.defineInRange( "port", 64738, 0, 65535 );
+		
+		path = builder
+			.comment( "Path of the Mumble channel." )
+			.define( "path", "" );
+		
+		useDimensionChannels = builder
+			.comment( "Use subchannels for each dimension?" )
+			.define( "use_dimension_channels", false );
+		
+		spec = builder.build();
 	}
 	
 	@NotNull
-	@Override
-	public ModConfig.Type type() {
+	public ModConfigSpec getSpec() {
 		
-		return ModConfig.Type.CLIENT;
+		return spec;
 	}
 	
-	@Override
-	public boolean isEarlyLoad() {
+	public void registerConfigScreen() {
 		
-		return false;
-	}
-	
-	@Override
-	protected void registerConfigValues() {
-		
-		registerConfigValue( "Should the Mumble integration be active?", MUMBLE_ACTIVE_KEY, false );
-		registerConfigValue( "Should Mumble be connect automated?", AUTO_CONNECT_KEY, false );
-		registerConfigValue( "Address of the Mumble server.", ADDRESS_KEY, "" );
-		registerConfigValue(
-			"Port of the Mumble server.",
-			PORT_KEY,
-			( builder, path ) -> builder.defineInRange( path, 64738, 0, 65535 )
-		);
-		registerConfigValue( "Path of the Mumble channel.", PATH_KEY, "" );
-		registerConfigValue( "Use subchannels for each dimension?", USE_DIMENSION_CHANNELS_KEY, false );
-	}
-	
-	@OnlyIn( Dist.CLIENT )
-	@SubscribeEvent
-	@Override
-	public void handleFMLClientSetupEvent( @NotNull FMLClientSetupEvent event ) {
-		
-		ModLoadingContext.get().registerExtensionPoint(
-			ConfigScreenHandler.ConfigScreenFactory.class,
-			() -> new ConfigScreenHandler.ConfigScreenFactory(
-				( minecraft, screen ) -> new ModConfigScreen( abstractMod, this, screen )
+		ModList.get().getModContainerById( MumbleIntegration.MODID ).ifPresent( ( ModContainer modContainer ) ->
+			modContainer.registerExtensionPoint( IConfigScreenFactory.class, ( container, screen ) ->
+				new ModConfigScreen( this, screen )
 			)
 		);
 	}
 	
-	@Override
-	protected void handleConfigChanging() {
+	public void handleConfigChange() {
 		
 		if( isMumbleActive() ) {
 			mumbleLinker.link();
@@ -97,63 +96,64 @@ public class ClientConfig extends AbstractConfig {
 	
 	public boolean isMumbleActive() {
 		
-		return getValue( Boolean.class, MUMBLE_ACTIVE_KEY );
+		return mumbleActive.get();
 	}
 	
-	public void setMumbleActive( boolean mumbleActive ) {
+	public void setMumbleActive( boolean value ) {
 		
-		setValue( Boolean.class, MUMBLE_ACTIVE_KEY, mumbleActive );
+		mumbleActive.set( value );
+		handleConfigChange();
 	}
 	
 	public boolean shouldAutoConnect() {
 		
-		return getValue( Boolean.class, AUTO_CONNECT_KEY );
+		return autoConnect.get();
 	}
 	
-	public void setAutoConnect( boolean autoConnect ) {
+	public void setAutoConnect( boolean value ) {
 		
-		setValue( Boolean.class, AUTO_CONNECT_KEY, autoConnect );
+		autoConnect.set( value );
 	}
 	
 	@NotNull
 	public String getAddress() {
 		
-		return getValue( String.class, ADDRESS_KEY );
+		return address.get();
 	}
 	
-	public void setAddress( @NotNull String address ) {
+	public void setAddress( @NotNull String value ) {
 		
-		setValue( String.class, ADDRESS_KEY, address );
+		address.set( value );
 	}
 	
 	public int getPort() {
 		
-		return getValue( Integer.class, PORT_KEY );
+		return port.get();
 	}
 	
-	public void setPort( int port ) {
+	public void setPort( int value ) {
 		
-		setValue( Integer.class, PORT_KEY, port );
+		port.set( value );
 	}
 	
 	@NotNull
 	public String getPath() {
 		
-		return getValue( String.class, PATH_KEY );
+		return path.get();
 	}
 	
-	public void setPath( @NotNull String path ) {
+	public void setPath( @NotNull String value ) {
 		
-		setValue( String.class, PATH_KEY, path );
+		path.set( value );
 	}
 	
 	public boolean useDimensionChannels() {
 		
-		return getValue( Boolean.class, USE_DIMENSION_CHANNELS_KEY );
+		return useDimensionChannels.get();
 	}
 	
-	public void setUseDimensionChannels( boolean useDimensionChannels ) {
+	public void setUseDimensionChannels( boolean value ) {
 		
-		setValue( Boolean.class, USE_DIMENSION_CHANNELS_KEY, useDimensionChannels );
+		useDimensionChannels.set( value );
 	}
 }

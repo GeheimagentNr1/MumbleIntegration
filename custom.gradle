@@ -6,21 +6,21 @@ repositories {
 }
 
 dependencies {
-    minecraftLibrary("com.skaggsm:java-mumble-link:${java_mumble_link_version}") {
+    implementation("com.skaggsm:java-mumble-link:${java_mumble_link_version}") {
         exclude group: 'org.jetbrains.kotlin', module: 'kotlin-stdlib-jdk8'
         exclude group: 'net.java.dev.jna'
     }
 
-    jarJar("com.skaggsm:java-mumble-link:[${java_mumble_link_version},)") {
-        jarJar.pin(it, "${java_mumble_link_version}")
-        transitive = false
-        exclude group: 'org.jetbrains.kotlin', module: 'kotlin-stdlib-jdk8'
-        exclude group: 'net.java.dev.jna'
+    jarJar(implementation("com.skaggsm:java-mumble-link:${java_mumble_link_version}")) {
+        version {
+            strictly "[${java_mumble_link_version},)"
+            prefer "${java_mumble_link_version}"
+        }
     }
-    jarJar("com.skaggsm:jvm-shared-memory:[0.2.7,)") {
-        jarJar.pin(it, "0.2.7")
-        transitive = false
-        exclude group: 'org.jetbrains.kotlin', module: 'kotlin-stdlib-jdk8'
-        exclude group: 'net.java.dev.jna'
+    jarJar(implementation("com.skaggsm:jvm-shared-memory:0.2.7")) {
+        version {
+            strictly "[0.2.7,)"
+            prefer "0.2.7"
+        }
     }
 }

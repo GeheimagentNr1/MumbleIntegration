@@ -2,10 +2,7 @@ package de.geheimagentnr1.mumbleintegration.linking;
 
 import com.skaggsm.jmumblelink.MumbleLink;
 import com.skaggsm.jmumblelink.MumbleLinkImpl;
-import de.geheimagentnr1.minecraft_forge_api.AbstractMod;
-import de.geheimagentnr1.minecraft_forge_api.events.ForgeEventHandlerInterface;
 import de.geheimagentnr1.mumbleintegration.config.ClientConfig;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
@@ -14,11 +11,9 @@ import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.config.ModConfig;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
+import net.neoforged.neoforge.client.event.ClientTickEvent;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
@@ -34,16 +29,13 @@ import java.util.regex.Pattern;
 
 
 @Log4j2
-@RequiredArgsConstructor
-public class MumbleLinker implements ForgeEventHandlerInterface {
+public class MumbleLinker {
 	
 	
 	@NotNull
 	private static final Pattern UNDERSCORE_PATTERN = Pattern.compile( "_" );
 	
-	@NotNull
-	private final AbstractMod abstractMod;
-	
+	@Nullable
 	private ClientConfig clientConfig;
 	
 	@Nullable
@@ -58,12 +50,16 @@ public class MumbleLinker implements ForgeEventHandlerInterface {
 		System.setProperty( "java.awt.headless", "false" );
 	}
 	
+	public void setClientConfig( @NotNull ClientConfig _clientConfig ) {
+		
+		clientConfig = _clientConfig;
+	}
+	
 	@NotNull
 	private ClientConfig clientConfig() {
 		
 		if( clientConfig == null ) {
-			clientConfig = abstractMod.getConfig( ModConfig.Type.CLIENT, ClientConfig.class )
-				.orElseThrow( () -> new IllegalStateException( "MumbleIntgration#ClientConfig not found" ) );
+			throw new IllegalStateException( "MumbleIntegration#ClientConfig not set" );
 		}
 		return clientConfig;
 	}
@@ -230,22 +226,20 @@ public class MumbleLinker implements ForgeEventHandlerInterface {
 		return new float[] { x, y, z };
 	}
 	
-	@Override
-	public void handlePlayerLoggedInEvent( @NotNull PlayerEvent.PlayerLoggedInEvent event ) {
+	@SubscribeEvent
+	public void handleClientPlayerNetworkLoggingInEvent( @NotNull ClientPlayerNetworkEvent.LoggingIn event ) {
 		
 		link();
 	}
 	
 	@SubscribeEvent
-	@Override
 	public void handleClientPlayerNetworkLoggingOutEvent( @NotNull ClientPlayerNetworkEvent.LoggingOut event ) {
 		
 		unlink();
 	}
 	
 	@SubscribeEvent
-	@Override
-	public void handleClientTickEvent( @NotNull TickEvent.ClientTickEvent event ) {
+	public void handleClientTickEvent( @NotNull ClientTickEvent.Post event ) {
 		
 		try {
 			updateData();

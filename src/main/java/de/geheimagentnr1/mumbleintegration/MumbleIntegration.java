@@ -1,37 +1,51 @@
 package de.geheimagentnr1.mumbleintegration;
 
-import de.geheimagentnr1.minecraft_forge_api.AbstractMod;
 import de.geheimagentnr1.mumbleintegration.config.ClientConfig;
 import de.geheimagentnr1.mumbleintegration.linking.MumbleLinker;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.config.ModConfig;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.neoforge.common.NeoForge;
 import org.jetbrains.annotations.NotNull;
 
 
-@Mod( MumbleIntegration.MODID )
-public class MumbleIntegration extends AbstractMod {
+@Mod( value = MumbleIntegration.MODID, dist = Dist.CLIENT )
+public class MumbleIntegration {
 	
 	
 	@NotNull
-	static final String MODID = "mumbleintegration";
+	public static final String MODID = "mumbleintegration";
 	
 	@NotNull
-	@Override
-	public String getModId() {
+	private final ClientConfig clientConfig;
+	
+	@NotNull
+	private final MumbleLinker mumbleLinker;
+	
+	public MumbleIntegration( @NotNull IEventBus modEventBus, @NotNull ModContainer modContainer ) {
 		
-		return MODID;
+		mumbleLinker = new MumbleLinker();
+		clientConfig = new ClientConfig( mumbleLinker );
+		
+		modContainer.registerConfig( ModConfig.Type.CLIENT, clientConfig.getSpec() );
+		
+		NeoForge.EVENT_BUS.register( mumbleLinker );
+		
+		modEventBus.addListener( this::onClientSetup );
 	}
 	
-	@Override
-	protected void initMod() {
+	private void onClientSetup( @NotNull FMLClientSetupEvent event ) {
 		
-		DistExecutor.safeRunWhenOn(
-			Dist.CLIENT,
-			() -> () -> {
-				MumbleLinker mumbleLinker = registerEventHandler( new MumbleLinker( this ) );
-				registerConfig( abstractMod -> new ClientConfig( abstractMod, mumbleLinker ) );
-			}
-		);
+		mumbleLinker.setClientConfig( clientConfig );
+		clientConfig.registerConfigScreen();
+	}
+	
+	@NotNull
+	public ClientConfig getClientConfig() {
+		
+		return clientConfig;
 	}
 }
