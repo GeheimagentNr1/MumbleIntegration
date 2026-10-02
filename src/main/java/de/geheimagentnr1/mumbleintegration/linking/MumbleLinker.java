@@ -16,7 +16,7 @@ import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
-import org.joml.Vector3f;
+import org.joml.Vector3fc;
 
 import javax.annotation.Nullable;
 import java.awt.*;
@@ -118,9 +118,9 @@ public class MumbleLinker {
 			ResourceKey<Level> worldDimension = level.dimension();
 			autoConnect( worldDimension );
 			Camera camera = minecraft.gameRenderer.getMainCamera();
-			float[] camPos = vec3dToArray( camera.getPosition() );
-			float[] camDir = vec3fToArray( camera.getLookVector() );
-			float[] camTop = vec3fToArray( camera.getUpVector() );
+			float[] camPos = vec3dToArray( camera.position() );
+			float[] camDir = vec3fToArray( camera.forwardVector() );
+			float[] camTop = vec3fToArray( camera.upVector() );
 			if( !clientConfig().useDimensionChannels() ) {
 				List<ResourceKey<Level>> worlds = Objects.requireNonNull( Minecraft.getInstance().getConnection() )
 					.levels()
@@ -207,7 +207,7 @@ public class MumbleLinker {
 	private String getTrimedNameOfDimension( @NotNull ResourceKey<Level> dimensionKey ) {
 		
 		return StringUtils.capitalize( UNDERSCORE_PATTERN.matcher(
-			Objects.requireNonNull( dimensionKey.location() ).getPath() ).replaceAll( " " )
+			Objects.requireNonNull( dimensionKey.identifier() ).getPath() ).replaceAll( " " )
 		);
 	}
 	
@@ -216,7 +216,7 @@ public class MumbleLinker {
 		return vec3ToArray( (float)vec3d.x, (float)vec3d.y, -(float)vec3d.z );
 	}
 	
-	private float[] vec3fToArray( @NotNull Vector3f vector3f ) {
+	private float[] vec3fToArray( @NotNull Vector3fc vector3f ) {
 		
 		return vec3ToArray( vector3f.x(), vector3f.y(), -vector3f.z() );
 	}
