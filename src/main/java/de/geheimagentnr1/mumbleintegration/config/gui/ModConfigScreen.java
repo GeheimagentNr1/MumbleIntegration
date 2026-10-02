@@ -1,7 +1,7 @@
 package de.geheimagentnr1.mumbleintegration.config.gui;
 
 import de.geheimagentnr1.mumbleintegration.config.ClientConfig;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
@@ -107,10 +107,10 @@ public class ModConfigScreen extends Screen {
 	}
 	
 	@Override
-	public void render( @NotNull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick ) {
+	public void extractRenderState( @NotNull GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick ) {
 		
-		super.render( guiGraphics, mouseX, mouseY, partialTick );
-		guiGraphics.drawCenteredString( this.font, this.title, this.width / 2, 15, 0xFFFFFFFF );
+		super.extractRenderState( graphics, mouseX, mouseY, partialTick );
+		graphics.centeredText( this.font, this.title, this.width / 2, 15, 0xFFFFFFFF );
 		
 		int centerX = this.width / 2;
 		int labelX = centerX - 100 - 5;
@@ -118,20 +118,17 @@ public class ModConfigScreen extends Screen {
 		int spacing = 24;
 		
 		y += spacing * 2; // Skip first two buttons
-		drawLabel( guiGraphics, "Address:", labelX, y + 6 );
+		drawLabel( graphics, "Address:", labelX, y + 6 );
 		y += spacing;
-		drawLabel( guiGraphics, "Port:", labelX, y + 6 );
+		drawLabel( graphics, "Port:", labelX, y + 6 );
 		y += spacing;
-		drawLabel( guiGraphics, "Path:", labelX, y + 6 );
+		drawLabel( graphics, "Path:", labelX, y + 6 );
 	}
 	
-	//Right-aligned label ending at endX. drawCenteredString is used, because drawString returns int up to 1.21.5
-	//and void since 1.21.6 (NoSuchMethodError otherwise). It draws at x - width / 2, so x = startX + width / 2
-	//places the text exactly where drawString( .., startX, .. ) did.
-	private void drawLabel( @NotNull GuiGraphics guiGraphics, @NotNull String label, int endX, int y ) {
+	//Right-aligned label ending at endX
+	private void drawLabel( @NotNull GuiGraphicsExtractor graphics, @NotNull String label, int endX, int y ) {
 		
-		int width = this.font.width( label );
-		guiGraphics.drawCenteredString( this.font, Component.literal( label ), endX - width + width / 2, y, 0xFFA0A0A0 );
+		graphics.text( this.font, label, endX - this.font.width( label ), y, 0xFFA0A0A0 );
 	}
 	
 	@Override
