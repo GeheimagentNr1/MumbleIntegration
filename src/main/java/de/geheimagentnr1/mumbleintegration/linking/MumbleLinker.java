@@ -168,19 +168,26 @@ public class MumbleLinker {
 	private void connectToMumble( @NotNull ResourceKey<Level> dimensionKey ) {
 		
 		try {
-			if( Desktop.isDesktopSupported() ) {
+			URI uri = new URI(
+				"mumble",
+				null,
+				clientConfig().getAddress(),
+				clientConfig().getPort(),
+				buildMumblePath( dimensionKey ),
+				null,
+				null
+			);
+			//On Windows Desktop.browse can hand mumble:// links to the web browser instead of Mumble, so the link is
+			//opened like Win+R or a browser does: by the shell's registered URL protocol handler.
+			//noinspection AccessOfSystemProperties
+			if( System.getProperty( "os.name", "" ).toLowerCase().contains( "win" ) ) {
+				log.info( "Auto Connecting to mumble" );
+				new ProcessBuilder( "rundll32", "url.dll,FileProtocolHandler", uri.toASCIIString() ).start();
+			} else if( Desktop.isDesktopSupported() ) {
 				Desktop desktop = Desktop.getDesktop();
 				if( desktop.isSupported( Desktop.Action.BROWSE ) ) {
 					log.info( "Auto Connecting to mumble" );
-					desktop.browse( new URI(
-						"mumble",
-						null,
-						clientConfig().getAddress(),
-						clientConfig().getPort(),
-						buildMumblePath( dimensionKey ),
-						null,
-						null
-					) );
+					desktop.browse( uri );
 				} else {
 					log.warn( "Auto Connect failed: Desktop Api browse action not supported" );
 				}
