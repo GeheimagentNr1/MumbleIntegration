@@ -110,7 +110,7 @@ public class ModConfigScreen extends Screen {
 	public void render( @NotNull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick ) {
 		
 		super.render( guiGraphics, mouseX, mouseY, partialTick );
-		guiGraphics.drawCenteredString( this.font, this.title, this.width / 2, 15, 0xFFFFFF );
+		guiGraphics.drawCenteredString( this.font, this.title, this.width / 2, 15, 0xFFFFFFFF );
 		
 		int centerX = this.width / 2;
 		int labelX = centerX - 100 - 5;
@@ -118,11 +118,20 @@ public class ModConfigScreen extends Screen {
 		int spacing = 24;
 		
 		y += spacing * 2; // Skip first two buttons
-		guiGraphics.drawString( this.font, "Address:", labelX - this.font.width( "Address:" ), y + 6, 0xA0A0A0 );
+		drawLabel( guiGraphics, "Address:", labelX, y + 6 );
 		y += spacing;
-		guiGraphics.drawString( this.font, "Port:", labelX - this.font.width( "Port:" ), y + 6, 0xA0A0A0 );
+		drawLabel( guiGraphics, "Port:", labelX, y + 6 );
 		y += spacing;
-		guiGraphics.drawString( this.font, "Path:", labelX - this.font.width( "Path:" ), y + 6, 0xA0A0A0 );
+		drawLabel( guiGraphics, "Path:", labelX, y + 6 );
+	}
+	
+	//Right-aligned label ending at endX. drawCenteredString is used, because drawString returns int up to 1.21.5
+	//and void since 1.21.6 (NoSuchMethodError otherwise). It draws at x - width / 2, so x = startX + width / 2
+	//places the text exactly where drawString( .., startX, .. ) did.
+	private void drawLabel( @NotNull GuiGraphics guiGraphics, @NotNull String label, int endX, int y ) {
+		
+		int width = this.font.width( label );
+		guiGraphics.drawCenteredString( this.font, Component.literal( label ), endX - width + width / 2, y, 0xFFA0A0A0 );
 	}
 	
 	@Override

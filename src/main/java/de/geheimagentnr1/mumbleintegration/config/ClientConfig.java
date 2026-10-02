@@ -102,6 +102,7 @@ public class ClientConfig {
 	public void setMumbleActive( boolean value ) {
 		
 		mumbleActive.set( value );
+		mumbleActive.save();
 		handleConfigChange();
 	}
 	
@@ -113,6 +114,7 @@ public class ClientConfig {
 	public void setAutoConnect( boolean value ) {
 		
 		autoConnect.set( value );
+		autoConnect.save();
 	}
 	
 	@NotNull
@@ -124,6 +126,7 @@ public class ClientConfig {
 	public void setAddress( @NotNull String value ) {
 		
 		address.set( value );
+		address.save();
 	}
 	
 	public int getPort() {
@@ -134,6 +137,7 @@ public class ClientConfig {
 	public void setPort( int value ) {
 		
 		port.set( value );
+		port.save();
 	}
 	
 	@NotNull
@@ -145,6 +149,7 @@ public class ClientConfig {
 	public void setPath( @NotNull String value ) {
 		
 		path.set( value );
+		path.save();
 	}
 	
 	public boolean useDimensionChannels() {
@@ -155,5 +160,6 @@ public class ClientConfig {
 	public void setUseDimensionChannels( boolean value ) {
 		
 		useDimensionChannels.set( value );
+		useDimensionChannels.save();
 	}
 }
