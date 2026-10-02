@@ -78,7 +78,13 @@ public class ModConfigScreen extends Screen {
 		portField = new EditBox( this.font, centerX - buttonWidth / 2, y, buttonWidth, buttonHeight, Component.literal( "Port" ) );
 		portField.setMaxLength( 5 );
 		portField.setValue( String.valueOf( config.getPort() ) );
-		portField.setFilter( s -> s.isEmpty() || s.matches( "\\d*" ) );
+		//EditBox.setFilter was removed in 26.2: remove non-digits right after the change (before rendering)
+		portField.setResponder( value -> {
+			String digits = value.replaceAll( "\\D", "" );
+			if( !digits.equals( value ) ) {
+				portField.setValue( digits );
+			}
+		} );
 		this.addRenderableWidget( portField );
 		y += spacing;
 		
@@ -135,7 +141,7 @@ public class ModConfigScreen extends Screen {
 	public void onClose() {
 		
 		saveConfig();
-		this.minecraft.setScreen( parent );
+		this.minecraft.gui.setScreen( parent );
 	}
 	
 	private void saveConfig() {

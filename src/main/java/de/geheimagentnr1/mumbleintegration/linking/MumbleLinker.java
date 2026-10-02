@@ -117,7 +117,7 @@ public class MumbleLinker {
 			ensureLinking();
 			ResourceKey<Level> worldDimension = level.dimension();
 			autoConnect( worldDimension );
-			Camera camera = minecraft.gameRenderer.getMainCamera();
+			Camera camera = minecraft.gameRenderer.mainCamera();
 			float[] camPos = vec3dToArray( camera.position() );
 			float[] camDir = vec3fToArray( camera.forwardVector() );
 			float[] camTop = vec3fToArray( camera.upVector() );
