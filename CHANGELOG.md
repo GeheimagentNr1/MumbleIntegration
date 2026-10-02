@@ -1,1 +1,3 @@
-﻿Add compatibility for minecraft version 1.21.1, 1.21.2, 1.21.3, 1.21.4, 1.21.5, 1.21.6, 1.21.7, 1.21.8, 1.21.9, 1.21.10
+﻿Fix config screen settings not being saved to the config file (they were lost on restart)
+Fix Auto Connect and dimension channel switching opening the web browser instead of Mumble on Windows
+Fix the config screen crashing / showing invisible labels on Minecraft 1.21.6 - 1.21.10
